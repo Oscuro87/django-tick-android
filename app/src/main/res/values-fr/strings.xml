@@ -4,4 +4,10 @@
 
     <string name="action_settings">Paramètres</string>
     <string name="app_name_display">Ticket Service</string>
+    <string name="login_header_text">Formulaire de connection</string>
+    <string name="email_label_trad">Email:</string>
+    <string name="password_label_trad">Mot de passe:</string>
+    <string name="login_button_label">Connection</string>
+    <string name="remember_me_label">Souvenez-vous de moi</string>
+    <string name="toast_login_success_text">Connection réussie.</string>
 </resources>

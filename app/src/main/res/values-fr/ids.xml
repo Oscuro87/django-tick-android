@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="toast_login_success_text" type="id">Login successful.</item>
+</resources>
