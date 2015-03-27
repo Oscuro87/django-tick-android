@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">AndroidTicket</string>
+    <string name="title_activity_ticket_login">Ticket Service - Login</string>
+
+    <string name="action_settings">Paramètres</string>
+    <string name="app_name_display">Ticket Service</string>
+</resources>
