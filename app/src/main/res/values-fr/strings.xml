@@ -10,4 +10,7 @@
     <string name="login_button_label">Connection</string>
     <string name="remember_me_label">Souvenez-vous de moi</string>
     <string name="toast_login_success_text">Connection réussie.</string>
+    <string name="toast_logged_out_text">Logged out</string>
+    <string name="toast_not_logged_in_text">You are not logged in</string>
+    <string name="toast_logout_error_text">Error while logging out</string>
 </resources>
