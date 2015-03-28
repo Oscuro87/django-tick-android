@@ -4,6 +4,7 @@ public class UserData
 {
     private static UserData instance;
 
+    private boolean loggedIn;
     private String email;
     private String firstName;
     private String lastName;
@@ -33,6 +34,11 @@ public class UserData
         return lastName;
     }
 
+    public boolean isLoggedIn()
+    {
+        return loggedIn;
+    }
+
     public boolean isStaff()
     {
         return isStaff;
@@ -56,5 +62,10 @@ public class UserData
     public void setStaff(boolean isStaff)
     {
         this.isStaff = isStaff;
+    }
+
+    public void setLoggedIn(boolean loggedIn)
+    {
+        this.loggedIn = loggedIn;
     }
 }

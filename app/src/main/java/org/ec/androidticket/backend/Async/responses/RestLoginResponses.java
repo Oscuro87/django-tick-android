@@ -37,12 +37,7 @@ public class RestLoginResponses
 
         public Auth()
         {
-            super();
-            UserData ud = UserData.get();
-            ud.setEmail(email);
-            ud.setFirstName(first_name);
-            ud.setLastName(last_name);
-            ud.setStaff(staff);
+
         }
 
         public boolean isSuccess()

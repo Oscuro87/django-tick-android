@@ -16,7 +16,9 @@ import org.ec.androidticket.R;
 import org.ec.androidticket.backend.GlobalSettings;
 import org.ec.androidticket.backend.Async.RESTClient;
 import org.ec.androidticket.backend.Async.responses.RestLoginResponses;
+import org.ec.androidticket.backend.managers.CookieManager;
 import org.ec.androidticket.backend.models.CredentialCookie;
+import org.ec.androidticket.backend.models.UserData;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -41,7 +43,7 @@ public class TicketLoginActivity extends Activity
         setContentView(R.layout.activity_ticket_login);
         setupListeners();
 
-        CredentialCookie cookie = readCookie();
+        CredentialCookie cookie = CookieManager.readCookie(getApplicationContext());
         if (cookie != null) // Si le cookie a été correctement lu...
         {
             EditText emailField = (EditText) findViewById(R.id.email_field);
@@ -59,8 +61,16 @@ public class TicketLoginActivity extends Activity
             @Override
             public void onClick(View v)
             {
+                CheckBox rememberMe = (CheckBox)findViewById(R.id.rememberMe);
+                EditText emailField = (EditText)findViewById(R.id.email_field);
+                EditText passwordField = (EditText)findViewById(R.id.password_field);
+
+                boolean remember = rememberMe.isChecked();
+                String email = emailField.getText().toString();
+                String password = passwordField.getText().toString();
+
                 // Créer un cookie
-                writeCookie();
+                CookieManager.writeCookie(getApplicationContext(), email, password, remember);
 
                 // Login
                 action_login();
@@ -79,102 +89,9 @@ public class TicketLoginActivity extends Activity
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings)
-        {
-            return true;
-        }
-
         return super.onOptionsItemSelected(item);
-    }
-
-    /**
-     * Écrit un cookie permettant de ne pas devoir rentrer son login à chaque fois.
-     * Ne fonctionne que si l'option "remember me" est active!
-     */
-    private void writeCookie()
-    {
-        CheckBox rememberMe = (CheckBox) findViewById(R.id.rememberMe);
-        EditText emailField = (EditText) findViewById(R.id.email_field);
-        EditText passwordField = (EditText) findViewById(R.id.password_field);
-
-        if (rememberMe.isChecked())
-        {
-            try
-            {
-                File cookie = new File(getApplicationContext().getCacheDir(), GlobalSettings.CREDENTIAL_COOKIE_FILENAME);
-                if (!cookie.exists())
-                    cookie.createNewFile();
-                FileWriter writer = new FileWriter(cookie);
-                writer.append(emailField.getText().toString());
-                writer.append(" ");
-                // TODO: MD5 le mdp?
-                writer.append(passwordField.getText().toString());
-                writer.flush();
-                writer.close();
-            } catch (IOException e)
-            {
-                Log.e("CustomLog", e.getMessage());
-            }
-
-        } else
-        {
-            // On détruit le cookie car l'utilisateur ne veut plus être 'enregistré'
-            destroyCookie();
-        }
-    }
-
-    /**
-     * Détruit un cookie qui n'est plus nécéssaire.
-     */
-    private void destroyCookie()
-    {
-        File cookie = new File(getApplicationContext().getCacheDir(),
-                GlobalSettings.CREDENTIAL_COOKIE_FILENAME);
-        if (cookie.exists())
-            cookie.delete();
-    }
-
-    /**
-     * Retourne les informations de cookie.
-     * @return Un array sous la forme ["email", "mot de passe"].
-     */
-    private CredentialCookie readCookie()
-    {
-        File cookieFile = new File(getApplicationContext().getCacheDir(), GlobalSettings.CREDENTIAL_COOKIE_FILENAME);
-        if(!cookieFile.exists())
-            return null;
-        else
-        {
-            try
-            {
-                String email;
-                String password;
-                InputStream in = new FileInputStream(cookieFile);
-                InputStreamReader reader = new InputStreamReader(in);
-                BufferedReader breader = new BufferedReader(reader);
-
-                String line = breader.readLine();
-                breader.close();
-                email = line.split(" ")[0];
-                password = line.split(" ")[1];
-
-                return new CredentialCookie(email, password);
-            } catch (FileNotFoundException e)
-            {
-                Log.e("CustomLog", e.getMessage());
-                return null;
-            } catch (IOException e)
-            {
-                Log.e("CustomLog", e.getMessage());
-                return null;
-            }
-        }
     }
 
     private void action_logout()
@@ -212,7 +129,19 @@ public class TicketLoginActivity extends Activity
             public void success(RestLoginResponses.Auth auth, Response response)
             {
                 Context context = getApplicationContext();
-                Toast.makeText(context, R.string.toast_login_success_text, Toast.LENGTH_SHORT).show();
+                if (auth.isSuccess())
+                {
+                    Toast.makeText(context, R.string.toast_login_success_text, Toast.LENGTH_SHORT).show();
+                    UserData.get().setLoggedIn(auth.isSuccess());
+                    UserData.get().setFirstName(auth.getFirst_name());
+                    UserData.get().setLastName(auth.getLast_name());
+                    UserData.get().setEmail(auth.getEmail());
+                    UserData.get().setStaff(auth.isStaff());
+                }
+                else
+                {
+                    Toast.makeText(context, R.string.toast_login_fail_text + ":\n" + auth.getReason(), Toast.LENGTH_SHORT).show();
+                }
             }
 
             @Override

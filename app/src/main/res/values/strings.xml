@@ -16,4 +16,5 @@
     <string name="title_activity_tickets">TicketsActivity</string>
 
     <string name="hello_world">Hello world!</string>
+    <string name="toast_login_fail_text">Login failed</string>
 </resources>
