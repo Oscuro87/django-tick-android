@@ -1,8 +1,8 @@
-package org.ec.androidticket.backend.RestClient;
+package org.ec.androidticket.backend.Async.responses;
 
 import org.ec.androidticket.backend.models.UserData;
 
-public class RestResponses
+public class RestLoginResponses
 {
     public class AuthResponse
     {

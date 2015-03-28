@@ -21,7 +21,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.tickets.TicketsActivity"
+            android:name=".activities.tickets.TicketHomeActivity"
             android:label="@string/title_activity_tickets"
             android:parentActivityName=".activities.login.TicketLoginActivity" >
             <meta-data

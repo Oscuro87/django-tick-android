@@ -7,14 +7,14 @@ import android.view.MenuItem;
 
 import org.ec.androidticket.R;
 
-public class TicketsActivity extends ActionBarActivity
+public class TicketHomeActivity extends ActionBarActivity
 {
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_tickets);
+        setContentView(R.layout.activity_ticket_home);
     }
 
 
@@ -22,7 +22,7 @@ public class TicketsActivity extends ActionBarActivity
     public boolean onCreateOptionsMenu(Menu menu)
     {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_tickets, menu);
+        getMenuInflater().inflate(R.menu.menu_ticket_home, menu);
         return true;
     }
 

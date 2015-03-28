@@ -14,16 +14,14 @@ import android.widget.Toast;
 
 import org.ec.androidticket.R;
 import org.ec.androidticket.backend.GlobalSettings;
-import org.ec.androidticket.backend.RestClient.RESTClient;
-import org.ec.androidticket.backend.RestClient.RestResponses;
+import org.ec.androidticket.backend.Async.RESTClient;
+import org.ec.androidticket.backend.Async.responses.RestLoginResponses;
 import org.ec.androidticket.backend.models.CredentialCookie;
-import org.ec.androidticket.backend.models.UserData;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
@@ -181,10 +179,10 @@ public class TicketLoginActivity extends Activity
 
     private void action_logout()
     {
-        RESTClient.get().logoutTicket(new Callback<RestResponses.Logout>()
+        RESTClient.get().logoutTicket(new Callback<RestLoginResponses.Logout>()
         {
             @Override
-            public void success(RestResponses.Logout logout, Response response)
+            public void success(RestLoginResponses.Logout logout, Response response)
             {
                 if (logout.isDisconnected())
                     Toast.makeText(getApplicationContext(), getString(R.string.toast_logged_out_text), Toast.LENGTH_SHORT).show();
@@ -208,10 +206,10 @@ public class TicketLoginActivity extends Activity
         String email = emailField.getText().toString();
         String pass = passwordField.getText().toString();
 
-        RESTClient.get().authTicket(email, pass, new Callback<RestResponses.Auth>()
+        RESTClient.get().authTicket(email, pass, new Callback<RestLoginResponses.Auth>()
         {
             @Override
-            public void success(RestResponses.Auth auth, Response response)
+            public void success(RestLoginResponses.Auth auth, Response response)
             {
                 Context context = getApplicationContext();
                 Toast.makeText(context, R.string.toast_login_success_text, Toast.LENGTH_SHORT).show();
