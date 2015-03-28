@@ -2,17 +2,20 @@ package org.ec.androidticket.backend.models;
 
 public class UserData
 {
+    private static UserData instance;
+
     private String email;
     private String firstName;
     private String lastName;
     private boolean isStaff;
 
-    public UserData(String email, String firstName, String lastName, boolean isStaff)
+    private UserData() {}
+
+    public static UserData get()
     {
-        this.email = email;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.isStaff = isStaff;
+        if (instance == null)
+            instance = new UserData();
+        return instance;
     }
 
     public String getEmail()
@@ -33,5 +36,25 @@ public class UserData
     public boolean isStaff()
     {
         return isStaff;
+    }
+
+    public void setEmail(String email)
+    {
+        this.email = email;
+    }
+
+    public void setFirstName(String firstName)
+    {
+        this.firstName = firstName;
+    }
+
+    public void setLastName(String lastName)
+    {
+        this.lastName = lastName;
+    }
+
+    public void setStaff(boolean isStaff)
+    {
+        this.isStaff = isStaff;
     }
 }

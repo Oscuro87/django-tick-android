@@ -35,12 +35,14 @@ public class RestResponses
         private String email;
         private boolean staff;
 
-        private final UserData userDataObject;
-
         public Auth()
         {
             super();
-            this.userDataObject = new UserData(email, first_name, last_name, staff);
+            UserData ud = UserData.get();
+            ud.setEmail(email);
+            ud.setFirstName(first_name);
+            ud.setLastName(last_name);
+            ud.setStaff(staff);
         }
 
         public boolean isSuccess()
@@ -75,7 +77,7 @@ public class RestResponses
 
         public UserData getUserDataObject()
         {
-            return userDataObject;
+            return UserData.get();
         }
     }
 
