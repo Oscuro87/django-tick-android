@@ -1,4 +1,4 @@
-package org.ec.androidticket.activities.tickets;
+package org.ec.androidticket.activities.home;
 
 import android.content.Context;
 import android.support.v4.app.NavUtils;

@@ -17,7 +17,7 @@ import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 
 import org.ec.androidticket.R;
-import org.ec.androidticket.activities.tickets.TicketHomeActivity;
+import org.ec.androidticket.activities.home.TicketHomeActivity;
 import org.ec.androidticket.backend.events.loginEvents.LoginFailureEvent;
 import org.ec.androidticket.backend.events.loginEvents.LoginSuccessEvent;
 import org.ec.androidticket.backend.events.loginEvents.LoggedOutEvent;
