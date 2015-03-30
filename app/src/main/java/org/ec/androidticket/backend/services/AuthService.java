@@ -8,12 +8,12 @@ import com.squareup.otto.Subscribe;
 
 import org.ec.androidticket.backend.Async.RESTClient;
 import org.ec.androidticket.backend.Async.responses.RestLoginResponses;
-import org.ec.androidticket.backend.busEvents.LoggedOutEvent;
-import org.ec.androidticket.backend.busEvents.LoginEvent;
-import org.ec.androidticket.backend.busEvents.LoginFailureEvent;
-import org.ec.androidticket.backend.busEvents.LoginSuccessEvent;
-import org.ec.androidticket.backend.busEvents.LogoutEvent;
-import org.ec.androidticket.backend.busEvents.LogoutFailEvent;
+import org.ec.androidticket.backend.events.loginEvents.LoggedOutEvent;
+import org.ec.androidticket.backend.events.loginEvents.LoginEvent;
+import org.ec.androidticket.backend.events.loginEvents.LoginFailureEvent;
+import org.ec.androidticket.backend.events.loginEvents.LoginSuccessEvent;
+import org.ec.androidticket.backend.events.loginEvents.LogoutEvent;
+import org.ec.androidticket.backend.events.loginEvents.LogoutFailEvent;
 
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -44,7 +44,7 @@ public class AuthService
                 if (auth.isSuccess())
                 {
                     bus.post(new LoginSuccessEvent(
-                            auth.getSessionid(),
+                            auth.getAuthtoken(),
                             auth.isSuccess(),
                             auth.getReason(),
                             auth.getFirst_name(),
@@ -70,20 +70,22 @@ public class AuthService
     @Subscribe
     public void onLogoutEvent(LogoutEvent event)
     {
-        RESTClient.get().logoutTicket(event.getSessionID(), new Callback<RestLoginResponses.Logout>()
-        {
-            @Override
-            public void success(RestLoginResponses.Logout logout, Response response)
-            {
-                bus.post(new LoggedOutEvent(logout.isDisconnected()));
-            }
+        RESTClient.get().logoutTicket(
+                "Token " + event.getAuthtoken(),
+                new Callback<RestLoginResponses.Logout>()
+                {
+                    @Override
+                    public void success(RestLoginResponses.Logout logout, Response response)
+                    {
+                        bus.post(new LoggedOutEvent(logout.isDisconnected()));
+                    }
 
-            @Override
-            public void failure(RetrofitError error)
-            {
-                Log.e("CustomLog", "Logout unsuccessful: " + error.toString());
-                bus.post(new LogoutFailEvent(error.toString()));
-            }
-        });
+                    @Override
+                    public void failure(RetrofitError error)
+                    {
+                        Log.e("CustomLog", "Logout unsuccessful: " + error.toString());
+                        bus.post(new LogoutFailEvent(error.toString()));
+                    }
+                });
     }
 }

@@ -3,7 +3,11 @@ package org.ec.androidticket.backend.Async.apis;
 import org.ec.androidticket.backend.Async.responses.RestLoginResponses;
 
 import retrofit.Callback;
-import retrofit.http.*;
+import retrofit.http.Field;
+import retrofit.http.FormUrlEncoded;
+import retrofit.http.GET;
+import retrofit.http.Header;
+import retrofit.http.POST;
 
 public interface RestLoginAPI
 {
@@ -14,7 +18,6 @@ public interface RestLoginAPI
             @Field("password") String password,
             Callback<RestLoginResponses.Auth> callback);
 
-    @FormUrlEncoded
-    @POST("/rest/logout")
-    void logoutTicket(@Field("sessionid") String sessionID, Callback<RestLoginResponses.Logout> callback);
+    @GET("/rest/logout")
+    void logoutTicket(@Header("Authorization") String authtoken, Callback<RestLoginResponses.Logout> callback);
 }

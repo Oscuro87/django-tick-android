@@ -4,14 +4,16 @@ public class UserData
 {
     private static UserData instance;
 
-    private String sessionid;
+    private String authtoken;
     private boolean loggedIn;
     private String email;
     private String firstName;
     private String lastName;
     private boolean isStaff;
 
-    private UserData() {}
+    private UserData()
+    {
+    }
 
     public static UserData get()
     {
@@ -22,7 +24,7 @@ public class UserData
 
     public void purge()
     {
-        this.sessionid = "";
+        this.authtoken = "";
         this.loggedIn = false;
         this.email = "";
         this.firstName = "";
@@ -30,9 +32,9 @@ public class UserData
         this.isStaff = false;
     }
 
-    public String getSessionid()
+    public String getAuthtoken()
     {
-        return sessionid;
+        return authtoken;
     }
 
     public String getEmail()
@@ -85,8 +87,8 @@ public class UserData
         this.loggedIn = loggedIn;
     }
 
-    public void setSessionid(String sessionid)
+    public void setAuthtoken(String authtoken)
     {
-        this.sessionid = sessionid;
+        this.authtoken = authtoken;
     }
 }

@@ -1,4 +1,4 @@
-package org.ec.androidticket.backend.busEvents;
+package org.ec.androidticket.backend.events.loginEvents;
 
 public class LogoutFailEvent
 {

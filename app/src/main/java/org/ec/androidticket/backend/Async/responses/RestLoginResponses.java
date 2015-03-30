@@ -29,7 +29,7 @@ public class RestLoginResponses
     public class Auth
     {
         private boolean success;
-        private String sessionid;
+        private String authtoken;
         private String reason;
         private String first_name;
         private String last_name;
@@ -38,12 +38,11 @@ public class RestLoginResponses
 
         public Auth()
         {
-
         }
 
-        public String getSessionid()
+        public String getAuthtoken()
         {
-            return sessionid;
+            return authtoken;
         }
 
         public boolean isSuccess()

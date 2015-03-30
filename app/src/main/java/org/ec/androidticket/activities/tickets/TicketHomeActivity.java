@@ -13,8 +13,8 @@ import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 
 import org.ec.androidticket.R;
-import org.ec.androidticket.backend.busEvents.LoggedOutEvent;
-import org.ec.androidticket.backend.busEvents.LogoutEvent;
+import org.ec.androidticket.backend.events.loginEvents.LoggedOutEvent;
+import org.ec.androidticket.backend.events.loginEvents.LogoutEvent;
 import org.ec.androidticket.backend.models.internal.UserData;
 import org.ec.androidticket.backend.services.AuthService;
 
@@ -69,7 +69,7 @@ public class TicketHomeActivity extends ActionBarActivity
 
         if(item.getItemId() == R.id.action_logout)
         {
-            eventBus.post(new LogoutEvent(UserData.get().getSessionid()));
+            eventBus.post(new LogoutEvent(UserData.get().getAuthtoken()));
             return true; // consommé
         }
 

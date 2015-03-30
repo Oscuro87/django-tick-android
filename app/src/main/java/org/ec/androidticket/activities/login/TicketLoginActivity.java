@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,11 +18,11 @@ import com.squareup.otto.Subscribe;
 
 import org.ec.androidticket.R;
 import org.ec.androidticket.activities.tickets.TicketHomeActivity;
-import org.ec.androidticket.backend.busEvents.LoginFailureEvent;
-import org.ec.androidticket.backend.busEvents.LoginSuccessEvent;
-import org.ec.androidticket.backend.busEvents.LoggedOutEvent;
-import org.ec.androidticket.backend.busEvents.LoginEvent;
-import org.ec.androidticket.backend.busEvents.LogoutEvent;
+import org.ec.androidticket.backend.events.loginEvents.LoginFailureEvent;
+import org.ec.androidticket.backend.events.loginEvents.LoginSuccessEvent;
+import org.ec.androidticket.backend.events.loginEvents.LoggedOutEvent;
+import org.ec.androidticket.backend.events.loginEvents.LoginEvent;
+import org.ec.androidticket.backend.events.loginEvents.LogoutEvent;
 import org.ec.androidticket.backend.managers.CookieManager;
 import org.ec.androidticket.backend.models.internal.CredentialCookie;
 import org.ec.androidticket.backend.models.internal.UserData;
@@ -111,8 +112,15 @@ public class TicketLoginActivity extends Activity
     protected void onDestroy()
     {
         super.onStop();
-        eventBus.post(new LogoutEvent(UserData.get().getSessionid()));
-        eventBus.unregister(this);
+        eventBus.post(new LogoutEvent(UserData.get().getAuthtoken()));
+        try
+        {
+            eventBus.unregister(this);
+        }
+        catch(IllegalArgumentException ignored)
+        {
+            Log.e("CustomLog", "This class is already unregistered!");
+        }
     }
 
     public void loggedOut(LoggedOutEvent event)
@@ -132,7 +140,7 @@ public class TicketLoginActivity extends Activity
     {
         Context context = getApplicationContext();
 
-        UserData.get().setSessionid(event.sessionID);
+        UserData.get().setAuthtoken(event.authtoken);
         UserData.get().setLoggedIn(true);
         UserData.get().setStaff(event.staff);
         UserData.get().setEmail(event.email);
