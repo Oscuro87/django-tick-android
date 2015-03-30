@@ -14,4 +14,7 @@
     <string name="toast_not_logged_in_text">You are not logged in</string>
     <string name="toast_logout_error_text">Error while logging out</string>
     <string name="toast_login_fail_text">Login failed</string>
+    <string name="title_activity_tickets">TicketsActivity</string>
+    <string name="action_logout">Logout</string>
+    <string name="toast_more_options">Tap the menu button for more options</string>
 </resources>

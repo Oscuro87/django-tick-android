@@ -4,7 +4,7 @@ import android.content.Context;
 import android.util.Log;
 
 import org.ec.androidticket.backend.GlobalSettings;
-import org.ec.androidticket.backend.models.CredentialCookie;
+import org.ec.androidticket.backend.models.internal.CredentialCookie;
 
 import java.io.BufferedReader;
 import java.io.File;

@@ -1,4 +1,4 @@
-package org.ec.androidticket.backend.models;
+package org.ec.androidticket.backend.models.internal;
 
 public class CredentialCookie
 {

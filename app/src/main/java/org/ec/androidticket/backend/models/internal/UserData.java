@@ -1,9 +1,10 @@
-package org.ec.androidticket.backend.models;
+package org.ec.androidticket.backend.models.internal;
 
 public class UserData
 {
     private static UserData instance;
 
+    private String sessionid;
     private boolean loggedIn;
     private String email;
     private String firstName;
@@ -17,6 +18,21 @@ public class UserData
         if (instance == null)
             instance = new UserData();
         return instance;
+    }
+
+    public void purge()
+    {
+        this.sessionid = "";
+        this.loggedIn = false;
+        this.email = "";
+        this.firstName = "";
+        this.lastName = "";
+        this.isStaff = false;
+    }
+
+    public String getSessionid()
+    {
+        return sessionid;
     }
 
     public String getEmail()
@@ -67,5 +83,10 @@ public class UserData
     public void setLoggedIn(boolean loggedIn)
     {
         this.loggedIn = loggedIn;
+    }
+
+    public void setSessionid(String sessionid)
+    {
+        this.sessionid = sessionid;
     }
 }

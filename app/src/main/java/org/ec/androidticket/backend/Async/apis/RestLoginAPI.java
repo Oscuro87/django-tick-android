@@ -14,6 +14,7 @@ public interface RestLoginAPI
             @Field("password") String password,
             Callback<RestLoginResponses.Auth> callback);
 
-    @GET("/rest/logout")
-    void logoutTicket(Callback<RestLoginResponses.Logout> callback);
+    @FormUrlEncoded
+    @POST("/rest/logout")
+    void logoutTicket(@Field("sessionid") String sessionID, Callback<RestLoginResponses.Logout> callback);
 }

@@ -1,6 +1,6 @@
 package org.ec.androidticket.backend.Async.responses;
 
-import org.ec.androidticket.backend.models.UserData;
+import org.ec.androidticket.backend.models.internal.UserData;
 
 public class RestLoginResponses
 {
@@ -29,6 +29,7 @@ public class RestLoginResponses
     public class Auth
     {
         private boolean success;
+        private String sessionid;
         private String reason;
         private String first_name;
         private String last_name;
@@ -38,6 +39,11 @@ public class RestLoginResponses
         public Auth()
         {
 
+        }
+
+        public String getSessionid()
+        {
+            return sessionid;
         }
 
         public boolean isSuccess()
