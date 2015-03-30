@@ -1,19 +1,18 @@
-package org.ec.androidticket.backend.services;
+package org.ec.androidticket.backend.Async.services;
 
-import android.app.Activity;
 import android.util.Log;
 
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 
 import org.ec.androidticket.backend.Async.RESTClient;
-import org.ec.androidticket.backend.Async.responses.RestLoginResponses;
-import org.ec.androidticket.backend.events.loginEvents.LoggedOutEvent;
-import org.ec.androidticket.backend.events.loginEvents.LoginEvent;
-import org.ec.androidticket.backend.events.loginEvents.LoginFailureEvent;
-import org.ec.androidticket.backend.events.loginEvents.LoginSuccessEvent;
-import org.ec.androidticket.backend.events.loginEvents.LogoutEvent;
-import org.ec.androidticket.backend.events.loginEvents.LogoutFailEvent;
+import org.ec.androidticket.backend.Async.events.loginEvents.LoggedOutEvent;
+import org.ec.androidticket.backend.Async.events.loginEvents.LoginEvent;
+import org.ec.androidticket.backend.Async.events.loginEvents.LoginFailureEvent;
+import org.ec.androidticket.backend.Async.events.loginEvents.LoginSuccessEvent;
+import org.ec.androidticket.backend.Async.events.loginEvents.LogoutEvent;
+import org.ec.androidticket.backend.Async.events.loginEvents.LogoutFailEvent;
+import org.ec.androidticket.backend.Async.responses.login.Login;
 
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -21,14 +20,10 @@ import retrofit.client.Response;
 
 public class AuthService
 {
-    private Activity attachedActivity;
     private Bus bus;
-    private LogoutEvent logoutEvent;
-    private LoginEvent loginEvent;
 
-    public AuthService(Bus bus, Activity attachedActivity)
+    public AuthService(Bus bus)
     {
-        this.attachedActivity = attachedActivity;
         this.bus = bus;
         this.bus.register(this);
     }
@@ -36,13 +31,14 @@ public class AuthService
     @Subscribe
     public void onLoginEvent(LoginEvent event)
     {
-        RESTClient.get().authTicket(event.getEmail(), event.getPassword(), new Callback<RestLoginResponses.Auth>()
+        RESTClient.getLoginAPI().authTicket(event.getEmail(), event.getPassword(), new Callback<Login.Auth>()
         {
             @Override
-            public void success(RestLoginResponses.Auth auth, Response response)
+            public void success(Login.Auth auth, Response response)
             {
                 if (auth.isSuccess())
                 {
+                    Log.i("CustomLog", auth.toString());
                     bus.post(new LoginSuccessEvent(
                             auth.getAuthtoken(),
                             auth.isSuccess(),
@@ -70,12 +66,12 @@ public class AuthService
     @Subscribe
     public void onLogoutEvent(LogoutEvent event)
     {
-        RESTClient.get().logoutTicket(
+        RESTClient.getLoginAPI().logoutTicket(
                 "Token " + event.getAuthtoken(),
-                new Callback<RestLoginResponses.Logout>()
+                new Callback<Login.Logout>()
                 {
                     @Override
-                    public void success(RestLoginResponses.Logout logout, Response response)
+                    public void success(Login.Logout logout, Response response)
                     {
                         bus.post(new LoggedOutEvent(logout.isDisconnected()));
                     }

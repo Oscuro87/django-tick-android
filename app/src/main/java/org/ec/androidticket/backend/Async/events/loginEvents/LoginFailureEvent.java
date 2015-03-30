@@ -1,4 +1,4 @@
-package org.ec.androidticket.backend.events.loginEvents;
+package org.ec.androidticket.backend.Async.events.loginEvents;
 
 public class LoginFailureEvent
 {

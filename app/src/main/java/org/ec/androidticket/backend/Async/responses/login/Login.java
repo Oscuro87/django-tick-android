@@ -1,8 +1,6 @@
-package org.ec.androidticket.backend.Async.responses;
+package org.ec.androidticket.backend.Async.responses.login;
 
-import org.ec.androidticket.backend.models.internal.UserData;
-
-public class RestLoginResponses
+public class Login
 {
     public class AuthResponse
     {
@@ -75,9 +73,17 @@ public class RestLoginResponses
             return staff;
         }
 
-        public UserData getUserDataObject()
+        @Override
+        public String toString()
         {
-            return UserData.get();
+            StringBuilder bld = new StringBuilder();
+            bld.append("Success: ").append(success);
+            bld.append("Reason: ").append(reason);
+            bld.append("Email: ").append(email);
+            bld.append("First name: ").append(first_name);
+            bld.append("Last name: ").append(last_name);
+            bld.append("Is staff? ").append(staff);
+            return bld.toString();
         }
     }
 

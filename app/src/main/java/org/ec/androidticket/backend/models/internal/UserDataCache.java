@@ -1,8 +1,8 @@
 package org.ec.androidticket.backend.models.internal;
 
-public class UserData
+public class UserDataCache
 {
-    private static UserData instance;
+    private static UserDataCache instance;
 
     private String authtoken;
     private boolean loggedIn;
@@ -11,14 +11,14 @@ public class UserData
     private String lastName;
     private boolean isStaff;
 
-    private UserData()
+    private UserDataCache()
     {
     }
 
-    public static UserData get()
+    public static UserDataCache get()
     {
         if (instance == null)
-            instance = new UserData();
+            instance = new UserDataCache();
         return instance;
     }
 
@@ -50,6 +50,11 @@ public class UserData
     public String getLastName()
     {
         return lastName;
+    }
+
+    public String getFullName()
+    {
+        return firstName + " " + lastName;
     }
 
     public boolean isLoggedIn()
