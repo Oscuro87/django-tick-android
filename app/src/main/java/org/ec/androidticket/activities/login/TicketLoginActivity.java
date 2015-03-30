@@ -18,15 +18,15 @@ import com.squareup.otto.Subscribe;
 
 import org.ec.androidticket.R;
 import org.ec.androidticket.activities.home.TicketHomeActivity;
-import org.ec.androidticket.backend.events.loginEvents.LoginFailureEvent;
-import org.ec.androidticket.backend.events.loginEvents.LoginSuccessEvent;
-import org.ec.androidticket.backend.events.loginEvents.LoggedOutEvent;
-import org.ec.androidticket.backend.events.loginEvents.LoginEvent;
-import org.ec.androidticket.backend.events.loginEvents.LogoutEvent;
+import org.ec.androidticket.backend.Async.events.loginEvents.LoginFailureEvent;
+import org.ec.androidticket.backend.Async.events.loginEvents.LoginSuccessEvent;
+import org.ec.androidticket.backend.Async.events.loginEvents.LoggedOutEvent;
+import org.ec.androidticket.backend.Async.events.loginEvents.LoginEvent;
+import org.ec.androidticket.backend.Async.events.loginEvents.LogoutEvent;
 import org.ec.androidticket.backend.managers.CookieManager;
 import org.ec.androidticket.backend.models.internal.CredentialCookie;
-import org.ec.androidticket.backend.models.internal.UserData;
-import org.ec.androidticket.backend.services.AuthService;
+import org.ec.androidticket.backend.models.internal.UserDataCache;
+import org.ec.androidticket.backend.Async.services.AuthService;
 
 public class TicketLoginActivity extends Activity
 {
@@ -50,7 +50,7 @@ public class TicketLoginActivity extends Activity
         }
 
         eventBus = new Bus();
-        authService = new AuthService(eventBus, this);
+        authService = new AuthService(eventBus);
     }
 
     private void setupListeners()
@@ -112,7 +112,7 @@ public class TicketLoginActivity extends Activity
     protected void onDestroy()
     {
         super.onStop();
-        eventBus.post(new LogoutEvent(UserData.get().getAuthtoken()));
+        eventBus.post(new LogoutEvent(UserDataCache.get().getAuthtoken()));
         try
         {
             eventBus.unregister(this);
@@ -140,12 +140,12 @@ public class TicketLoginActivity extends Activity
     {
         Context context = getApplicationContext();
 
-        UserData.get().setAuthtoken(event.authtoken);
-        UserData.get().setLoggedIn(true);
-        UserData.get().setStaff(event.staff);
-        UserData.get().setEmail(event.email);
-        UserData.get().setFirstName(event.firstName);
-        UserData.get().setLastName(event.lastName);
+        UserDataCache.get().setAuthtoken(event.authtoken);
+        UserDataCache.get().setLoggedIn(true);
+        UserDataCache.get().setStaff(event.staff);
+        UserDataCache.get().setEmail(event.email);
+        UserDataCache.get().setFirstName(event.firstName);
+        UserDataCache.get().setLastName(event.lastName);
         Toast.makeText(context, R.string.toast_login_success_text, Toast.LENGTH_SHORT).show();
 
         Intent toHome = new Intent(this, TicketHomeActivity.class);

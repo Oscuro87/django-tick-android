@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import org.ec.androidticket.R;
+import org.ec.androidticket.backend.Async.responses.simpleTicket.helpers.TicketStatus;
 
 /**
  * Fragment représentant une icône + code ticket pour chaque ticket associé à l'utilisateur.
@@ -16,32 +17,29 @@ import org.ec.androidticket.R;
  */
 public class TicketObjectFragment extends Fragment
 {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    private static final String ARG_ticketCode = "ticketCode";
+    private static final String TICKETSTATUS_KEY = "ticketStatusKey";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private String ticketCode;
 
-    private OnFragmentInteractionListener mListener;
+    private OnTicketObjectFragmentInteractionListener mListener;
 
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
+     * @param ticketCode Le code ticket à afficher
+     * @param status The tickt
      * @return A new instance of fragment TicketObjectFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static TicketObjectFragment newInstance(String param1, String param2)
+    public static TicketObjectFragment newInstance(String ticketCode, TicketStatus status)
     {
         TicketObjectFragment fragment = new TicketObjectFragment();
+        // préparer les params
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+        args.putString(ARG_ticketCode, ticketCode);
+
         fragment.setArguments(args);
         return fragment;
     }
@@ -57,8 +55,7 @@ public class TicketObjectFragment extends Fragment
         super.onCreate(savedInstanceState);
         if (getArguments() != null)
         {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            ticketCode = getArguments().getString(ARG_ticketCode);
         }
     }
 
@@ -75,7 +72,7 @@ public class TicketObjectFragment extends Fragment
     {
         if (mListener != null)
         {
-            mListener.onFragmentInteraction(uri);
+            mListener.onTicketObjectInteraction(uri);
         }
     }
 
@@ -85,11 +82,11 @@ public class TicketObjectFragment extends Fragment
         super.onAttach(activity);
         try
         {
-            mListener = (OnFragmentInteractionListener) activity;
+            mListener = (OnTicketObjectFragmentInteractionListener) activity;
         } catch (ClassCastException e)
         {
             throw new ClassCastException(activity.toString()
-                    + " must implement OnFragmentInteractionListener");
+                    + " must implement OnTicketObjectFragmentInteractionListener");
         }
     }
 
@@ -100,20 +97,10 @@ public class TicketObjectFragment extends Fragment
         mListener = null;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnFragmentInteractionListener
+    public interface OnTicketObjectFragmentInteractionListener
     {
         // TODO: Update argument type and name
-        public void onFragmentInteraction(Uri uri);
+        public void onTicketObjectInteraction(Uri uri);
     }
 
 }
