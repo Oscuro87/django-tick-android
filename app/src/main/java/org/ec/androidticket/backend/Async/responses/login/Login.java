@@ -30,7 +30,8 @@ public class Login
         private String first_name;
         private String last_name;
         private String email;
-        private boolean staff;
+        private boolean is_staff;
+        private boolean is_active;
 
         public Auth()
         {
@@ -58,7 +59,7 @@ public class Login
 
         public boolean isStaff()
         {
-            return staff;
+            return is_staff;
         }
 
         @Override
@@ -68,7 +69,8 @@ public class Login
             bld.append("Email: ").append(email);
             bld.append("First name: ").append(first_name);
             bld.append("Last name: ").append(last_name);
-            bld.append("Is staff? ").append(staff);
+            bld.append("Is banned?").append(!is_active);
+            bld.append("Is staff? ").append(is_staff);
             return bld.toString();
         }
     }

@@ -6,6 +6,10 @@
           android:title="@string/action_logout"
           android:orderInCategory="100"
           app:showAsAction="never"/>
+    <item android:id="@+id/action_createTicket"
+          android:title="@string/action_create_ticket"
+          android:orderInCategory="1"
+          app:showAsAction="never" />
     <item android:id="@+id/action_createBuilding"
           android:title="@string/action_create_building"
           android:orderInCategory="1"

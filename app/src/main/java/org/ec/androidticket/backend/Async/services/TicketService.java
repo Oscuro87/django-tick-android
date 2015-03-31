@@ -5,6 +5,7 @@ import android.util.Log;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 
+import org.ec.androidticket.backend.Async.BusDepot;
 import org.ec.androidticket.backend.Async.RESTClient;
 import org.ec.androidticket.backend.Async.events.ticketEvents.SimpleTicketRequestEvent;
 import org.ec.androidticket.backend.Async.events.ticketEvents.SimpleTicketRequestResponse;
@@ -20,7 +21,7 @@ public class TicketService
 
     public TicketService(Bus bus)
     {
-        this.bus = bus;
+        this.bus = BusDepot.get().getBus(BusDepot.BusType.TICKET);
         this.bus.register(this);
     }
 

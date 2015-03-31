@@ -18,6 +18,7 @@ import com.squareup.otto.Subscribe;
 
 import org.ec.androidticket.R;
 import org.ec.androidticket.activities.home.TicketHomeActivity;
+import org.ec.androidticket.backend.Async.BusDepot;
 import org.ec.androidticket.backend.Async.events.loginEvents.LoginFailureEvent;
 import org.ec.androidticket.backend.Async.events.loginEvents.LoginSuccessEvent;
 import org.ec.androidticket.backend.Async.events.loginEvents.LoggedOutEvent;
@@ -30,7 +31,7 @@ import org.ec.androidticket.backend.Async.services.AuthService;
 
 public class TicketLoginActivity extends Activity
 {
-    private Bus eventBus;
+    private Bus loginBus;
     private AuthService authService;
 
     @Override
@@ -49,8 +50,8 @@ public class TicketLoginActivity extends Activity
             passwordField.setText(cookie.getPassword());
         }
 
-        eventBus = new Bus();
-        authService = new AuthService(eventBus);
+        loginBus = BusDepot.get().getBus(BusDepot.BusType.LOGIN);
+        authService = new AuthService(loginBus);
     }
 
     private void setupListeners()
@@ -73,7 +74,7 @@ public class TicketLoginActivity extends Activity
                 CookieManager.writeCookie(getApplicationContext(), email, password, remember);
 
                 // Login
-                eventBus.post(new LoginEvent(email, password));
+                loginBus.post(new LoginEvent(email, password));
             }
         });
     }
@@ -98,24 +99,27 @@ public class TicketLoginActivity extends Activity
     protected void onResume()
     {
         super.onResume();
-        eventBus.register(this);
+        loginBus.register(this);
     }
 
     @Override
     protected void onPause()
     {
         super.onPause();
-        eventBus.unregister(this);
+        loginBus.unregister(this);
     }
 
     @Override
     protected void onDestroy()
     {
         super.onStop();
-        eventBus.post(new LogoutEvent(UserDataCache.get().getAuthtoken()));
+
+        if(UserDataCache.get().isLoggedIn())
+            loginBus.post(new LogoutEvent(UserDataCache.get().getAuthtoken()));
+
         try
         {
-            eventBus.unregister(this);
+            loginBus.unregister(this);
         }
         catch(IllegalArgumentException ignored)
         {

@@ -5,6 +5,7 @@ import android.util.Log;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 
+import org.ec.androidticket.backend.Async.BusDepot;
 import org.ec.androidticket.backend.Async.RESTClient;
 import org.ec.androidticket.backend.Async.events.loginEvents.LoggedOutEvent;
 import org.ec.androidticket.backend.Async.events.loginEvents.LoginEvent;
@@ -24,7 +25,7 @@ public class AuthService
 
     public AuthService(Bus bus)
     {
-        this.bus = bus;
+        this.bus = BusDepot.get().getBus(BusDepot.BusType.LOGIN);
         this.bus.register(this);
     }
 
