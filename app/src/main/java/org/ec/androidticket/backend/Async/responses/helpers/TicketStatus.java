@@ -1,7 +1,4 @@
-package org.ec.androidticket.backend.Async.responses.simpleTicket.helpers;
-
-import android.os.Parcel;
-import android.os.Parcelable;
+package org.ec.androidticket.backend.Async.responses.helpers;
 
 import com.google.gson.annotations.Expose;
 
@@ -12,12 +9,6 @@ public class TicketStatus
     private Integer pk;
     @Expose
     private String label;
-
-    private TicketStatus(Parcel input)
-    {
-        pk = input.readInt();
-        label = input.readString();
-    }
 
     public Integer getPk()
     {
@@ -37,5 +28,11 @@ public class TicketStatus
     public void setLabel(String label)
     {
         this.label = label;
+    }
+
+    @Override
+    public String toString()
+    {
+        return label;
     }
 }

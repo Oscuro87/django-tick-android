@@ -1,6 +1,6 @@
 package org.ec.androidticket.backend.Async.apis;
 
-import org.ec.androidticket.backend.Async.responses.simpleTicket.SimpleTicketResponse;
+import org.ec.androidticket.backend.Async.responses.SimpleTicketResponse;
 
 import retrofit.Callback;
 import retrofit.http.Field;

@@ -1,6 +1,6 @@
-package org.ec.androidticket.backend.Async.responses.login;
+package org.ec.androidticket.backend.Async.responses;
 
-public class Login
+public class LoginResponse
 {
     public class AuthResponse
     {

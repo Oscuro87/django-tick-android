@@ -26,4 +26,6 @@
     <string name="action_create_ticket">Create a ticket</string>
     <string name="ticket_home_show_menu">Menu</string>
     <string name="toast_banned_user">User is banned</string>
+    <string name="simple_ticket_code_caption">Ticket code</string>
+    <string name="simple_ticket_status_caption">Ticket status</string>
 </resources>

@@ -13,7 +13,7 @@ import org.ec.androidticket.backend.Async.events.loginEvents.LoginFailureEvent;
 import org.ec.androidticket.backend.Async.events.loginEvents.LoginSuccessEvent;
 import org.ec.androidticket.backend.Async.events.loginEvents.LogoutEvent;
 import org.ec.androidticket.backend.Async.events.loginEvents.LogoutFailEvent;
-import org.ec.androidticket.backend.Async.responses.login.Login;
+import org.ec.androidticket.backend.Async.responses.LoginResponse;
 
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -49,10 +49,10 @@ public class AuthService
         RESTClient.getLoginAPI().authTicket(
                 email,
                 password,
-                new Callback<Login.Auth>()
+                new Callback<LoginResponse.Auth>()
                 {
                     @Override
-                    public void success(Login.Auth auth, Response response)
+                    public void success(LoginResponse.Auth auth, Response response)
                     {
                         Log.i("CustomLog", auth.toString());
                         bus.post(new LoginSuccessEvent(
@@ -84,10 +84,10 @@ public class AuthService
     {
         RESTClient.getLoginAPI().logoutTicket(
                 "Token " + authtoken,
-                new Callback<Login.Logout>()
+                new Callback<LoginResponse.Logout>()
                 {
                     @Override
-                    public void success(Login.Logout logout, Response response)
+                    public void success(LoginResponse.Logout logout, Response response)
                     {
                         bus.post(new LoggedOutEvent(logout.isDisconnected()));
                     }

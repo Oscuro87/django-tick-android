@@ -1,11 +1,10 @@
-package org.ec.androidticket.backend.Async.responses.simpleTicket.helpers;
+package org.ec.androidticket.backend.Async.responses.helpers;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Reporter
+public class User
 {
-
     @Expose
     private Integer pk;
     @SerializedName("first_name")

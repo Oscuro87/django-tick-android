@@ -1,10 +1,11 @@
-package org.ec.androidticket.backend.Async.responses.simpleTicket.helpers;
+package org.ec.androidticket.backend.Async.responses.helpers;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class Ticket
 {
+    @SerializedName("pk")
     @Expose
     private Integer pk;
     @SerializedName("ticket_code")
@@ -12,89 +13,59 @@ public class Ticket
     private String ticketCode;
     @SerializedName("fk_reporter")
     @Expose
-    private Reporter reporter;
+    private User reporter;
     @SerializedName("fk_manager")
     @Expose
-    private Object fkManager;
+    private User manager;
     @SerializedName("fk_status")
     @Expose
     private TicketStatus ticketStatus;
 
-    /**
-     * @return The pk
-     */
     public Integer getPk()
     {
         return pk;
     }
 
-    /**
-     * @param pk The pk
-     */
     public void setPk(Integer pk)
     {
         this.pk = pk;
     }
 
-    /**
-     * @return The ticketCode
-     */
     public String getTicketCode()
     {
         return ticketCode;
     }
 
-    /**
-     * @param ticketCode The ticket_code
-     */
     public void setTicketCode(String ticketCode)
     {
         this.ticketCode = ticketCode;
     }
 
-    /**
-     * @return The fkReporter
-     */
-    public Reporter getReporter()
+    public User getReporter()
     {
         return reporter;
     }
 
-    /**
-     * @param reporter The fk_reporter
-     */
-    public void setReporter(Reporter reporter)
+    public void setReporter(User reporter)
     {
         this.reporter = reporter;
     }
 
-    /**
-     * @return The fkManager
-     */
-    public Object getFkManager()
+    public User getManager()
     {
-        return fkManager;
+        return manager;
     }
 
-    /**
-     * @param fkManager The fk_manager
-     */
-    public void setFkManager(Object fkManager)
+    public void setManager(User manager)
     {
-        this.fkManager = fkManager;
+        this.manager = manager;
     }
 
-    /**
-     * @return The fkStatus
-     */
     public TicketStatus getTicketStatus()
     {
         return ticketStatus;
     }
 
-    /**
-     * @param ticketStatus The fk_status
-     */
     public void setTicketStatus(TicketStatus ticketStatus)
     {
         this.ticketStatus = ticketStatus;
@@ -107,7 +78,7 @@ public class Ticket
                 "pk=" + pk +
                 ", ticketCode='" + ticketCode + '\'' +
                 ", reporter=" + reporter +
-                ", fkManager=" + fkManager +
+                ", manager=" + manager +
                 ", ticketStatus=" + ticketStatus +
                 '}';
     }

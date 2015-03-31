@@ -1,8 +1,8 @@
-package org.ec.androidticket.backend.Async.responses.simpleTicket;
+package org.ec.androidticket.backend.Async.responses;
 
 import com.google.gson.annotations.Expose;
 
-import org.ec.androidticket.backend.Async.responses.simpleTicket.helpers.Ticket;
+import org.ec.androidticket.backend.Async.responses.helpers.Ticket;
 
 import java.util.ArrayList;
 import java.util.List;

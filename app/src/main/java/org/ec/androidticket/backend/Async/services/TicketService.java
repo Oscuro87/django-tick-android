@@ -9,7 +9,7 @@ import org.ec.androidticket.backend.Async.BusDepot;
 import org.ec.androidticket.backend.Async.RESTClient;
 import org.ec.androidticket.backend.Async.events.ticketEvents.SimpleTicketRequestEvent;
 import org.ec.androidticket.backend.Async.events.ticketEvents.SimpleTicketRequestResponseEvent;
-import org.ec.androidticket.backend.Async.responses.simpleTicket.SimpleTicketResponse;
+import org.ec.androidticket.backend.Async.responses.SimpleTicketResponse;
 
 import retrofit.Callback;
 import retrofit.RetrofitError;

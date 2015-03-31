@@ -2,11 +2,15 @@ package org.ec.androidticket.activities.home;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBarActivity;
+import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -14,16 +18,19 @@ import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 
 import org.ec.androidticket.R;
+import org.ec.androidticket.activities.home.adapters.SimpleTicketListViewAdapter;
 import org.ec.androidticket.backend.Async.BusDepot;
 import org.ec.androidticket.backend.Async.events.loginEvents.LoggedOutEvent;
 import org.ec.androidticket.backend.Async.events.loginEvents.LogoutEvent;
 import org.ec.androidticket.backend.Async.events.ticketEvents.SimpleTicketRequestEvent;
 import org.ec.androidticket.backend.Async.events.ticketEvents.SimpleTicketRequestResponseEvent;
-import org.ec.androidticket.backend.Async.responses.simpleTicket.helpers.Ticket;
+import org.ec.androidticket.backend.Async.responses.helpers.Ticket;
 import org.ec.androidticket.backend.Async.services.AuthService;
 import org.ec.androidticket.backend.Async.services.TicketService;
 import org.ec.androidticket.backend.models.internal.UserDataCache;
 import org.ec.androidticket.backend.models.internal.UserSimpleTicketCache;
+
+import java.util.List;
 
 public class TicketHomeActivity extends ActionBarActivity
 {
@@ -84,6 +91,13 @@ public class TicketHomeActivity extends ActionBarActivity
     }
 
     @Override
+    public View onCreateView(String name, @NonNull Context context, @NonNull AttributeSet attrs)
+    {
+
+        return super.onCreateView(name, context, attrs);
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu)
     {
         getMenuInflater().inflate(R.menu.menu_ticket_home, menu);
@@ -129,14 +143,20 @@ public class TicketHomeActivity extends ActionBarActivity
     @Subscribe
     public void onSimpleTicketRequestResponse(SimpleTicketRequestResponseEvent event)
     {
-        UserSimpleTicketCache.getInstance().purge();
+        List<Ticket> ticketList = event.getTickets();
+        UserSimpleTicketCache cache = UserSimpleTicketCache.get();
 
-        for (Ticket t : event.getTickets())
+        cache.purge();
+        for (Ticket t : ticketList)
         {
-            UserSimpleTicketCache.getInstance().putTicketInCache(t);
-            t.toString();
+            cache.putTicketInCache(t);
         }
 
+        SimpleTicketListViewAdapter adapter = new SimpleTicketListViewAdapter(getApplicationContext(), cache.getCache());
+        ListView listView = (ListView)findViewById(R.id.listView);
+        listView.setAdapter(adapter);
+
         Log.i("CustomLog", "Cached the tickets informations!");
+        Log.i("CustomLog", cache.toString());
     }
 }
