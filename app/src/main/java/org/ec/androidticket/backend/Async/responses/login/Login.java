@@ -26,9 +26,7 @@ public class Login
 
     public class Auth
     {
-        private boolean success;
         private String authtoken;
-        private String reason;
         private String first_name;
         private String last_name;
         private String email;
@@ -41,16 +39,6 @@ public class Login
         public String getAuthtoken()
         {
             return authtoken;
-        }
-
-        public boolean isSuccess()
-        {
-            return success;
-        }
-
-        public String getReason()
-        {
-            return reason;
         }
 
         public String getFirst_name()
@@ -77,8 +65,6 @@ public class Login
         public String toString()
         {
             StringBuilder bld = new StringBuilder();
-            bld.append("Success: ").append(success);
-            bld.append("Reason: ").append(reason);
             bld.append("Email: ").append(email);
             bld.append("First name: ").append(first_name);
             bld.append("Last name: ").append(last_name);

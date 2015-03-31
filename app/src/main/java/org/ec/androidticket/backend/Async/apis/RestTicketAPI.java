@@ -1,6 +1,6 @@
 package org.ec.androidticket.backend.Async.apis;
 
-import org.ec.androidticket.backend.Async.responses.simpleTicket.SimpleTicket;
+import org.ec.androidticket.backend.Async.responses.simpleTicket.SimpleTicketResponse;
 
 import retrofit.Callback;
 import retrofit.http.Field;
@@ -15,5 +15,5 @@ public interface RestTicketAPI
     void requestSimpleTickets(
             @Header("Authorization") String authtoken,
             @Field("ticketType") String ticketType,
-            Callback<SimpleTicket.Tickets> callback);
+            Callback<SimpleTicketResponse.TicketsData> callback);
 }

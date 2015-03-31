@@ -3,7 +3,7 @@ package org.ec.androidticket.backend.Async.responses.simpleTicket.helpers;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Ticket
+public class SimpleTicket
 {
     @Expose
     private Integer pk;

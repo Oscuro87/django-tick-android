@@ -15,7 +15,6 @@ import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 
 import org.ec.androidticket.R;
-import org.ec.androidticket.activities.home.fragments.TicketObjectFragment;
 import org.ec.androidticket.backend.Async.events.loginEvents.LoggedOutEvent;
 import org.ec.androidticket.backend.Async.events.loginEvents.LogoutEvent;
 import org.ec.androidticket.backend.Async.events.ticketEvents.SimpleTicketRequestEvent;
@@ -23,7 +22,7 @@ import org.ec.androidticket.backend.Async.services.TicketService;
 import org.ec.androidticket.backend.models.internal.UserDataCache;
 import org.ec.androidticket.backend.Async.services.AuthService;
 
-public class TicketHomeActivity extends Activity implements TicketObjectFragment.OnTicketObjectFragmentInteractionListener
+public class TicketHomeActivity extends Activity
 {
     private Bus eventBus;
     private AuthService authService;
@@ -86,11 +85,22 @@ public class TicketHomeActivity extends Activity implements TicketObjectFragment
     {
         int id = item.getItemId();
 
+        switch(item.getItemId())
+        {
+            case R.id.action_logout:
+                eventBus.post(new LogoutEvent(UserDataCache.get().getAuthtoken()));
+                return true;
+            case R.id.action_createBuilding:
+                // TODO: bouton create building
+                return true;
+        }
+
         if(item.getItemId() == R.id.action_logout)
         {
             eventBus.post(new LogoutEvent(UserDataCache.get().getAuthtoken()));
             return true; // consommé
         }
+
 
         return super.onOptionsItemSelected(item);
     }
@@ -109,11 +119,5 @@ public class TicketHomeActivity extends Activity implements TicketObjectFragment
         {
             Toast.makeText(context, "Problem while logging out", Toast.LENGTH_SHORT).show();
         }
-    }
-
-    @Override
-    public void onTicketObjectInteraction(Uri uri)
-    {
-        // TODO: Interaction avec un fragment ticket object
     }
 }

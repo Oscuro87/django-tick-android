@@ -36,22 +36,14 @@ public class AuthService
             @Override
             public void success(Login.Auth auth, Response response)
             {
-                if (auth.isSuccess())
-                {
-                    Log.i("CustomLog", auth.toString());
-                    bus.post(new LoginSuccessEvent(
-                            auth.getAuthtoken(),
-                            auth.isSuccess(),
-                            auth.getReason(),
-                            auth.getFirst_name(),
-                            auth.getLast_name(),
-                            auth.getEmail(),
-                            auth.isStaff()
-                    ));
-                } else
-                {
-                    bus.post(new LoginFailureEvent(auth.getReason()));
-                }
+                Log.i("CustomLog", auth.toString());
+                bus.post(new LoginSuccessEvent(
+                        auth.getAuthtoken(),
+                        auth.getFirst_name(),
+                        auth.getLast_name(),
+                        auth.getEmail(),
+                        auth.isStaff()
+                ));
             }
 
             @Override

@@ -7,7 +7,8 @@ import com.squareup.otto.Subscribe;
 
 import org.ec.androidticket.backend.Async.RESTClient;
 import org.ec.androidticket.backend.Async.events.ticketEvents.SimpleTicketRequestEvent;
-import org.ec.androidticket.backend.Async.responses.simpleTicket.SimpleTicket;
+import org.ec.androidticket.backend.Async.events.ticketEvents.SimpleTicketRequestResponse;
+import org.ec.androidticket.backend.Async.responses.simpleTicket.SimpleTicketResponse;
 
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -29,18 +30,19 @@ public class TicketService
         RESTClient.getTicketAPI().requestSimpleTickets(
                 event.getAuthorizationToken(),
                 event.getTicketType(),
-                new Callback<SimpleTicket.Tickets>()
+                new Callback<SimpleTicketResponse.TicketsData>()
                 {
                     @Override
-                    public void success(SimpleTicket.Tickets tickets, Response response)
+                    public void success(SimpleTicketResponse.TicketsData ticketsData, Response response)
                     {
-                        Log.i("CustomLog", "Retrieve tickets success? " + tickets.getSuccess());
+                        Log.i("CustomLog", "Retrieve tickets success? " + ticketsData.getSuccess());
+                        bus.post(new SimpleTicketRequestResponse(ticketsData.getSimpleTickets()));
                     }
 
                     @Override
                     public void failure(RetrofitError error)
                     {
-                        // TODO
+                        Log.e("CustomLog", "Error with Retrofit: " + error.getMessage());
                     }
                 }
         );
