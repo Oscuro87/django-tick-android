@@ -9,8 +9,7 @@ public class BusDepot
 {
     public enum BusType
     {
-        LOGIN,
-        TICKET,
+        GENERAL,
     }
 
     private static Map<BusType, Bus> depot;
@@ -18,6 +17,7 @@ public class BusDepot
 
     private BusDepot()
     {
+        depot = new HashMap<>();
     }
 
     public static BusDepot get()
@@ -29,9 +29,6 @@ public class BusDepot
 
     public Bus getBus(BusType type)
     {
-        if(depot == null)
-            depot = new HashMap<>();
-
         if(depot.containsKey(type))
             return depot.get(type);
         else

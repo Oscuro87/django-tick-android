@@ -3,7 +3,7 @@ package org.ec.androidticket.backend.Async.responses.simpleTicket.helpers;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class SimpleTicket
+public class Ticket
 {
     @Expose
     private Integer pk;
@@ -100,4 +100,15 @@ public class SimpleTicket
         this.ticketStatus = ticketStatus;
     }
 
+    @Override
+    public String toString()
+    {
+        return "Ticket{" +
+                "pk=" + pk +
+                ", ticketCode='" + ticketCode + '\'' +
+                ", reporter=" + reporter +
+                ", fkManager=" + fkManager +
+                ", ticketStatus=" + ticketStatus +
+                '}';
+    }
 }

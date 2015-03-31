@@ -8,7 +8,7 @@ import com.squareup.otto.Subscribe;
 import org.ec.androidticket.backend.Async.BusDepot;
 import org.ec.androidticket.backend.Async.RESTClient;
 import org.ec.androidticket.backend.Async.events.ticketEvents.SimpleTicketRequestEvent;
-import org.ec.androidticket.backend.Async.events.ticketEvents.SimpleTicketRequestResponse;
+import org.ec.androidticket.backend.Async.events.ticketEvents.SimpleTicketRequestResponseEvent;
 import org.ec.androidticket.backend.Async.responses.simpleTicket.SimpleTicketResponse;
 
 import retrofit.Callback;
@@ -17,12 +17,20 @@ import retrofit.client.Response;
 
 public class TicketService
 {
+    private static TicketService instance = null;
     private Bus bus;
 
-    public TicketService(Bus bus)
+    private TicketService()
     {
-        this.bus = BusDepot.get().getBus(BusDepot.BusType.TICKET);
-        this.bus.register(this);
+        this.bus = BusDepot.get().getBus(BusDepot.BusType.GENERAL);
+        bus.register(this);
+    }
+
+    public static TicketService get()
+    {
+        if(instance == null)
+            instance = new TicketService();
+        return instance;
     }
 
     @Subscribe
@@ -31,13 +39,12 @@ public class TicketService
         RESTClient.getTicketAPI().requestSimpleTickets(
                 event.getAuthorizationToken(),
                 event.getTicketType(),
-                new Callback<SimpleTicketResponse.TicketsData>()
+                new Callback<SimpleTicketResponse.Tickets>()
                 {
                     @Override
-                    public void success(SimpleTicketResponse.TicketsData ticketsData, Response response)
+                    public void success(SimpleTicketResponse.Tickets tickets, Response response)
                     {
-                        Log.i("CustomLog", "Retrieve tickets success? " + ticketsData.getSuccess());
-                        bus.post(new SimpleTicketRequestResponse(ticketsData.getSimpleTickets()));
+                        bus.post(new SimpleTicketRequestResponseEvent(tickets.getTickets()));
                     }
 
                     @Override

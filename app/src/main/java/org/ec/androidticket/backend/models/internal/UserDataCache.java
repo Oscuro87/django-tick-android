@@ -10,6 +10,7 @@ public class UserDataCache
     private String firstName;
     private String lastName;
     private boolean isStaff;
+    private boolean isActive;
 
     private UserDataCache()
     {
@@ -67,6 +68,11 @@ public class UserDataCache
         return isStaff;
     }
 
+    public boolean isActive()
+    {
+        return isActive;
+    }
+
     public void setEmail(String email)
     {
         this.email = email;
@@ -85,6 +91,11 @@ public class UserDataCache
     public void setStaff(boolean isStaff)
     {
         this.isStaff = isStaff;
+    }
+
+    public void setActive(boolean isActive)
+    {
+        this.isActive = isActive;
     }
 
     public void setLoggedIn(boolean loggedIn)

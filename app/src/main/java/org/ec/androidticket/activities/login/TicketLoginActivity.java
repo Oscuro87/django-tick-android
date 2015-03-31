@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -24,15 +25,17 @@ import org.ec.androidticket.backend.Async.events.loginEvents.LoginSuccessEvent;
 import org.ec.androidticket.backend.Async.events.loginEvents.LoggedOutEvent;
 import org.ec.androidticket.backend.Async.events.loginEvents.LoginEvent;
 import org.ec.androidticket.backend.Async.events.loginEvents.LogoutEvent;
+import org.ec.androidticket.backend.Async.services.TicketService;
 import org.ec.androidticket.backend.managers.CookieManager;
 import org.ec.androidticket.backend.models.internal.CredentialCookie;
 import org.ec.androidticket.backend.models.internal.UserDataCache;
 import org.ec.androidticket.backend.Async.services.AuthService;
 
-public class TicketLoginActivity extends Activity
+public class TicketLoginActivity extends ActionBarActivity
 {
-    private Bus loginBus;
+    private Bus bus;
     private AuthService authService;
+    private TicketService ticketService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -50,8 +53,9 @@ public class TicketLoginActivity extends Activity
             passwordField.setText(cookie.getPassword());
         }
 
-        loginBus = BusDepot.get().getBus(BusDepot.BusType.LOGIN);
-        authService = new AuthService(loginBus);
+        bus = BusDepot.get().getBus(BusDepot.BusType.GENERAL);
+        authService = AuthService.get();
+        ticketService = TicketService.get();
     }
 
     private void setupListeners()
@@ -62,9 +66,9 @@ public class TicketLoginActivity extends Activity
             @Override
             public void onClick(View v)
             {
-                CheckBox rememberMe = (CheckBox)findViewById(R.id.rememberMe);
-                EditText emailField = (EditText)findViewById(R.id.email_field);
-                EditText passwordField = (EditText)findViewById(R.id.password_field);
+                CheckBox rememberMe = (CheckBox) findViewById(R.id.rememberMe);
+                EditText emailField = (EditText) findViewById(R.id.email_field);
+                EditText passwordField = (EditText) findViewById(R.id.password_field);
 
                 boolean remember = rememberMe.isChecked();
                 String email = emailField.getText().toString();
@@ -74,7 +78,7 @@ public class TicketLoginActivity extends Activity
                 CookieManager.writeCookie(getApplicationContext(), email, password, remember);
 
                 // Login
-                loginBus.post(new LoginEvent(email, password));
+                bus.post(new LoginEvent(email, password));
             }
         });
     }
@@ -99,14 +103,19 @@ public class TicketLoginActivity extends Activity
     protected void onResume()
     {
         super.onResume();
-        loginBus.register(this);
+        try
+        {
+            bus.register(this);
+        } catch(IllegalArgumentException ignored)
+        {
+            Log.e("CustomLog", "Bus already registered.");
+        }
     }
 
     @Override
     protected void onPause()
     {
         super.onPause();
-        loginBus.unregister(this);
     }
 
     @Override
@@ -115,26 +124,19 @@ public class TicketLoginActivity extends Activity
         super.onStop();
 
         if(UserDataCache.get().isLoggedIn())
-            loginBus.post(new LogoutEvent(UserDataCache.get().getAuthtoken()));
-
-        try
-        {
-            loginBus.unregister(this);
-        }
-        catch(IllegalArgumentException ignored)
-        {
-            Log.e("CustomLog", "This class is already unregistered!");
-        }
+            bus.post(new LogoutEvent(UserDataCache.get().getAuthtoken()));
     }
 
     public void loggedOut(LoggedOutEvent event)
     {
         if (event.disconnected)
         {
+            Log.i("CustomLog", "Disconnection successful");
             Toast.makeText(getApplicationContext(), "Logout successful", Toast.LENGTH_SHORT).show();
         }
         else
         {
+            Log.e("CustomLog", "Error while disconnecting!");
             Toast.makeText(getApplicationContext(), "Problem logging out!", Toast.LENGTH_SHORT).show();
         }
     }
@@ -142,24 +144,36 @@ public class TicketLoginActivity extends Activity
     @Subscribe
     public void onLoggedIn(LoginSuccessEvent event)
     {
-        Context context = getApplicationContext();
-
         UserDataCache.get().setAuthtoken(event.authtoken);
         UserDataCache.get().setLoggedIn(true);
-        UserDataCache.get().setStaff(event.staff);
+        UserDataCache.get().setStaff(event.is_staff);
+        UserDataCache.get().setActive(event.is_active);
         UserDataCache.get().setEmail(event.email);
         UserDataCache.get().setFirstName(event.firstName);
         UserDataCache.get().setLastName(event.lastName);
-        Toast.makeText(context, R.string.toast_login_success_text, Toast.LENGTH_SHORT).show();
 
-        Intent toHome = new Intent(this, TicketHomeActivity.class);
-        toHome.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
-        context.startActivity(toHome);
+        Context context = getApplicationContext();
+        if(UserDataCache.get().isActive())
+        {
+            Intent toHome = new Intent(TicketLoginActivity.this, TicketHomeActivity.class);
+            toHome.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
+            context.startActivity(toHome);
+        }
+        else
+        {
+            Toast.makeText(context, R.string.toast_banned_user, Toast.LENGTH_LONG).show();
+        }
     }
 
     @Subscribe
-    public void onLoggedOut(LoginFailureEvent event)
+    public void onLoginFailure(LoginFailureEvent event)
     {
-        Toast.makeText(getApplicationContext(), event.reason, Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(), event.reason, Toast.LENGTH_SHORT).show();
+    }
+
+    @Subscribe
+    public void onLoggedOut(LoggedOutEvent event)
+    {
+        //Toast.makeText(getApplicationContext(), "Disconnected", Toast.LENGTH_LONG).show();
     }
 }

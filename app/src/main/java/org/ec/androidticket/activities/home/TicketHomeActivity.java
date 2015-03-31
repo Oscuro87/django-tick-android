@@ -18,13 +18,16 @@ import org.ec.androidticket.backend.Async.BusDepot;
 import org.ec.androidticket.backend.Async.events.loginEvents.LoggedOutEvent;
 import org.ec.androidticket.backend.Async.events.loginEvents.LogoutEvent;
 import org.ec.androidticket.backend.Async.events.ticketEvents.SimpleTicketRequestEvent;
+import org.ec.androidticket.backend.Async.events.ticketEvents.SimpleTicketRequestResponseEvent;
+import org.ec.androidticket.backend.Async.responses.simpleTicket.helpers.Ticket;
 import org.ec.androidticket.backend.Async.services.AuthService;
 import org.ec.androidticket.backend.Async.services.TicketService;
 import org.ec.androidticket.backend.models.internal.UserDataCache;
+import org.ec.androidticket.backend.models.internal.UserSimpleTicketCache;
 
 public class TicketHomeActivity extends ActionBarActivity
 {
-    private Bus ticketBus, loginBus;
+    private Bus bus;
     private AuthService authService;
     private TicketService ticketService;
 
@@ -39,12 +42,9 @@ public class TicketHomeActivity extends ActionBarActivity
         TextView header = (TextView) (findViewById(R.id.ticketHomeHeader));
         header.setText(header.getText() + " " + UserDataCache.get().getFullName());
 
-        ticketBus = BusDepot.get().getBus(BusDepot.BusType.TICKET);
-        loginBus = BusDepot.get().getBus(BusDepot.BusType.LOGIN);
-        authService = new AuthService(loginBus);
-        ticketService = new TicketService(ticketBus);
-
-        ticketBus.post(new SimpleTicketRequestEvent(UserDataCache.get().getAuthtoken()));
+        bus = BusDepot.get().getBus(BusDepot.BusType.GENERAL);
+        authService = AuthService.get();
+        ticketService = TicketService.get();
 
         setupListeners();
     }
@@ -57,16 +57,17 @@ public class TicketHomeActivity extends ActionBarActivity
     protected void onResume()
     {
         super.onResume();
-        ticketBus.register(this);
-        loginBus.register(this);
+        bus.register(this);
+
+        String authtoken = UserDataCache.get().getAuthtoken();
+        bus.post(new SimpleTicketRequestEvent(authtoken));
     }
 
     @Override
     protected void onPause()
     {
         super.onPause();
-        ticketBus.unregister(this);
-        loginBus.unregister(this);
+        bus.unregister(this);
     }
 
     @Override
@@ -75,8 +76,7 @@ public class TicketHomeActivity extends ActionBarActivity
         super.onDestroy();
         try
         {
-            ticketBus.unregister(this);
-            loginBus.unregister(this);
+            bus.unregister(this);
         } catch (IllegalArgumentException ignored)
         {
             Log.e("CustomLog", this.getClass().getCanonicalName() + " already unregistered.");
@@ -98,10 +98,13 @@ public class TicketHomeActivity extends ActionBarActivity
         switch (item.getItemId())
         {
             case R.id.action_logout:
-                loginBus.post(new LogoutEvent(UserDataCache.get().getAuthtoken()));
+                bus.post(new LogoutEvent(UserDataCache.get().getAuthtoken()));
                 return true;
             case R.id.action_createBuilding:
                 // TODO: bouton create building
+                return true;
+            case R.id.action_createTicket:
+                // TODO: bouton create ticket
                 return true;
         }
 
@@ -121,5 +124,19 @@ public class TicketHomeActivity extends ActionBarActivity
         {
             Toast.makeText(context, "Problem while logging out", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    @Subscribe
+    public void onSimpleTicketRequestResponse(SimpleTicketRequestResponseEvent event)
+    {
+        UserSimpleTicketCache.getInstance().purge();
+
+        for (Ticket t : event.getTickets())
+        {
+            UserSimpleTicketCache.getInstance().putTicketInCache(t);
+            t.toString();
+        }
+
+        Log.i("CustomLog", "Cached the tickets informations!");
     }
 }

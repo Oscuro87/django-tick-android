@@ -62,15 +62,20 @@ public class Login
             return is_staff;
         }
 
+        public boolean isActive()
+        {
+            return is_active;
+        }
+
         @Override
         public String toString()
         {
             StringBuilder bld = new StringBuilder();
-            bld.append("Email: ").append(email);
-            bld.append("First name: ").append(first_name);
-            bld.append("Last name: ").append(last_name);
-            bld.append("Is banned?").append(!is_active);
-            bld.append("Is staff? ").append(is_staff);
+            bld.append("Email: ").append(email).append("\n");
+            bld.append("First name: ").append(first_name).append("\n");
+            bld.append("Last name: ").append(last_name).append("\n");
+            bld.append("Is banned?").append(!is_active).append("\n");
+            bld.append("Is is_staff? ").append(is_staff);
             return bld.toString();
         }
     }

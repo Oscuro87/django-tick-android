@@ -21,46 +21,69 @@ import retrofit.client.Response;
 
 public class AuthService
 {
+    private static AuthService instance = null;
     private Bus bus;
 
-    public AuthService(Bus bus)
+    private AuthService()
     {
-        this.bus = BusDepot.get().getBus(BusDepot.BusType.LOGIN);
+        this.bus = BusDepot.get().getBus(BusDepot.BusType.GENERAL);
         this.bus.register(this);
+    }
+
+    public static AuthService get()
+    {
+        if(instance == null)
+            instance = new AuthService();
+        return instance;
     }
 
     @Subscribe
     public void onLoginEvent(LoginEvent event)
     {
-        RESTClient.getLoginAPI().authTicket(event.getEmail(), event.getPassword(), new Callback<Login.Auth>()
-        {
-            @Override
-            public void success(Login.Auth auth, Response response)
-            {
-                Log.i("CustomLog", auth.toString());
-                bus.post(new LoginSuccessEvent(
-                        auth.getAuthtoken(),
-                        auth.getFirst_name(),
-                        auth.getLast_name(),
-                        auth.getEmail(),
-                        auth.isStaff()
-                ));
-            }
+        Log.i("CustomLog", "Received login event");
+        postLoginAnswer(event.getEmail(), event.getPassword());
+    }
 
-            @Override
-            public void failure(RetrofitError error)
-            {
-                Log.e("CustomLog", "Failure in onUserLogin in AuthService:\n" + error.toString());
-                bus.post(new LoginFailureEvent("Failure in onUserLogin in AuthService:\n" + error.toString()));
-            }
-        });
+    private void postLoginAnswer(String email, String password)
+    {
+        RESTClient.getLoginAPI().authTicket(
+                email,
+                password,
+                new Callback<Login.Auth>()
+                {
+                    @Override
+                    public void success(Login.Auth auth, Response response)
+                    {
+                        Log.i("CustomLog", auth.toString());
+                        bus.post(new LoginSuccessEvent(
+                                auth.getAuthtoken(),
+                                auth.getFirst_name(),
+                                auth.getLast_name(),
+                                auth.getEmail(),
+                                auth.isStaff(),
+                                auth.isActive()
+                        ));
+                    }
+
+                    @Override
+                    public void failure(RetrofitError error)
+                    {
+                        Log.e("CustomLog", "Failure in onUserLogin in AuthService:\n" + error.toString());
+                        bus.post(new LoginFailureEvent("Failure in onUserLogin in AuthService:\n" + error.toString()));
+                    }
+                });
     }
 
     @Subscribe
     public void onLogoutEvent(LogoutEvent event)
     {
+        postLogoutAnswer(event.getAuthtoken());
+    }
+
+    private void postLogoutAnswer(String authtoken)
+    {
         RESTClient.getLoginAPI().logoutTicket(
-                "Token " + event.getAuthtoken(),
+                "Token " + authtoken,
                 new Callback<Login.Logout>()
                 {
                     @Override

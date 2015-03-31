@@ -1,26 +1,18 @@
 package org.ec.androidticket.backend.models.internal;
 
-import android.util.Log;
+import org.ec.androidticket.backend.Async.responses.simpleTicket.helpers.Ticket;
 
-import com.squareup.otto.Bus;
-import com.squareup.otto.Subscribe;
-
-import org.ec.androidticket.backend.Async.BusDepot;
-import org.ec.androidticket.backend.Async.events.ticketEvents.SimpleTicketRequestResponse;
-import org.ec.androidticket.backend.Async.responses.simpleTicket.helpers.SimpleTicket;
-
+import java.util.ArrayList;
 import java.util.List;
 
 public class UserSimpleTicketCache
 {
     private static UserSimpleTicketCache instance = null;
-    private List<SimpleTicket> cache;
-    private Bus bus;
+    private List<Ticket> cache;
 
     private UserSimpleTicketCache()
     {
-        bus = BusDepot.get().getBus(BusDepot.BusType.TICKET);
-        bus.register(this);
+        cache = new ArrayList<>();
     }
 
     public static UserSimpleTicketCache getInstance()
@@ -30,24 +22,29 @@ public class UserSimpleTicketCache
         return instance;
     }
 
-    public void putTicketInCache(SimpleTicket object)
+    public void purge()
+    {
+        cache.clear();
+    }
+
+    public void putTicketInCache(Ticket object)
     {
         cache.add(object);
     }
 
-    public List<SimpleTicket> getCache()
+    public List<Ticket> getCache()
     {
         return cache;
     }
 
-    @Subscribe
-    public void onSimpleTicketRequestResponse(SimpleTicketRequestResponse event)
+    @Override
+    public String toString()
     {
-        Log.i("CustomLog", "Cached the tickets informations!");
-        this.cache = event.getTickets();
-        for (SimpleTicket t : cache)
+        StringBuilder bld = new StringBuilder();
+        for (Ticket t : cache)
         {
-            t.toString();
+            bld.append(t.toString()).append("\n");
         }
+        return bld.toString();
     }
 }

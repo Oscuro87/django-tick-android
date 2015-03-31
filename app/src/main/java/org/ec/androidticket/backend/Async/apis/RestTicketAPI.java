@@ -15,5 +15,5 @@ public interface RestTicketAPI
     void requestSimpleTickets(
             @Header("Authorization") String authtoken,
             @Field("ticketType") String ticketType,
-            Callback<SimpleTicketResponse.TicketsData> callback);
+            Callback<SimpleTicketResponse.Tickets> callback);
 }

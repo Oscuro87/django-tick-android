@@ -2,7 +2,7 @@ package org.ec.androidticket.backend.Async.responses.simpleTicket;
 
 import com.google.gson.annotations.Expose;
 
-import org.ec.androidticket.backend.Async.responses.simpleTicket.helpers.SimpleTicket;
+import org.ec.androidticket.backend.Async.responses.simpleTicket.helpers.Ticket;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,47 +13,22 @@ public class SimpleTicketResponse
     {
         private int cod;
         private String base;
-        private TicketsData ticketsData;
+        private Tickets tickets;
     }
 
-    public class TicketsData
+    public class Tickets
     {
         @Expose
-        private List<SimpleTicket> simpleTickets = new ArrayList<SimpleTicket>();
-        @Expose
-        private Boolean success;
+        private List<Ticket> tickets = new ArrayList<Ticket>();
 
-        /**
-         * @return The tickets
-         */
-        public List<SimpleTicket> getSimpleTickets()
+        public List<Ticket> getTickets()
         {
-            return simpleTickets;
+            return tickets;
         }
 
-        /**
-         * @param simpleTickets The tickets
-         */
-        public void setSimpleTickets(List<SimpleTicket> simpleTickets)
+        public void setTickets(List<Ticket> tickets)
         {
-            this.simpleTickets = simpleTickets;
+            this.tickets = tickets;
         }
-
-        /**
-         * @return The success
-         */
-        public Boolean getSuccess()
-        {
-            return success;
-        }
-
-        /**
-         * @param success The success
-         */
-        public void setSuccess(Boolean success)
-        {
-            this.success = success;
-        }
-
     }
 }
