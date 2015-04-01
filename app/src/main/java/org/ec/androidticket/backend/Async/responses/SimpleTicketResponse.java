@@ -1,11 +1,6 @@
 package org.ec.androidticket.backend.Async.responses;
 
-import com.google.gson.annotations.Expose;
-
-import org.ec.androidticket.backend.Async.responses.helpers.Ticket;
-
-import java.util.ArrayList;
-import java.util.List;
+import org.ec.androidticket.backend.models.ticketing.Tickets;
 
 public class SimpleTicketResponse
 {
@@ -14,21 +9,5 @@ public class SimpleTicketResponse
         private int cod;
         private String base;
         private Tickets tickets;
-    }
-
-    public class Tickets
-    {
-        @Expose
-        private List<Ticket> tickets = new ArrayList<Ticket>();
-
-        public List<Ticket> getTickets()
-        {
-            return tickets;
-        }
-
-        public void setTickets(List<Ticket> tickets)
-        {
-            this.tickets = tickets;
-        }
     }
 }

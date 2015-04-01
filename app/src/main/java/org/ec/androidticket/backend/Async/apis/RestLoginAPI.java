@@ -1,6 +1,7 @@
 package org.ec.androidticket.backend.Async.apis;
 
-import org.ec.androidticket.backend.Async.responses.LoginResponse;
+import org.ec.androidticket.backend.models.ticketing.Auth;
+import org.ec.androidticket.backend.models.ticketing.Logout;
 
 import retrofit.Callback;
 import retrofit.http.Field;
@@ -16,10 +17,10 @@ public interface RestLoginAPI
     void authTicket(
             @Field("email") String email,
             @Field("password") String password,
-            Callback<LoginResponse.Auth> callback);
+            Callback<Auth> callback);
 
     @GET("/rest/logout")
     void logoutTicket(
             @Header("Authorization") String authtoken,
-            Callback<LoginResponse.Logout> callback);
+            Callback<Logout> callback);
 }

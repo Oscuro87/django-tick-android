@@ -1,6 +1,6 @@
 package org.ec.androidticket.backend.Async.events.ticketEvents;
 
-import org.ec.androidticket.backend.Async.responses.helpers.Ticket;
+import org.ec.androidticket.backend.models.ticketing.Ticket;
 
 import java.util.List;
 
@@ -16,5 +16,18 @@ public class SimpleTicketRequestResponseEvent
     public List<Ticket> getTickets()
     {
         return tickets;
+    }
+
+    @Override
+    public String toString()
+    {
+        // TODO: remove when done debugging
+        String ans = "";
+        for (Ticket ticket : tickets)
+        {
+            ans += ticket.toString();
+        }
+
+        return ans;
     }
 }

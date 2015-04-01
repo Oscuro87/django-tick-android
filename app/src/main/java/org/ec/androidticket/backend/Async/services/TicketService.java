@@ -9,7 +9,7 @@ import org.ec.androidticket.backend.Async.BusDepot;
 import org.ec.androidticket.backend.Async.RESTClient;
 import org.ec.androidticket.backend.Async.events.ticketEvents.SimpleTicketRequestEvent;
 import org.ec.androidticket.backend.Async.events.ticketEvents.SimpleTicketRequestResponseEvent;
-import org.ec.androidticket.backend.Async.responses.SimpleTicketResponse;
+import org.ec.androidticket.backend.models.ticketing.Tickets;
 
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -39,10 +39,10 @@ public class TicketService
         RESTClient.getTicketAPI().requestSimpleTickets(
                 event.getAuthorizationToken(),
                 event.getTicketType(),
-                new Callback<SimpleTicketResponse.Tickets>()
+                new Callback<Tickets>()
                 {
                     @Override
-                    public void success(SimpleTicketResponse.Tickets tickets, Response response)
+                    public void success(Tickets tickets, Response response)
                     {
                         bus.post(new SimpleTicketRequestResponseEvent(tickets.getTickets()));
                     }

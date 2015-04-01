@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,9 +23,10 @@ import org.ec.androidticket.activities.home.adapters.SimpleTicketListViewAdapter
 import org.ec.androidticket.backend.Async.BusDepot;
 import org.ec.androidticket.backend.Async.events.loginEvents.LoggedOutEvent;
 import org.ec.androidticket.backend.Async.events.loginEvents.LogoutEvent;
+import org.ec.androidticket.backend.Async.events.ticketEvents.FullTicketRequestEvent;
 import org.ec.androidticket.backend.Async.events.ticketEvents.SimpleTicketRequestEvent;
 import org.ec.androidticket.backend.Async.events.ticketEvents.SimpleTicketRequestResponseEvent;
-import org.ec.androidticket.backend.Async.responses.helpers.Ticket;
+import org.ec.androidticket.backend.models.ticketing.Ticket;
 import org.ec.androidticket.backend.Async.services.AuthService;
 import org.ec.androidticket.backend.Async.services.TicketService;
 import org.ec.androidticket.backend.models.internal.UserDataCache;
@@ -144,19 +146,27 @@ public class TicketHomeActivity extends ActionBarActivity
     public void onSimpleTicketRequestResponse(SimpleTicketRequestResponseEvent event)
     {
         List<Ticket> ticketList = event.getTickets();
+
         UserSimpleTicketCache cache = UserSimpleTicketCache.get();
 
         cache.purge();
         for (Ticket t : ticketList)
-        {
             cache.putTicketInCache(t);
-        }
 
         SimpleTicketListViewAdapter adapter = new SimpleTicketListViewAdapter(getApplicationContext(), cache.getCache());
-        ListView listView = (ListView)findViewById(R.id.listView);
+        final ListView listView = (ListView)findViewById(R.id.listView);
         listView.setAdapter(adapter);
 
-        Log.i("CustomLog", "Cached the tickets informations!");
-        Log.i("CustomLog", cache.toString());
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener()
+        {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+            {
+                Ticket selected = (Ticket) listView.getItemAtPosition(position);
+                Log.i("CustomLog", "Clicked on " + selected.getTicketCode() + " id = " + selected.getPk());
+                // créer activité vue ticket avec la PK du ticket en paramètre
+
+            }
+        });
     }
 }
