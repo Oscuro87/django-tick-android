@@ -28,6 +28,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activities.login.TicketLoginActivity" />
         </activity>
+        <activity
+            android:name=".activities.ticketDetail.TicketDetailActivity"
+            android:label="@string/title_activity_ticket_detail"
+            android:parentActivityName=".activities.home.TicketHomeActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="org.ec.androidticket.activities.home.TicketHomeActivity" />
+        </activity>
     </application>
 
 </manifest>

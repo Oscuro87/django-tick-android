@@ -3,6 +3,10 @@ package org.ec.androidticket.backend.models.ticketing;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+/**
+ * Attention, cette classe représente la version SIMPLIFIEE d'un ticket.
+ * Pour la classe reprenant l'intégralité des informations pour un ticket, voir FullTicket.java!
+ */
 public class Ticket
 {
     @Expose

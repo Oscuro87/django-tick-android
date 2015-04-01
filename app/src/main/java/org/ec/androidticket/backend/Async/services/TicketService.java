@@ -7,8 +7,12 @@ import com.squareup.otto.Subscribe;
 
 import org.ec.androidticket.backend.Async.BusDepot;
 import org.ec.androidticket.backend.Async.RESTClient;
+import org.ec.androidticket.backend.Async.events.ticketEvents.FullTicketFailureResponseEvent;
+import org.ec.androidticket.backend.Async.events.ticketEvents.FullTicketRequestEvent;
+import org.ec.androidticket.backend.Async.events.ticketEvents.FullTicketSuccessResponseEvent;
 import org.ec.androidticket.backend.Async.events.ticketEvents.SimpleTicketRequestEvent;
 import org.ec.androidticket.backend.Async.events.ticketEvents.SimpleTicketRequestResponseEvent;
+import org.ec.androidticket.backend.models.ticketing.FullTicket;
 import org.ec.androidticket.backend.models.ticketing.Tickets;
 
 import retrofit.Callback;
@@ -28,7 +32,7 @@ public class TicketService
 
     public static TicketService get()
     {
-        if(instance == null)
+        if (instance == null)
             instance = new TicketService();
         return instance;
     }
@@ -51,6 +55,37 @@ public class TicketService
                     public void failure(RetrofitError error)
                     {
                         Log.e("CustomLog", "Error with Retrofit: " + error.getMessage());
+                    }
+                }
+        );
+    }
+
+    @Subscribe
+    public void onFullTicketRequest(FullTicketRequestEvent event)
+    {
+        RESTClient.getTicketAPI().requestFullTicket(
+                event.getAuthToken(),
+                event.getPrimaryKey(),
+                new Callback<FullTicket>()
+                {
+                    @Override
+                    public void success(FullTicket ticket, Response response)
+                    {
+                        Log.i("CustomLog", "Successfully retrieved ticket information for ticket code: " + ticket.getTicketCode());
+                        if (ticket != null)
+                        {
+                            bus.post(new FullTicketSuccessResponseEvent(ticket));
+                        } else
+                        {
+                            bus.post(new FullTicketFailureResponseEvent(response.getReason()));
+                        }
+                    }
+
+                    @Override
+                    public void failure(RetrofitError error)
+                    {
+                        Log.e("CustomLog", "Failed to retrieve ticket informations:\n" + error.getMessage());
+                        bus.post(new FullTicketFailureResponseEvent(error.getMessage()));
                     }
                 }
         );

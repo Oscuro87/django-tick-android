@@ -28,4 +28,7 @@
     <string name="toast_banned_user">User is banned</string>
     <string name="simple_ticket_code_caption">Ticket code</string>
     <string name="simple_ticket_status_caption">Ticket status</string>
+    <string name="title_activity_ticket_detail">TicketDetailActivity</string>
+
+    <string name="hello_world">Hello world!</string>
 </resources>

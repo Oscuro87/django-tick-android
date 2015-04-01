@@ -1,5 +1,6 @@
 package org.ec.androidticket.backend.Async.apis;
 
+import org.ec.androidticket.backend.models.ticketing.FullTicket;
 import org.ec.androidticket.backend.models.ticketing.Ticket;
 import org.ec.androidticket.backend.models.ticketing.Tickets;
 
@@ -23,5 +24,5 @@ public interface RestTicketAPI
     void requestFullTicket(
             @Header("Authorization") String authtoken,
             @Field("ticketPK") Integer ticketPK,
-            Callback<Ticket> callback);
+            Callback<FullTicket> callback);
 }

@@ -1,6 +1,7 @@
 package org.ec.androidticket.activities.home;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.NavUtils;
@@ -20,10 +21,10 @@ import com.squareup.otto.Subscribe;
 
 import org.ec.androidticket.R;
 import org.ec.androidticket.activities.home.adapters.SimpleTicketListViewAdapter;
+import org.ec.androidticket.activities.ticketDetail.TicketDetailActivity;
 import org.ec.androidticket.backend.Async.BusDepot;
 import org.ec.androidticket.backend.Async.events.loginEvents.LoggedOutEvent;
 import org.ec.androidticket.backend.Async.events.loginEvents.LogoutEvent;
-import org.ec.androidticket.backend.Async.events.ticketEvents.FullTicketRequestEvent;
 import org.ec.androidticket.backend.Async.events.ticketEvents.SimpleTicketRequestEvent;
 import org.ec.androidticket.backend.Async.events.ticketEvents.SimpleTicketRequestResponseEvent;
 import org.ec.androidticket.backend.models.ticketing.Ticket;
@@ -164,9 +165,18 @@ public class TicketHomeActivity extends ActionBarActivity
             {
                 Ticket selected = (Ticket) listView.getItemAtPosition(position);
                 Log.i("CustomLog", "Clicked on " + selected.getTicketCode() + " id = " + selected.getPk());
-                // créer activité vue ticket avec la PK du ticket en paramètre
-
+                //TODO: créer la vue ticket détaillée
+                goToTicketDetailView(selected.getPk());
             }
         });
+    }
+
+    private void goToTicketDetailView(Integer ticketPK)
+    {
+        Bundle arguments = new Bundle(1);
+        arguments.putInt("ticketPK", ticketPK);
+        Intent intent = new Intent(TicketHomeActivity.this, TicketDetailActivity.class);
+        intent.putExtras(arguments);
+        startActivity(intent);
     }
 }
