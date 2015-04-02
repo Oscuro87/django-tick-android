@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBarActivity;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Menu;
@@ -13,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,6 +22,7 @@ import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 
 import org.ec.androidticket.R;
+import org.ec.androidticket.activities.MyActivity;
 import org.ec.androidticket.activities.home.adapters.SimpleTicketListViewAdapter;
 import org.ec.androidticket.activities.login.TicketLoginActivity;
 import org.ec.androidticket.activities.ticketDetail.TicketDetailActivity;
@@ -36,11 +39,11 @@ import org.ec.androidticket.backend.models.ticketing.Ticket;
 
 import java.util.List;
 
-public class TicketHomeActivity extends ActionBarActivity
+public class TicketHomeActivity extends MyActivity implements SearchView.OnQueryTextListener
 {
-    private Bus bus;
-    private AuthService authService;
-    private TicketService ticketService;
+    private SearchView searchView;
+    private ListView listView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -53,11 +56,14 @@ public class TicketHomeActivity extends ActionBarActivity
         TextView header = (TextView) (findViewById(R.id.ticketHomeHeader));
         header.setText(header.getText() + " " + UserDataCache.get().getFullName());
 
-        bus = BusDepot.get().getBus(BusDepot.BusType.GENERAL);
-        authService = AuthService.get();
-        ticketService = TicketService.get();
-
+        setupViewCache();
         setupListeners();
+    }
+
+    private void setupViewCache()
+    {
+        searchView = (SearchView)findViewById(R.id.simpleTicketSearchView);
+        listView = (ListView)findViewById(R.id.listView);
     }
 
     private void setupListeners()
@@ -68,30 +74,9 @@ public class TicketHomeActivity extends ActionBarActivity
     protected void onResume()
     {
         super.onResume();
-        bus.register(this);
 
         String authtoken = UserDataCache.get().getAuthtoken();
         bus.post(new SimpleTicketRequestEvent(authtoken));
-    }
-
-    @Override
-    protected void onPause()
-    {
-        super.onPause();
-        bus.unregister(this);
-    }
-
-    @Override
-    protected void onDestroy()
-    {
-        super.onDestroy();
-        try
-        {
-            bus.unregister(this);
-        } catch (IllegalArgumentException ignored)
-        {
-            Log.e("CustomLog", this.getClass().getCanonicalName() + " already unregistered.");
-        }
     }
 
     @Override
@@ -157,9 +142,27 @@ public class TicketHomeActivity extends ActionBarActivity
         for (Ticket t : ticketList)
             cache.putTicketInCache(t);
 
+        setupListView();
+        setupSearchView();
+    }
+
+    private void goToTicketDetailView(Integer ticketPK)
+    {
+        Bundle arguments = new Bundle(1);
+        arguments.putInt("ticketPK", ticketPK);
+        Intent intent = new Intent(TicketHomeActivity.this, TicketDetailActivity.class);
+        intent.putExtras(arguments);
+        startActivity(intent);
+    }
+
+    private void setupListView()
+    {
+        UserSimpleTicketCache cache = UserSimpleTicketCache.get();
         SimpleTicketListViewAdapter adapter = new SimpleTicketListViewAdapter(getApplicationContext(), cache.getCache());
         final ListView listView = (ListView) findViewById(R.id.listView);
+
         listView.setAdapter(adapter);
+        listView.setTextFilterEnabled(true);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener()
         {
@@ -172,12 +175,27 @@ public class TicketHomeActivity extends ActionBarActivity
         });
     }
 
-    private void goToTicketDetailView(Integer ticketPK)
+    private void setupSearchView()
     {
-        Bundle arguments = new Bundle(1);
-        arguments.putInt("ticketPK", ticketPK);
-        Intent intent = new Intent(TicketHomeActivity.this, TicketDetailActivity.class);
-        intent.putExtras(arguments);
-        startActivity(intent);
+        searchView.setIconifiedByDefault(false);
+        searchView.setOnQueryTextListener(this);
+        searchView.setSubmitButtonEnabled(true);
+    }
+
+
+    @Override
+    public boolean onQueryTextSubmit(String query)
+    {
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText)
+    {
+        if(newText.equals(""))
+            listView.clearTextFilter();
+        else
+            listView.setFilterText(newText);
+        return true;
     }
 }

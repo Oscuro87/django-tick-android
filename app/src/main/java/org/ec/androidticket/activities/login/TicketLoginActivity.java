@@ -18,6 +18,7 @@ import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 
 import org.ec.androidticket.R;
+import org.ec.androidticket.activities.MyActivity;
 import org.ec.androidticket.activities.home.TicketHomeActivity;
 import org.ec.androidticket.backend.Async.BusDepot;
 import org.ec.androidticket.backend.Async.events.loginEvents.LoginFailureEvent;
@@ -31,19 +32,20 @@ import org.ec.androidticket.backend.models.internal.CredentialCookie;
 import org.ec.androidticket.backend.models.internal.UserDataCache;
 import org.ec.androidticket.backend.Async.services.AuthService;
 
-public class TicketLoginActivity extends ActionBarActivity
+public class TicketLoginActivity extends MyActivity
 {
-    private Bus bus;
-    private AuthService authService;
-    private TicketService ticketService;
-
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ticket_login);
-        setupListeners();
 
+        setupListeners();
+        setupCookie();
+    }
+
+    private void setupCookie()
+    {
         CredentialCookie cookie = CookieManager.readCookie(getApplicationContext());
         if (cookie != null) // Si le cookie a été correctement lu...
         {
@@ -52,10 +54,6 @@ public class TicketLoginActivity extends ActionBarActivity
             emailField.setText(cookie.getEmail());
             passwordField.setText(cookie.getPassword());
         }
-
-        bus = BusDepot.get().getBus(BusDepot.BusType.GENERAL);
-        authService = AuthService.get();
-        ticketService = TicketService.get();
     }
 
     private void setupListeners()
@@ -99,25 +97,6 @@ public class TicketLoginActivity extends ActionBarActivity
     }
 
     @Override
-    protected void onResume()
-    {
-        super.onResume();
-        try
-        {
-            bus.register(this);
-        } catch(IllegalArgumentException ignored)
-        {
-            Log.e("CustomLog", "Bus already registered.");
-        }
-    }
-
-    @Override
-    protected void onPause()
-    {
-        super.onPause();
-    }
-
-    @Override
     public void onBackPressed()
     {
 
@@ -133,7 +112,7 @@ public class TicketLoginActivity extends ActionBarActivity
             bus.post(new LogoutEvent(UserDataCache.get().getAuthtoken()));
     }
 
-    public void loggedOut(LoggedOutEvent event)
+    public void onLoggedOut(LoggedOutEvent event)
     {
         if (event.disconnected)
         {
@@ -150,13 +129,8 @@ public class TicketLoginActivity extends ActionBarActivity
     @Subscribe
     public void onLoggedIn(LoginSuccessEvent event)
     {
-        UserDataCache.get().setAuthtoken(event.authtoken);
-        UserDataCache.get().setLoggedIn(true);
-        UserDataCache.get().setStaff(event.is_staff);
-        UserDataCache.get().setActive(event.is_active);
-        UserDataCache.get().setEmail(event.email);
-        UserDataCache.get().setFirstName(event.firstName);
-        UserDataCache.get().setLastName(event.lastName);
+        // Met les informations utilisateur en cache
+        UserDataCache.get().applyLoginSuccessEvent(event);
 
         Context context = getApplicationContext();
         if(UserDataCache.get().isActive())
@@ -175,11 +149,5 @@ public class TicketLoginActivity extends ActionBarActivity
     public void onLoginFailure(LoginFailureEvent event)
     {
         Toast.makeText(getApplicationContext(), event.reason, Toast.LENGTH_SHORT).show();
-    }
-
-    @Subscribe
-    public void onLoggedOut(LoggedOutEvent event)
-    {
-
     }
 }

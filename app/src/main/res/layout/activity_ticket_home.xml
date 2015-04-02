@@ -18,6 +18,12 @@
         android:gravity="center_vertical|center|center_horizontal"
         android:elegantTextHeight="false"/>
 
+    <SearchView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/simpleTicketSearchView"
+        android:queryHint="@string/simple_ticket_search_hint"/>
+
     <ListView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

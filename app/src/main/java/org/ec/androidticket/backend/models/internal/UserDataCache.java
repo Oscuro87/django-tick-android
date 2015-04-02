@@ -1,5 +1,7 @@
 package org.ec.androidticket.backend.models.internal;
 
+import org.ec.androidticket.backend.Async.events.loginEvents.LoginSuccessEvent;
+
 public class UserDataCache
 {
     private static UserDataCache instance;
@@ -31,6 +33,17 @@ public class UserDataCache
         this.firstName = "";
         this.lastName = "";
         this.isStaff = false;
+    }
+
+    public void applyLoginSuccessEvent(LoginSuccessEvent event)
+    {
+        setAuthtoken(event.authtoken);
+        setLoggedIn(true);
+        setStaff(event.is_staff);
+        setActive(event.is_active);
+        setEmail(event.email);
+        setFirstName(event.firstName);
+        setLastName(event.lastName);
     }
 
     public String getAuthtoken()
