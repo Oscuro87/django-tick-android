@@ -5,24 +5,24 @@ import org.ec.androidticket.backend.models.ticketing.Ticket;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserSimpleTicketCache
+public class SimpleTicketCache
 {
-    private static UserSimpleTicketCache instance = null;
+    private static SimpleTicketCache instance = null;
     private List<Ticket> cache;
     private List<Ticket> unmanagedCache;
     private List<Ticket> managedByUserCache;
 
-    private UserSimpleTicketCache()
+    private SimpleTicketCache()
     {
         cache = new ArrayList<>();
         unmanagedCache = new ArrayList<>();
         managedByUserCache = new ArrayList<>();
     }
 
-    public static UserSimpleTicketCache get()
+    public static SimpleTicketCache get()
     {
         if(instance == null)
-            instance = new UserSimpleTicketCache();
+            instance = new SimpleTicketCache();
         return instance;
     }
 

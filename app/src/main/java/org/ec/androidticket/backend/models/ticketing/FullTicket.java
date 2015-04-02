@@ -3,6 +3,8 @@ package org.ec.androidticket.backend.models.ticketing;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.Date;
+
 @SuppressWarnings("UnusedDeclaration")
 public class FullTicket
 {
@@ -26,10 +28,10 @@ public class FullTicket
     private TicketStatus status;
     @SerializedName("fk_manager")
     @Expose
-    private Object manager;
+    private User manager;
     @SerializedName("fk_company")
     @Expose
-    private Object company;
+    private Company company;
     @SerializedName("ticket_code")
     @Expose
     private String ticketCode;
@@ -39,7 +41,7 @@ public class FullTicket
     private String office;
     @SerializedName("intervention_date")
     @Expose
-    private Object interventionDate;
+    private Date interventionDate;
     @Expose
     private String description;
 
@@ -103,22 +105,22 @@ public class FullTicket
         this.status = status;
     }
 
-    public Object getManager()
+    public User getManager()
     {
         return manager;
     }
 
-    public void setManager(Object manager)
+    public void setManager(User manager)
     {
         this.manager = manager;
     }
 
-    public Object getCompany()
+    public Company getCompany()
     {
         return company;
     }
 
-    public void setCompany(Object company)
+    public void setCompany(Company company)
     {
         this.company = company;
     }
@@ -153,12 +155,12 @@ public class FullTicket
         this.office = office;
     }
 
-    public Object getInterventionDate()
+    public Date getInterventionDate()
     {
         return interventionDate;
     }
 
-    public void setInterventionDate(Object interventionDate)
+    public void setInterventionDate(Date interventionDate)
     {
         this.interventionDate = interventionDate;
     }

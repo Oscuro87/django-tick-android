@@ -1,10 +1,8 @@
 package org.ec.androidticket.activities.login;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -14,25 +12,21 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 
 import org.ec.androidticket.R;
-import org.ec.androidticket.activities.MyActivity;
-import org.ec.androidticket.activities.home.TicketHomeActivity;
-import org.ec.androidticket.backend.Async.BusDepot;
+import org.ec.androidticket.activities.MyActionBarActivity;
+import org.ec.androidticket.activities.home.TicketHomeActionBarActivity;
 import org.ec.androidticket.backend.Async.events.loginEvents.LoginFailureEvent;
 import org.ec.androidticket.backend.Async.events.loginEvents.LoginSuccessEvent;
 import org.ec.androidticket.backend.Async.events.loginEvents.LoggedOutEvent;
 import org.ec.androidticket.backend.Async.events.loginEvents.LoginEvent;
 import org.ec.androidticket.backend.Async.events.loginEvents.LogoutEvent;
-import org.ec.androidticket.backend.Async.services.TicketService;
 import org.ec.androidticket.backend.managers.CookieManager;
 import org.ec.androidticket.backend.models.internal.CredentialCookie;
 import org.ec.androidticket.backend.models.internal.UserDataCache;
-import org.ec.androidticket.backend.Async.services.AuthService;
 
-public class TicketLoginActivity extends MyActivity
+public class TicketLoginActionBarActivity extends MyActionBarActivity
 {
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -135,7 +129,7 @@ public class TicketLoginActivity extends MyActivity
         Context context = getApplicationContext();
         if(UserDataCache.get().isActive())
         {
-            Intent toHome = new Intent(TicketLoginActivity.this, TicketHomeActivity.class);
+            Intent toHome = new Intent(TicketLoginActionBarActivity.this, TicketHomeActionBarActivity.class);
             toHome.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
             context.startActivity(toHome);
         }

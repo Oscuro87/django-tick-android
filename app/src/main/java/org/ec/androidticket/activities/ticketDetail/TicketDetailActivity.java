@@ -1,5 +1,8 @@
 package org.ec.androidticket.activities.ticketDetail;
 
+import android.app.ActionBar;
+import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -11,6 +14,7 @@ import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 
 import org.ec.androidticket.R;
+import org.ec.androidticket.activities.MyFragmentActivity;
 import org.ec.androidticket.backend.Async.BusDepot;
 import org.ec.androidticket.backend.Async.events.ticketEvents.FullTicketRequestEvent;
 import org.ec.androidticket.backend.Async.events.ticketEvents.FullTicketSuccessResponseEvent;
@@ -18,19 +22,29 @@ import org.ec.androidticket.backend.Async.responses.FullTicketResponse;
 import org.ec.androidticket.backend.models.internal.UserDataCache;
 import org.ec.androidticket.backend.models.ticketing.FullTicket;
 
-public class TicketDetailActivity extends ActionBarActivity
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * Vue détaillée d'un ticket, divisée en 3 parties:
+ * La vue ticket contenant toutes ses informations
+ * La vue commentaires qui permet de consulter ou écrire un nouveau commentaire
+ * La vue historique ticket
+ *
+ * Tutorial pour viewpager : http://www.androidhive.info/2013/10/android-tab-layout-with-swipeable-views-1/
+ */
+
+public class TicketDetailActivity extends MyFragmentActivity implements ActionBar.TabListener
 {
     private Integer ticketPK;
-    private Bus bus;
+     // Contient tous les fragments utilisés comme "tab" dans le viewpager
+    private List<Fragment> pagesFragments = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ticket_detail);
-
-        bus = BusDepot.get().getBus(BusDepot.BusType.GENERAL);
-        bus.register(this);
 
         Intent thisIntent = getIntent();
         Bundle params = thisIntent.getExtras();
@@ -79,6 +93,24 @@ public class TicketDetailActivity extends ActionBarActivity
     {
         // TODO: Gérer la réponse du web service + check erreurs
         Log.i("CustomLog", "Received full ticket details loaded event");
+
+    }
+
+    @Override
+    public void onTabSelected(ActionBar.Tab tab, FragmentTransaction ft)
+    {
+
+    }
+
+    @Override
+    public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction ft)
+    {
+
+    }
+
+    @Override
+    public void onTabReselected(ActionBar.Tab tab, FragmentTransaction ft)
+    {
 
     }
 }

@@ -3,12 +3,7 @@ package org.ec.androidticket.activities.home;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v4.app.NavUtils;
-import android.support.v7.app.ActionBarActivity;
-import android.text.TextUtils;
-import android.util.AttributeSet;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,28 +13,23 @@ import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 
 import org.ec.androidticket.R;
-import org.ec.androidticket.activities.MyActivity;
+import org.ec.androidticket.activities.MyActionBarActivity;
 import org.ec.androidticket.activities.home.adapters.SimpleTicketListViewAdapter;
-import org.ec.androidticket.activities.login.TicketLoginActivity;
 import org.ec.androidticket.activities.ticketDetail.TicketDetailActivity;
-import org.ec.androidticket.backend.Async.BusDepot;
 import org.ec.androidticket.backend.Async.events.loginEvents.LoggedOutEvent;
 import org.ec.androidticket.backend.Async.events.loginEvents.LogoutEvent;
 import org.ec.androidticket.backend.Async.events.ticketEvents.SimpleTicketRequestEvent;
 import org.ec.androidticket.backend.Async.events.ticketEvents.SimpleTicketRequestResponseEvent;
-import org.ec.androidticket.backend.Async.services.AuthService;
-import org.ec.androidticket.backend.Async.services.TicketService;
 import org.ec.androidticket.backend.models.internal.UserDataCache;
-import org.ec.androidticket.backend.models.internal.UserSimpleTicketCache;
+import org.ec.androidticket.backend.models.internal.SimpleTicketCache;
 import org.ec.androidticket.backend.models.ticketing.Ticket;
 
 import java.util.List;
 
-public class TicketHomeActivity extends MyActivity implements SearchView.OnQueryTextListener
+public class TicketHomeActionBarActivity extends MyActionBarActivity implements SearchView.OnQueryTextListener
 {
     private SearchView searchView;
     private ListView listView;
@@ -136,7 +126,7 @@ public class TicketHomeActivity extends MyActivity implements SearchView.OnQuery
     {
         List<Ticket> ticketList = event.getTickets();
 
-        UserSimpleTicketCache cache = UserSimpleTicketCache.get();
+        SimpleTicketCache cache = SimpleTicketCache.get();
 
         cache.purge();
         for (Ticket t : ticketList)
@@ -150,14 +140,14 @@ public class TicketHomeActivity extends MyActivity implements SearchView.OnQuery
     {
         Bundle arguments = new Bundle(1);
         arguments.putInt("ticketPK", ticketPK);
-        Intent intent = new Intent(TicketHomeActivity.this, TicketDetailActivity.class);
+        Intent intent = new Intent(TicketHomeActionBarActivity.this, TicketDetailActivity.class);
         intent.putExtras(arguments);
         startActivity(intent);
     }
 
     private void setupListView()
     {
-        UserSimpleTicketCache cache = UserSimpleTicketCache.get();
+        SimpleTicketCache cache = SimpleTicketCache.get();
         SimpleTicketListViewAdapter adapter = new SimpleTicketListViewAdapter(getApplicationContext(), cache.getCache());
         final ListView listView = (ListView) findViewById(R.id.listView);
 

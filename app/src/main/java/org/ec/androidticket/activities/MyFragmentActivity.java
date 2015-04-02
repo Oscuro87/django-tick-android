@@ -1,7 +1,7 @@
 package org.ec.androidticket.activities;
 
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 
 import com.squareup.otto.Bus;
@@ -10,7 +10,7 @@ import org.ec.androidticket.backend.Async.BusDepot;
 import org.ec.androidticket.backend.Async.services.AuthService;
 import org.ec.androidticket.backend.Async.services.TicketService;
 
-public class MyActivity extends ActionBarActivity
+public class MyFragmentActivity extends FragmentActivity
 {
     protected Bus bus;
     protected AuthService authService;
