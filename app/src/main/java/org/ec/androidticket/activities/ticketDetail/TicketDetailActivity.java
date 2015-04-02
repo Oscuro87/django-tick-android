@@ -47,6 +47,11 @@ public class TicketDetailActivity extends ActionBarActivity
         }
     }
 
+    @Override
+    public void onBackPressed()
+    {
+        finish();
+    }
 
     private void buildTicketViewFromTicketInstance(FullTicket inst)
     {

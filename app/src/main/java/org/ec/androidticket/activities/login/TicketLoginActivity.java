@@ -86,8 +86,7 @@ public class TicketLoginActivity extends ActionBarActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
     {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_ticket_login, menu);
+        // getMenuInflater().inflate(R.menu.menu_ticket_login, menu);
         return true;
     }
 
@@ -116,6 +115,13 @@ public class TicketLoginActivity extends ActionBarActivity
     protected void onPause()
     {
         super.onPause();
+    }
+
+    @Override
+    public void onBackPressed()
+    {
+
+        finish();
     }
 
     @Override
@@ -174,6 +180,6 @@ public class TicketLoginActivity extends ActionBarActivity
     @Subscribe
     public void onLoggedOut(LoggedOutEvent event)
     {
-        //Toast.makeText(getApplicationContext(), "Disconnected", Toast.LENGTH_LONG).show();
+
     }
 }

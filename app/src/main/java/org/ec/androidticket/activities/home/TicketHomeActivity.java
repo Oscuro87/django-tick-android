@@ -21,17 +21,18 @@ import com.squareup.otto.Subscribe;
 
 import org.ec.androidticket.R;
 import org.ec.androidticket.activities.home.adapters.SimpleTicketListViewAdapter;
+import org.ec.androidticket.activities.login.TicketLoginActivity;
 import org.ec.androidticket.activities.ticketDetail.TicketDetailActivity;
 import org.ec.androidticket.backend.Async.BusDepot;
 import org.ec.androidticket.backend.Async.events.loginEvents.LoggedOutEvent;
 import org.ec.androidticket.backend.Async.events.loginEvents.LogoutEvent;
 import org.ec.androidticket.backend.Async.events.ticketEvents.SimpleTicketRequestEvent;
 import org.ec.androidticket.backend.Async.events.ticketEvents.SimpleTicketRequestResponseEvent;
-import org.ec.androidticket.backend.models.ticketing.Ticket;
 import org.ec.androidticket.backend.Async.services.AuthService;
 import org.ec.androidticket.backend.Async.services.TicketService;
 import org.ec.androidticket.backend.models.internal.UserDataCache;
 import org.ec.androidticket.backend.models.internal.UserSimpleTicketCache;
+import org.ec.androidticket.backend.models.ticketing.Ticket;
 
 import java.util.List;
 
@@ -94,13 +95,6 @@ public class TicketHomeActivity extends ActionBarActivity
     }
 
     @Override
-    public View onCreateView(String name, @NonNull Context context, @NonNull AttributeSet attrs)
-    {
-
-        return super.onCreateView(name, context, attrs);
-    }
-
-    @Override
     public boolean onCreateOptionsMenu(Menu menu)
     {
         getMenuInflater().inflate(R.menu.menu_ticket_home, menu);
@@ -135,12 +129,21 @@ public class TicketHomeActivity extends ActionBarActivity
         if (event.disconnected)
         {
             Toast.makeText(context, "Logged out", Toast.LENGTH_SHORT).show();
-            Log.i("CustomLost", "Logging out and back to main screen");
-            NavUtils.navigateUpFromSameTask(this);
+            goToLoginActivity();
         } else
-        {
             Toast.makeText(context, "Problem while logging out", Toast.LENGTH_SHORT).show();
-        }
+    }
+
+    @Override
+    public void onBackPressed()
+    {
+        bus.post(new LogoutEvent(UserDataCache.get().getAuthtoken()));
+    }
+
+    private void goToLoginActivity()
+    {
+        NavUtils.navigateUpFromSameTask(this);
+        finish();
     }
 
     @Subscribe
@@ -155,7 +158,7 @@ public class TicketHomeActivity extends ActionBarActivity
             cache.putTicketInCache(t);
 
         SimpleTicketListViewAdapter adapter = new SimpleTicketListViewAdapter(getApplicationContext(), cache.getCache());
-        final ListView listView = (ListView)findViewById(R.id.listView);
+        final ListView listView = (ListView) findViewById(R.id.listView);
         listView.setAdapter(adapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener()
@@ -164,8 +167,6 @@ public class TicketHomeActivity extends ActionBarActivity
             public void onItemClick(AdapterView<?> parent, View view, int position, long id)
             {
                 Ticket selected = (Ticket) listView.getItemAtPosition(position);
-                Log.i("CustomLog", "Clicked on " + selected.getTicketCode() + " id = " + selected.getPk());
-                //TODO: créer la vue ticket détaillée
                 goToTicketDetailView(selected.getPk());
             }
         });
