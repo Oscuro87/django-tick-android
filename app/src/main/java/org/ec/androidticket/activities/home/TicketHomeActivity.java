@@ -25,11 +25,12 @@ import org.ec.androidticket.backend.Async.events.ticketEvents.SimpleTicketReques
 import org.ec.androidticket.backend.Async.events.ticketEvents.SimpleTicketRequestResponseEvent;
 import org.ec.androidticket.backend.models.internal.UserDataCache;
 import org.ec.androidticket.backend.models.internal.SimpleTicketCache;
+import org.ec.androidticket.backend.models.ticketing.FullTicket;
 import org.ec.androidticket.backend.models.ticketing.Ticket;
 
 import java.util.List;
 
-public class TicketHomeActionBarActivity extends MyActionBarActivity implements SearchView.OnQueryTextListener
+public class TicketHomeActivity extends MyActionBarActivity implements SearchView.OnQueryTextListener
 {
     private SearchView searchView;
     private ListView listView;
@@ -136,11 +137,11 @@ public class TicketHomeActionBarActivity extends MyActionBarActivity implements 
         setupSearchView();
     }
 
-    private void goToTicketDetailView(Integer ticketPK)
+    private void goToTicketDetailView(String ticketCode)
     {
         Bundle arguments = new Bundle(1);
-        arguments.putInt("ticketPK", ticketPK);
-        Intent intent = new Intent(TicketHomeActionBarActivity.this, TicketDetailActivity.class);
+        arguments.putString("ticketCode", ticketCode);
+        Intent intent = new Intent(TicketHomeActivity.this, TicketDetailActivity.class);
         intent.putExtras(arguments);
         startActivity(intent);
     }
@@ -160,7 +161,7 @@ public class TicketHomeActionBarActivity extends MyActionBarActivity implements 
             public void onItemClick(AdapterView<?> parent, View view, int position, long id)
             {
                 Ticket selected = (Ticket) listView.getItemAtPosition(position);
-                goToTicketDetailView(selected.getPk());
+                goToTicketDetailView(selected.getTicketCode());
             }
         });
     }

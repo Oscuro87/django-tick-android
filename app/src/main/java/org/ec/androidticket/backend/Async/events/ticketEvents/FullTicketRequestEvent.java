@@ -3,17 +3,17 @@ package org.ec.androidticket.backend.Async.events.ticketEvents;
 public class FullTicketRequestEvent
 {
     private final String authToken;
-    private final Integer primaryKey;
+    private final String ticketCode;
 
-    public FullTicketRequestEvent(String authToken, Integer primaryKey)
+    public FullTicketRequestEvent(String authToken, String ticketCode)
     {
         this.authToken = authToken;
-        this.primaryKey = primaryKey;
+        this.ticketCode = ticketCode;
     }
 
-    public Integer getPrimaryKey()
+    public String getTicketCode()
     {
-        return primaryKey;
+        return ticketCode;
     }
 
     public String getAuthToken()

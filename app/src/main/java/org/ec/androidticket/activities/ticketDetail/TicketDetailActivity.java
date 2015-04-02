@@ -1,22 +1,20 @@
 package org.ec.androidticket.activities.ticketDetail;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.Window;
 
 import com.squareup.otto.Subscribe;
 
 import org.ec.androidticket.R;
 import org.ec.androidticket.activities.MyActionBarActivity;
 import org.ec.androidticket.activities.ticketDetail.adapters.TicketDetailPagerAdapter;
-import org.ec.androidticket.activities.ticketDetail.fragments.TicketDetailFragment;
 import org.ec.androidticket.backend.Async.events.ticketEvents.FullTicketRequestEvent;
 import org.ec.androidticket.backend.Async.events.ticketEvents.FullTicketSuccessResponseEvent;
+import org.ec.androidticket.backend.models.internal.FullTicketCache;
 import org.ec.androidticket.backend.models.internal.UserDataCache;
 import org.ec.androidticket.backend.models.ticketing.FullTicket;
 
@@ -31,9 +29,9 @@ import java.util.List;
  * Tutorial pour viewpager : http://www.androidhive.info/2013/10/android-tab-layout-with-swipeable-views-1/
  */
 
-public class TicketDetailActivity extends MyActionBarActivity implements android.support.v7.app.ActionBar.TabListener, TicketDetailFragment.OnTicketDetailFragmentInteractionListener
+public class TicketDetailActivity extends MyActionBarActivity implements android.support.v7.app.ActionBar.TabListener
 {
-    private Integer ticketPK;
+    private String ticketCode;
     // Fragments utilisés pour les "tabs"
     private List<String> tabNames;
 
@@ -63,14 +61,26 @@ public class TicketDetailActivity extends MyActionBarActivity implements android
 
         if (params != null)
         {
-            this.ticketPK = params.getInt("ticketPK");
-            bus.post(new FullTicketRequestEvent("Token " + UserDataCache.get().getAuthtoken(), ticketPK));
-            Log.i("CustomLog", "Sent full ticket request event");
+            this.ticketCode = params.getString("ticketCode");
+            requestFullTicketInformations(ticketCode);
             return true;
         } else
         {
-            Log.e("CustomLog", "Problem while requesting full ticket details for ticket pk: " + ticketPK);
+            Log.e("CustomLog", "Problem while requesting full ticket details for ticket pk: " + ticketCode);
             return false;
+        }
+    }
+
+    private void requestFullTicketInformations(String ticketPK)
+    {
+        // Ne demander les informations ticket que si le cache est périmé. (ou si l'utilisateur demande un refresh)
+        if(FullTicketCache.get().getTicketInformations() != null)
+        {
+            if(!FullTicketCache.get().getTicketInformations().getTicketCode().equals(ticketCode))
+            {
+                bus.post(new FullTicketRequestEvent("Token " + UserDataCache.get().getAuthtoken(), ticketPK));
+                Log.i("CustomLog", "Sent full ticket request event");
+            }
         }
     }
 
@@ -79,8 +89,8 @@ public class TicketDetailActivity extends MyActionBarActivity implements android
         if(tabNames == null)
             tabNames = new ArrayList<>();
         tabNames.add(getString(R.string.ticketDetail_tabNameDetail));
-//        tabNames.add(getString(R.string.ticketDetail_tabNameComments));
-//        tabNames.add(getString(R.string.ticketDetail_tabNameHistory));
+        tabNames.add(getString(R.string.ticketDetail_tabNameComments));
+        tabNames.add(getString(R.string.ticketDetail_tabNameHistory));
     }
 
     private void setupPager()
@@ -99,6 +109,27 @@ public class TicketDetailActivity extends MyActionBarActivity implements android
             actionBar.addTab(actionBar.newTab().setText(tab_name)
                     .setTabListener(this));
         }
+
+        /**
+         * on swiping the viewpager make respective tab selected
+         * */
+        viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+
+            @Override
+            public void onPageSelected(int position) {
+                // on changing the page
+                // make respected tab selected
+                actionBar.setSelectedNavigationItem(position);
+            }
+
+            @Override
+            public void onPageScrolled(int arg0, float arg1, int arg2) {
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int arg0) {
+            }
+        });
     }
 
     @Override
@@ -132,14 +163,16 @@ public class TicketDetailActivity extends MyActionBarActivity implements android
     public void onTicketInformationsReceived(FullTicketSuccessResponseEvent event)
     {
         // TODO: Gérer la réponse du web service + check erreurs
+        // Mettre en cache
         Log.i("CustomLog", "Received full ticket details loaded event");
-
     }
 
     @Override
     public void onTabSelected(android.support.v7.app.ActionBar.Tab tab, android.support.v4.app.FragmentTransaction fragmentTransaction)
     {
-
+        // on tab selected
+        // show respected fragment view
+        viewPager.setCurrentItem(tab.getPosition());
     }
 
     @Override
@@ -150,12 +183,6 @@ public class TicketDetailActivity extends MyActionBarActivity implements android
 
     @Override
     public void onTabReselected(android.support.v7.app.ActionBar.Tab tab, android.support.v4.app.FragmentTransaction fragmentTransaction)
-    {
-
-    }
-
-    @Override
-    public void onTicketDetailInteraction(Uri uri)
     {
 
     }

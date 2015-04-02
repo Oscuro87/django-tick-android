@@ -12,8 +12,6 @@ import org.ec.androidticket.R;
 
 public class TicketDetailFragment extends android.support.v4.app.Fragment
 {
-    private OnTicketDetailFragmentInteractionListener mListener;
-
     public static TicketDetailFragment newInstance(String param1, String param2)
     {
         TicketDetailFragment fragment = new TicketDetailFragment();
@@ -47,39 +45,4 @@ public class TicketDetailFragment extends android.support.v4.app.Fragment
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_ticket_detail, container, false);
     }
-
-    public void onButtonPressed(Uri uri)
-    {
-        if (mListener != null)
-        {
-            mListener.onTicketDetailInteraction(uri);
-        }
-    }
-
-    @Override
-    public void onAttach(Activity activity)
-    {
-        super.onAttach(activity);
-        try
-        {
-            mListener = (OnTicketDetailFragmentInteractionListener) activity;
-        } catch (ClassCastException e)
-        {
-            throw new ClassCastException(activity.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
-    }
-
-    @Override
-    public void onDetach()
-    {
-        super.onDetach();
-        mListener = null;
-    }
-
-    public interface OnTicketDetailFragmentInteractionListener
-    {
-        public void onTicketDetailInteraction(Uri uri);
-    }
-
 }

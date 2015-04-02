@@ -65,20 +65,14 @@ public class TicketService
     {
         RESTClient.getTicketAPI().requestFullTicket(
                 event.getAuthToken(),
-                event.getPrimaryKey(),
+                event.getTicketCode(),
                 new Callback<FullTicket>()
                 {
                     @Override
                     public void success(FullTicket ticket, Response response)
                     {
                         Log.i("CustomLog", "Successfully retrieved ticket information for ticket code: " + ticket.getTicketCode());
-                        if (ticket != null)
-                        {
-                            bus.post(new FullTicketSuccessResponseEvent(ticket));
-                        } else
-                        {
-                            bus.post(new FullTicketFailureResponseEvent(response.getReason()));
-                        }
+                        bus.post(new FullTicketSuccessResponseEvent(ticket));
                     }
 
                     @Override

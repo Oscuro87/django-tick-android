@@ -23,6 +23,6 @@ public interface RestTicketAPI
     @POST("/rest/tickets/full")
     void requestFullTicket(
             @Header("Authorization") String authtoken,
-            @Field("ticketPK") Integer ticketPK,
+            @Field("ticketCode") String ticketCode,
             Callback<FullTicket> callback);
 }

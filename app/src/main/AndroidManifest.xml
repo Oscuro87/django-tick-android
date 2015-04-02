@@ -21,7 +21,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.home.TicketHomeActionBarActivity"
+            android:name=".activities.home.TicketHomeActivity"
             android:label="@string/title_activity_tickets"
             android:parentActivityName=".activities.login.TicketLoginActionBarActivity" >
             <meta-data
@@ -31,10 +31,10 @@
         <activity
             android:name=".activities.ticketDetail.TicketDetailActivity"
             android:label="@string/title_activity_ticket_detail"
-            android:parentActivityName=".activities.home.TicketHomeActionBarActivity" >
+            android:parentActivityName=".activities.home.TicketHomeActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activities.home.TicketHomeActionBarActivity" />
+                android:value=".activities.home.TicketHomeActivity" />
         </activity>
     </application>
 
