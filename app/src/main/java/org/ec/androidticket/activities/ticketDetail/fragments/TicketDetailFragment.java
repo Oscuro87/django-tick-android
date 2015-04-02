@@ -10,9 +10,9 @@ import android.view.ViewGroup;
 
 import org.ec.androidticket.R;
 
-public class TicketDetailFragment extends Fragment
+public class TicketDetailFragment extends android.support.v4.app.Fragment
 {
-    private OnFragmentInteractionListener mListener;
+    private OnTicketDetailFragmentInteractionListener mListener;
 
     public static TicketDetailFragment newInstance(String param1, String param2)
     {
@@ -52,7 +52,7 @@ public class TicketDetailFragment extends Fragment
     {
         if (mListener != null)
         {
-            mListener.onFragmentInteraction(uri);
+            mListener.onTicketDetailInteraction(uri);
         }
     }
 
@@ -62,7 +62,7 @@ public class TicketDetailFragment extends Fragment
         super.onAttach(activity);
         try
         {
-            mListener = (OnFragmentInteractionListener) activity;
+            mListener = (OnTicketDetailFragmentInteractionListener) activity;
         } catch (ClassCastException e)
         {
             throw new ClassCastException(activity.toString()
@@ -77,9 +77,9 @@ public class TicketDetailFragment extends Fragment
         mListener = null;
     }
 
-    public interface OnFragmentInteractionListener
+    public interface OnTicketDetailFragmentInteractionListener
     {
-        public void onFragmentInteraction(Uri uri);
+        public void onTicketDetailInteraction(Uri uri);
     }
 
 }

@@ -27,4 +27,13 @@
     <string name="simple_ticket_code_caption">Ticket code</string>
     <string name="simple_ticket_status_caption">Ticket status</string>
     <string name="simple_ticket_search_hint">Search ticket code or status</string>
+    <string name="ticketDetail_ticketCodeLabel">Ticket Code</string>
+    <string name="ticketDetail_ticketStatus">Ticket status</string>
+    <string name="ticketDetail_title">Ticket detail for ticket :</string>
+    <string name="ticketDetail_ticketStatusLabel">Ticket status</string>
+    <string name="ticketDetail_ticketCategoryLabel">Category</string>
+    <string name="ticketDetail_ticketSubcategoryLabel">Subcategory</string>
+    <string name="ticketDetail_tabNameDetail">Ticket details</string>
+    <string name="ticketDetail_tabNameComments">Comments</string>
+    <string name="ticketDetail_tabNameHistory">History</string>
 </resources>

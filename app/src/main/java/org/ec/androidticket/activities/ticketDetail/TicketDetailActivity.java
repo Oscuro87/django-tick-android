@@ -1,24 +1,22 @@
 package org.ec.androidticket.activities.ticketDetail;
 
-import android.app.ActionBar;
-import android.app.Fragment;
-import android.app.FragmentTransaction;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.Window;
 
-import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 
 import org.ec.androidticket.R;
-import org.ec.androidticket.activities.MyFragmentActivity;
-import org.ec.androidticket.backend.Async.BusDepot;
+import org.ec.androidticket.activities.MyActionBarActivity;
+import org.ec.androidticket.activities.ticketDetail.adapters.TicketDetailPagerAdapter;
+import org.ec.androidticket.activities.ticketDetail.fragments.TicketDetailFragment;
 import org.ec.androidticket.backend.Async.events.ticketEvents.FullTicketRequestEvent;
 import org.ec.androidticket.backend.Async.events.ticketEvents.FullTicketSuccessResponseEvent;
-import org.ec.androidticket.backend.Async.responses.FullTicketResponse;
 import org.ec.androidticket.backend.models.internal.UserDataCache;
 import org.ec.androidticket.backend.models.ticketing.FullTicket;
 
@@ -30,15 +28,18 @@ import java.util.List;
  * La vue ticket contenant toutes ses informations
  * La vue commentaires qui permet de consulter ou écrire un nouveau commentaire
  * La vue historique ticket
- *
  * Tutorial pour viewpager : http://www.androidhive.info/2013/10/android-tab-layout-with-swipeable-views-1/
  */
 
-public class TicketDetailActivity extends MyFragmentActivity implements ActionBar.TabListener
+public class TicketDetailActivity extends MyActionBarActivity implements android.support.v7.app.ActionBar.TabListener, TicketDetailFragment.OnTicketDetailFragmentInteractionListener
 {
     private Integer ticketPK;
-     // Contient tous les fragments utilisés comme "tab" dans le viewpager
-    private List<Fragment> pagesFragments = new ArrayList<>();
+    // Fragments utilisés pour les "tabs"
+    private List<String> tabNames;
+
+    private ViewPager viewPager;
+    private TicketDetailPagerAdapter pagerAdapter;
+    private android.support.v7.app.ActionBar actionBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -46,6 +47,17 @@ public class TicketDetailActivity extends MyFragmentActivity implements ActionBa
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ticket_detail);
 
+        if(!unpackParameters())
+        {
+            // TODO: problème au chargement du ticket -> retourner sur la vue tickets d'ensemble
+        }
+
+        setupFragments();
+        setupPager();
+    }
+
+    private boolean unpackParameters()
+    {
         Intent thisIntent = getIntent();
         Bundle params = thisIntent.getExtras();
 
@@ -54,10 +66,38 @@ public class TicketDetailActivity extends MyFragmentActivity implements ActionBa
             this.ticketPK = params.getInt("ticketPK");
             bus.post(new FullTicketRequestEvent("Token " + UserDataCache.get().getAuthtoken(), ticketPK));
             Log.i("CustomLog", "Sent full ticket request event");
+            return true;
         } else
         {
-            // TODO: Go back to home view
             Log.e("CustomLog", "Problem while requesting full ticket details for ticket pk: " + ticketPK);
+            return false;
+        }
+    }
+
+    private void setupFragments()
+    {
+        if(tabNames == null)
+            tabNames = new ArrayList<>();
+        tabNames.add(getString(R.string.ticketDetail_tabNameDetail));
+//        tabNames.add(getString(R.string.ticketDetail_tabNameComments));
+//        tabNames.add(getString(R.string.ticketDetail_tabNameHistory));
+    }
+
+    private void setupPager()
+    {
+        // Initilization
+        viewPager = (ViewPager) findViewById(R.id.ticketDetail_viewpager);
+        actionBar = getSupportActionBar();
+        pagerAdapter = new TicketDetailPagerAdapter(getSupportFragmentManager());
+
+        viewPager.setAdapter(pagerAdapter);
+        actionBar.setHomeButtonEnabled(false);
+        actionBar.setNavigationMode(android.support.v7.app.ActionBar.NAVIGATION_MODE_TABS);
+
+        // Adding Tabs
+        for (String tab_name : tabNames) {
+            actionBar.addTab(actionBar.newTab().setText(tab_name)
+                    .setTabListener(this));
         }
     }
 
@@ -97,19 +137,25 @@ public class TicketDetailActivity extends MyFragmentActivity implements ActionBa
     }
 
     @Override
-    public void onTabSelected(ActionBar.Tab tab, FragmentTransaction ft)
+    public void onTabSelected(android.support.v7.app.ActionBar.Tab tab, android.support.v4.app.FragmentTransaction fragmentTransaction)
     {
 
     }
 
     @Override
-    public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction ft)
+    public void onTabUnselected(android.support.v7.app.ActionBar.Tab tab, android.support.v4.app.FragmentTransaction fragmentTransaction)
     {
 
     }
 
     @Override
-    public void onTabReselected(ActionBar.Tab tab, FragmentTransaction ft)
+    public void onTabReselected(android.support.v7.app.ActionBar.Tab tab, android.support.v4.app.FragmentTransaction fragmentTransaction)
+    {
+
+    }
+
+    @Override
+    public void onTicketDetailInteraction(Uri uri)
     {
 
     }

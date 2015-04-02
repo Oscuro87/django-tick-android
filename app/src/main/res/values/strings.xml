@@ -30,6 +30,13 @@
     <string name="simple_ticket_status_caption">Ticket status</string>
     <string name="title_activity_ticket_detail">TicketDetailActivity</string>
 
-    <string name="hello_world">Hello world!</string>
     <string name="simple_ticket_search_hint">Search ticket code or status</string>
+    <string name="ticketDetail_ticketCodeLabel">Code</string>
+    <string name="ticketDetail_title">Ticket detail for ticket :</string>
+    <string name="ticketDetail_ticketStatusLabel">Status</string>
+    <string name="ticketDetail_ticketCategoryLabel">Category</string>
+    <string name="ticketDetail_ticketSubcategoryLabel">Subcategory</string>
+    <string name="ticketDetail_tabNameDetail">Ticket details</string>
+    <string name="ticketDetail_tabNameComments">Comments</string>
+    <string name="ticketDetail_tabNameHistory">History</string>
 </resources>
