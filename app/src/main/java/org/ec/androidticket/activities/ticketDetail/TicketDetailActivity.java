@@ -1,17 +1,23 @@
 package org.ec.androidticket.activities.ticketDetail;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.view.ViewPager;
+import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Toast;
 
 import com.squareup.otto.Subscribe;
 
 import org.ec.androidticket.R;
-import org.ec.androidticket.activities.MyActionBarActivity;
+import org.ec.androidticket.activities.custom.MyActionBarActivity;
 import org.ec.androidticket.activities.ticketDetail.adapters.TicketDetailPagerAdapter;
+import org.ec.androidticket.activities.ticketDetail.fragments.TicketFragmentInterface;
 import org.ec.androidticket.backend.Async.events.ticketEvents.FullTicketRequestEvent;
 import org.ec.androidticket.backend.Async.events.ticketEvents.FullTicketSuccessResponseEvent;
 import org.ec.androidticket.backend.models.internal.FullTicketCache;
@@ -45,13 +51,14 @@ public class TicketDetailActivity extends MyActionBarActivity implements android
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ticket_detail);
 
-        if(!unpackParameters())
-        {
-            // TODO: problème au chargement du ticket -> retourner sur la vue tickets d'ensemble
-        }
-
         setupFragments();
         setupPager();
+
+        if (!unpackParameters())
+        {
+            Toast.makeText(getApplicationContext(), getString(R.string.ticketDetail_paramUnpackError), Toast.LENGTH_SHORT);
+            finish();
+        }
     }
 
     private boolean unpackParameters()
@@ -66,31 +73,36 @@ public class TicketDetailActivity extends MyActionBarActivity implements android
             return true;
         } else
         {
-            Log.e("CustomLog", "Problem while requesting full ticket details for ticket pk: " + ticketCode);
+            Log.e("CustomLog", "Problem while requesting full ticket details for ticket code: " + ticketCode);
             return false;
         }
     }
 
-    private void requestFullTicketInformations(String ticketPK)
+    private void requestFullTicketInformations(String ticketCode)
     {
         // Ne demander les informations ticket que si le cache est périmé. (ou si l'utilisateur demande un refresh)
-        if(FullTicketCache.get().getTicketInformations() != null)
+        FullTicketCache cache = FullTicketCache.get();
+        if (cache.getTicketInformations().getTicketCode() == null)
         {
-            if(!FullTicketCache.get().getTicketInformations().getTicketCode().equals(ticketCode))
-            {
-                bus.post(new FullTicketRequestEvent("Token " + UserDataCache.get().getAuthtoken(), ticketPK));
-                Log.i("CustomLog", "Sent full ticket request event");
-            }
+            bus.post(new FullTicketRequestEvent("Token " + UserDataCache.get().getAuthtoken(), ticketCode));
+        }
+        else
+        {
+            if(!FullTicketCache.get().getTicketInformations().getTicketCode().equals(this.ticketCode))
+                bus.post(new FullTicketRequestEvent("Token " + UserDataCache.get().getAuthtoken(), ticketCode));
+            else
+//                refreshFragmentsLayout();
+                bus.post(new FullTicketRequestEvent("Token " + UserDataCache.get().getAuthtoken(), ticketCode));
         }
     }
 
     private void setupFragments()
     {
-        if(tabNames == null)
+        if (tabNames == null)
             tabNames = new ArrayList<>();
         tabNames.add(getString(R.string.ticketDetail_tabNameDetail));
-        tabNames.add(getString(R.string.ticketDetail_tabNameComments));
-        tabNames.add(getString(R.string.ticketDetail_tabNameHistory));
+//        tabNames.add(getString(R.string.ticketDetail_tabNameComments));
+//        tabNames.add(getString(R.string.ticketDetail_tabNameHistory));
     }
 
     private void setupPager()
@@ -98,14 +110,16 @@ public class TicketDetailActivity extends MyActionBarActivity implements android
         // Initilization
         viewPager = (ViewPager) findViewById(R.id.ticketDetail_viewpager);
         actionBar = getSupportActionBar();
-        pagerAdapter = new TicketDetailPagerAdapter(getSupportFragmentManager());
+        if(pagerAdapter == null)
+            pagerAdapter = new TicketDetailPagerAdapter(getFragmentManager());
 
         viewPager.setAdapter(pagerAdapter);
         actionBar.setHomeButtonEnabled(false);
         actionBar.setNavigationMode(android.support.v7.app.ActionBar.NAVIGATION_MODE_TABS);
 
         // Adding Tabs
-        for (String tab_name : tabNames) {
+        for (String tab_name : tabNames)
+        {
             actionBar.addTab(actionBar.newTab().setText(tab_name)
                     .setTabListener(this));
         }
@@ -113,21 +127,25 @@ public class TicketDetailActivity extends MyActionBarActivity implements android
         /**
          * on swiping the viewpager make respective tab selected
          * */
-        viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+        viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener()
+        {
 
             @Override
-            public void onPageSelected(int position) {
+            public void onPageSelected(int position)
+            {
                 // on changing the page
                 // make respected tab selected
                 actionBar.setSelectedNavigationItem(position);
             }
 
             @Override
-            public void onPageScrolled(int arg0, float arg1, int arg2) {
+            public void onPageScrolled(int arg0, float arg1, int arg2)
+            {
             }
 
             @Override
-            public void onPageScrollStateChanged(int arg0) {
+            public void onPageScrollStateChanged(int arg0)
+            {
             }
         });
     }
@@ -137,12 +155,6 @@ public class TicketDetailActivity extends MyActionBarActivity implements android
     {
         finish();
     }
-
-    private void buildTicketViewFromTicketInstance(FullTicket inst)
-    {
-        // TODO: build ticket view from instance
-    }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
@@ -164,14 +176,23 @@ public class TicketDetailActivity extends MyActionBarActivity implements android
     {
         // TODO: Gérer la réponse du web service + check erreurs
         // Mettre en cache
+        FullTicket ticket = event.getTicket();
+        FullTicketCache.get().setTicketInformations(ticket);
+        refreshFragmentsLayout();
         Log.i("CustomLog", "Received full ticket details loaded event");
+    }
+
+    private void refreshFragmentsLayout()
+    {
+        // Refresh tickets details
+        ((TicketFragmentInterface)pagerAdapter.getRegisteredFragment(0)).onRefreshRequested();
+
+        // TODO: Ajouter les 2 autres refreshs
     }
 
     @Override
     public void onTabSelected(android.support.v7.app.ActionBar.Tab tab, android.support.v4.app.FragmentTransaction fragmentTransaction)
     {
-        // on tab selected
-        // show respected fragment view
         viewPager.setCurrentItem(tab.getPosition());
     }
 
@@ -184,6 +205,6 @@ public class TicketDetailActivity extends MyActionBarActivity implements android
     @Override
     public void onTabReselected(android.support.v7.app.ActionBar.Tab tab, android.support.v4.app.FragmentTransaction fragmentTransaction)
     {
-
+        viewPager.setCurrentItem(tab.getPosition());
     }
 }

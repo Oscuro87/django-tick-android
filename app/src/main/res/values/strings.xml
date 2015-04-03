@@ -18,8 +18,6 @@
     <string name="action_logout">Logout</string>
     <string name="toast_more_options">Tap the menu button for more options</string>
 
-<!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">delete me</string>
     <string name="ticket_home_header_text">Welcome, </string>
     <string name="ticket_home_create_ticket_button_label">Create a ticket</string>
     <string name="action_create_building">Create a building</string>
@@ -28,7 +26,7 @@
     <string name="toast_banned_user">User is banned</string>
     <string name="simple_ticket_code_caption">Ticket code</string>
     <string name="simple_ticket_status_caption">Ticket status</string>
-    <string name="title_activity_ticket_detail">TicketDetailActivity</string>
+    <string name="title_activity_ticket_detail">Ticket detail</string>
 
     <string name="simple_ticket_search_hint">Search ticket code or status</string>
     <string name="ticketDetail_ticketCodeLabel">Code</string>
@@ -36,7 +34,9 @@
     <string name="ticketDetail_ticketStatusLabel">Status</string>
     <string name="ticketDetail_ticketCategoryLabel">Category</string>
     <string name="ticketDetail_ticketSubcategoryLabel">Subcategory</string>
-    <string name="ticketDetail_tabNameDetail">Ticket details</string>
+    <string name="ticketDetail_tabNameDetail">Details</string>
     <string name="ticketDetail_tabNameComments">Comments</string>
     <string name="ticketDetail_tabNameHistory">History</string>
+    <string name="ticketDetail_ticketStatus">Ticket status</string>
+    <string name="ticketDetail_paramUnpackError">Error while treating your request, please try again.</string>
 </resources>

@@ -65,14 +65,14 @@ public class FullTicket
         this.channel = channel;
     }
 
-    public Category getParentCategory()
+    public Category getSubcategory()
     {
         return parentCategory;
     }
 
-    public void setParentCategory(Category parentCategory)
+    public void setSubcategory(Category subcategory)
     {
-        this.parentCategory = parentCategory;
+        this.parentCategory = subcategory;
     }
 
     public User getReporter()

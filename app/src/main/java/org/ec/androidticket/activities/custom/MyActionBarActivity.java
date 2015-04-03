@@ -1,4 +1,4 @@
-package org.ec.androidticket.activities;
+package org.ec.androidticket.activities.custom;
 
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;

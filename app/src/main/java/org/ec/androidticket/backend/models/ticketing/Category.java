@@ -7,18 +7,18 @@ public class Category
 {
     @SerializedName("fk_parent_category")
     @Expose
-    private Integer parentCategory;
+    private Category parentCategory;
     @SerializedName("fk_priority")
     @Expose
     private Priority priority;
     @Expose
     private String label;
 
-    public Integer getParentCategory() {
+    public Category getParentCategory() {
         return parentCategory;
     }
 
-    public void setParentCategory(Integer parentCategory) {
+    public void setParentCategory(Category parentCategory) {
         this.parentCategory = parentCategory;
     }
 

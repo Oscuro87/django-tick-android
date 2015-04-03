@@ -17,17 +17,4 @@ public class SimpleTicketRequestResponseEvent
     {
         return tickets;
     }
-
-    @Override
-    public String toString()
-    {
-        // TODO: remove when done debugging
-        String ans = "";
-        for (Ticket ticket : tickets)
-        {
-            ans += ticket.toString();
-        }
-
-        return ans;
-    }
 }

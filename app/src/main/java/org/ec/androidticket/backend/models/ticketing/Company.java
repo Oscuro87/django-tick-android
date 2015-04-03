@@ -3,11 +3,13 @@ package org.ec.androidticket.backend.models.ticketing;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+
 public class Company
 {
     @SerializedName("fk_suitableEventCategories")
     @Expose
-    private Category suitableEventCategories;
+    private List<Category> suitableEventCategories;
     @SerializedName("country")
     @Expose
     private String country;
@@ -34,12 +36,12 @@ public class Company
     {
     }
 
-    public Category getSuitableEventCategories()
+    public List<Category> getSuitableEventCategories()
     {
         return suitableEventCategories;
     }
 
-    public void setSuitableEventCategories(Category suitableEventCategories)
+    public void setSuitableEventCategories(List<Category> suitableEventCategories)
     {
         this.suitableEventCategories = suitableEventCategories;
     }

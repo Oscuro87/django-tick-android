@@ -16,7 +16,7 @@ import android.widget.Toast;
 import com.squareup.otto.Subscribe;
 
 import org.ec.androidticket.R;
-import org.ec.androidticket.activities.MyActionBarActivity;
+import org.ec.androidticket.activities.custom.MyActionBarActivity;
 import org.ec.androidticket.activities.home.adapters.SimpleTicketListViewAdapter;
 import org.ec.androidticket.activities.ticketDetail.TicketDetailActivity;
 import org.ec.androidticket.backend.Async.events.loginEvents.LoggedOutEvent;
@@ -25,7 +25,6 @@ import org.ec.androidticket.backend.Async.events.ticketEvents.SimpleTicketReques
 import org.ec.androidticket.backend.Async.events.ticketEvents.SimpleTicketRequestResponseEvent;
 import org.ec.androidticket.backend.models.internal.UserDataCache;
 import org.ec.androidticket.backend.models.internal.SimpleTicketCache;
-import org.ec.androidticket.backend.models.ticketing.FullTicket;
 import org.ec.androidticket.backend.models.ticketing.Ticket;
 
 import java.util.List;
@@ -49,6 +48,8 @@ public class TicketHomeActivity extends MyActionBarActivity implements SearchVie
 
         setupViewCache();
         setupListeners();
+
+        refreshTickets(false);
     }
 
     private void setupViewCache()
@@ -65,9 +66,19 @@ public class TicketHomeActivity extends MyActionBarActivity implements SearchVie
     protected void onResume()
     {
         super.onResume();
+        refreshTickets(false);
+    }
 
+    // TODO: Ajouter un bouton qui force à rafraichir la liste des tickets de l'utilisateur
+    private void refreshTickets(boolean forceRefresh)
+    {
         String authtoken = UserDataCache.get().getAuthtoken();
-        bus.post(new SimpleTicketRequestEvent(authtoken));
+
+        if(SimpleTicketCache.get().getCache().size() <= 0 || forceRefresh)
+            bus.post(new SimpleTicketRequestEvent(authtoken));
+
+        setupListView();
+        setupSearchView();
     }
 
     @Override
@@ -132,9 +143,6 @@ public class TicketHomeActivity extends MyActionBarActivity implements SearchVie
         cache.purge();
         for (Ticket t : ticketList)
             cache.putTicketInCache(t);
-
-        setupListView();
-        setupSearchView();
     }
 
     private void goToTicketDetailView(String ticketCode)

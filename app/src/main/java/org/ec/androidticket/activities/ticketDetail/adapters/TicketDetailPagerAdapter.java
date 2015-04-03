@@ -1,18 +1,18 @@
 package org.ec.androidticket.activities.ticketDetail.adapters;
 
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
+import android.app.Fragment;
+import android.app.FragmentManager;
 
+import org.ec.androidticket.activities.custom.SmartFragmentStatePagerAdapter;
 import org.ec.androidticket.activities.ticketDetail.fragments.TicketDetailFragment;
 
 /**
  * Classe décrivant le comportement des "tabs" du viewpager.
  */
-public class TicketDetailPagerAdapter extends FragmentPagerAdapter
+public class TicketDetailPagerAdapter extends SmartFragmentStatePagerAdapter
 {
     // Le nombre de fragments pré-construits, 3 dans ce cas-ci. (vue ticket, historique et commentaires)
-    private final int FRAGMENTS_COUNT = 3;
+    private final int FRAGMENTS_COUNT = 1;
 
     public TicketDetailPagerAdapter(FragmentManager fm)
     {
@@ -24,9 +24,11 @@ public class TicketDetailPagerAdapter extends FragmentPagerAdapter
     {
         switch(position)
         {
-            // TODO: getItem de l'adapter pager pour la vue detail ticket
+            case 0:
+                return TicketDetailFragment.newInstance();
+            // TODO: 2 autres fragments
             default:
-                return new TicketDetailFragment();
+                return null;
         }
     }
 

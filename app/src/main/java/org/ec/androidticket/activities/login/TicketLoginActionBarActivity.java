@@ -15,7 +15,7 @@ import android.widget.Toast;
 import com.squareup.otto.Subscribe;
 
 import org.ec.androidticket.R;
-import org.ec.androidticket.activities.MyActionBarActivity;
+import org.ec.androidticket.activities.custom.MyActionBarActivity;
 import org.ec.androidticket.activities.home.TicketHomeActivity;
 import org.ec.androidticket.backend.Async.events.loginEvents.LoginFailureEvent;
 import org.ec.androidticket.backend.Async.events.loginEvents.LoginSuccessEvent;
