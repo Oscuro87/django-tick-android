@@ -37,4 +37,14 @@
     <string name="ticketDetail_tabNameHistory">Historique</string>
     <string name="title_activity_ticket_detail">Détail ticket</string>
     <string name="ticketDetail_paramUnpackError">Error while treating your request, please try again.</string>
+    <string name="ticketDetail_ticketReporterLabel">Ticket reporter</string>
+    <string name="ticketDetail_ticketBuildingLabel">Building</string>
+    <string name="ticketDetail_ticketManagerLabel">Manager</string>
+    <string name="ticketDetail_ticketFloorLabel">Floor</string>
+    <string name="ticketDetail_ticketOfficeLabel">Office</string>
+    <string name="ticketDetail_ticketCompanyLabel">Company</string>
+    <string name="ticketDetail_ticketDescriptionLabel">Description</string>
+    <string name="ticketDetail_noManagerFlavour">No manager</string>
+    <string name="ticketDetail_noCompanyFlavour">No company assigned</string>
+    <string name="ticketDetail_noBuildingFlavour">None</string>
 </resources>

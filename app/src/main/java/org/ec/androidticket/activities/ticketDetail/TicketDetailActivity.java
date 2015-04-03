@@ -56,7 +56,7 @@ public class TicketDetailActivity extends MyActionBarActivity implements android
 
         if (!unpackParameters())
         {
-            Toast.makeText(getApplicationContext(), getString(R.string.ticketDetail_paramUnpackError), Toast.LENGTH_SHORT);
+            Toast.makeText(getApplicationContext(), getString(R.string.ticketDetail_paramUnpackError), Toast.LENGTH_SHORT).show();
             finish();
         }
     }
@@ -101,7 +101,7 @@ public class TicketDetailActivity extends MyActionBarActivity implements android
         if (tabNames == null)
             tabNames = new ArrayList<>();
         tabNames.add(getString(R.string.ticketDetail_tabNameDetail));
-//        tabNames.add(getString(R.string.ticketDetail_tabNameComments));
+        tabNames.add(getString(R.string.ticketDetail_tabNameComments));
 //        tabNames.add(getString(R.string.ticketDetail_tabNameHistory));
     }
 
@@ -186,8 +186,8 @@ public class TicketDetailActivity extends MyActionBarActivity implements android
     {
         // Refresh tickets details
         ((TicketFragmentInterface)pagerAdapter.getRegisteredFragment(0)).onRefreshRequested();
-
-        // TODO: Ajouter les 2 autres refreshs
+        ((TicketFragmentInterface)pagerAdapter.getRegisteredFragment(1)).onRefreshRequested();
+        // TODO ((TicketFragmentInterface)pagerAdapter.getRegisteredFragment(2)).onRefreshRequested();
     }
 
     @Override

@@ -69,4 +69,9 @@ public class User
     public void setIsStaff(Boolean isStaff) {
         this.isStaff = isStaff;
     }
+
+    public String getFullName()
+    {
+        return firstName + " " + lastName;
+    }
 }

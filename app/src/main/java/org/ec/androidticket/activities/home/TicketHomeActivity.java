@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Filter;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.TextView;
@@ -33,6 +34,7 @@ public class TicketHomeActivity extends MyActionBarActivity implements SearchVie
 {
     private SearchView searchView;
     private ListView listView;
+    private Filter searchFilter;
 
 
     @Override
@@ -49,7 +51,7 @@ public class TicketHomeActivity extends MyActionBarActivity implements SearchVie
         setupViewCache();
         setupListeners();
 
-        refreshTickets(false);
+        refreshTickets(true);
     }
 
     private void setupViewCache()
@@ -77,6 +79,11 @@ public class TicketHomeActivity extends MyActionBarActivity implements SearchVie
         if(SimpleTicketCache.get().getCache().size() <= 0 || forceRefresh)
             bus.post(new SimpleTicketRequestEvent(authtoken));
 
+        refreshTicketView();
+    }
+
+    private void refreshTicketView()
+    {
         setupListView();
         setupSearchView();
     }
@@ -143,6 +150,8 @@ public class TicketHomeActivity extends MyActionBarActivity implements SearchVie
         cache.purge();
         for (Ticket t : ticketList)
             cache.putTicketInCache(t);
+
+        refreshTicketView();
     }
 
     private void goToTicketDetailView(String ticketCode)
@@ -161,7 +170,8 @@ public class TicketHomeActivity extends MyActionBarActivity implements SearchVie
         final ListView listView = (ListView) findViewById(R.id.listView);
 
         listView.setAdapter(adapter);
-        listView.setTextFilterEnabled(true);
+        listView.setTextFilterEnabled(false);
+        searchFilter = adapter.getFilter();
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener()
         {
@@ -194,7 +204,7 @@ public class TicketHomeActivity extends MyActionBarActivity implements SearchVie
         if(newText.equals(""))
             listView.clearTextFilter();
         else
-            listView.setFilterText(newText);
+            searchFilter.filter(newText);
         return true;
     }
 }

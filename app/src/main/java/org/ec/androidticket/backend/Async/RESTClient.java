@@ -1,5 +1,7 @@
 package org.ec.androidticket.backend.Async;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.squareup.okhttp.OkHttpClient;
 
 import org.ec.androidticket.backend.Async.apis.RestLoginAPI;
@@ -8,6 +10,7 @@ import org.ec.androidticket.backend.GlobalSettings;
 
 import retrofit.RestAdapter;
 import retrofit.client.OkClient;
+import retrofit.converter.GsonConverter;
 
 public class RESTClient
 {
@@ -33,8 +36,13 @@ public class RESTClient
 
     private static void setupRestClient()
     {
+        Gson gson = new GsonBuilder()
+                .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
+                .create();
+
         RestAdapter.Builder builder = new RestAdapter.Builder();
         builder.setEndpoint(ROOT);
+        builder.setConverter(new GsonConverter(gson));
         builder.setClient(new OkClient(new OkHttpClient()));
         builder.setLogLevel(RestAdapter.LogLevel.FULL);
 

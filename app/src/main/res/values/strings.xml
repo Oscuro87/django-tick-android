@@ -39,4 +39,17 @@
     <string name="ticketDetail_tabNameHistory">History</string>
     <string name="ticketDetail_ticketStatus">Ticket status</string>
     <string name="ticketDetail_paramUnpackError">Error while treating your request, please try again.</string>
+    <string name="ticketDetail_ticketReporterLabel">Ticket reporter</string>
+    <string name="ticketDetail_ticketBuildingLabel">Building</string>
+    <string name="ticketDetail_ticketManagerLabel">Manager</string>
+    <string name="ticketDetail_ticketFloorLabel">Floor</string>
+    <string name="ticketDetail_ticketOfficeLabel">Office</string>
+    <string name="ticketDetail_ticketCompanyLabel">Company</string>
+    <string name="ticketDetail_ticketDescriptionLabel">Description</string>
+
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="ticketDetail_noManagerFlavour">No manager</string>
+    <string name="ticketDetail_noCompanyFlavour">No company assigned</string>
+    <string name="ticketDetail_noBuildingFlavour">None</string>
 </resources>
