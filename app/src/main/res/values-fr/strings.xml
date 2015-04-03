@@ -36,15 +36,16 @@
     <string name="ticketDetail_tabNameComments">Commentaires</string>
     <string name="ticketDetail_tabNameHistory">Historique</string>
     <string name="title_activity_ticket_detail">Détail ticket</string>
-    <string name="ticketDetail_paramUnpackError">Error while treating your request, please try again.</string>
-    <string name="ticketDetail_ticketReporterLabel">Ticket reporter</string>
-    <string name="ticketDetail_ticketBuildingLabel">Building</string>
-    <string name="ticketDetail_ticketManagerLabel">Manager</string>
-    <string name="ticketDetail_ticketFloorLabel">Floor</string>
-    <string name="ticketDetail_ticketOfficeLabel">Office</string>
-    <string name="ticketDetail_ticketCompanyLabel">Company</string>
+    <string name="ticketDetail_paramUnpackError">Erreur lors du traitement de votre requête, veuillez réessayer.</string>
+    <string name="ticketDetail_ticketReporterLabel">Instigateur du ticket</string>
+    <string name="ticketDetail_ticketBuildingLabel">Bâtiment</string>
+    <string name="ticketDetail_ticketManagerLabel">Gestionnaire</string>
+    <string name="ticketDetail_ticketFloorLabel">Étage</string>
+    <string name="ticketDetail_ticketOfficeLabel">Bureau</string>
+    <string name="ticketDetail_ticketCompanyLabel">Entreprise</string>
     <string name="ticketDetail_ticketDescriptionLabel">Description</string>
-    <string name="ticketDetail_noManagerFlavour">No manager</string>
-    <string name="ticketDetail_noCompanyFlavour">No company assigned</string>
-    <string name="ticketDetail_noBuildingFlavour">None</string>
+    <string name="ticketDetail_noManagerFlavour">Aucun gestionnaire</string>
+    <string name="ticketDetail_noCompanyFlavour">Pas d\'entreprise assignée</string>
+    <string name="ticketDetail_noBuildingFlavour">Aucun</string>
+    <string name="ticketComment_title">Commentaires sur ce ticket</string>
 </resources>

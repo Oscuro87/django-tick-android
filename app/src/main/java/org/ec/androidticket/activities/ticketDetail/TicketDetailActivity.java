@@ -1,21 +1,17 @@
 package org.ec.androidticket.activities.ticketDetail;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v4.view.ViewPager;
-import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Toast;
 
 import com.squareup.otto.Subscribe;
 
 import org.ec.androidticket.R;
-import org.ec.androidticket.activities.custom.MyActionBarActivity;
+import org.ec.androidticket.activities.MyActionBarActivity;
 import org.ec.androidticket.activities.ticketDetail.adapters.TicketDetailPagerAdapter;
 import org.ec.androidticket.activities.ticketDetail.fragments.TicketFragmentInterface;
 import org.ec.androidticket.backend.Async.events.ticketEvents.FullTicketRequestEvent;

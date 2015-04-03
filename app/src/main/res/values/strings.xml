@@ -48,8 +48,10 @@
     <string name="ticketDetail_ticketDescriptionLabel">Description</string>
 
 <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
     <string name="ticketDetail_noManagerFlavour">No manager</string>
     <string name="ticketDetail_noCompanyFlavour">No company assigned</string>
     <string name="ticketDetail_noBuildingFlavour">None</string>
+    <string name="ticketComment_title">Comments on this ticket</string>
+    <string name="ticketComment_createCommentButtonFlavour">Post a comment</string>
 </resources>

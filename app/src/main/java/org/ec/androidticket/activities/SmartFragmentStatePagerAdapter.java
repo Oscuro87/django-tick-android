@@ -1,4 +1,4 @@
-package org.ec.androidticket.activities.custom;
+package org.ec.androidticket.activities;
 
 // Source: https://gist.github.com/nesquena/c715c9b22fb873b1d259 & https://github.com/codepath/android_guides/wiki/ViewPager-with-FragmentPagerAdapter
 

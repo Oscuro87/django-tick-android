@@ -1,7 +1,38 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
              xmlns:tools="http://schemas.android.com/tools"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
              tools:context="org.ec.androidticket.activities.ticketDetail.fragments.TicketCommentFragment">
 
-</FrameLayout>
+    <TableRow
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:paddingBottom="20dp"
+        android:id="@+id/header">
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Headline"
+            android:text="@string/ticketComment_title"
+            android:id="@+id/textView2"
+            android:layout_weight="1"/>
+    </TableRow>
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:id="@+id/postAComment">
+
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/ticketComment_createCommentButtonFlavour"
+            android:id="@+id/button"
+            android:layout_column="0"
+            android:layout_gravity="top"
+            android:layout_weight="1"/>
+    </TableRow>
+
+</TableLayout>

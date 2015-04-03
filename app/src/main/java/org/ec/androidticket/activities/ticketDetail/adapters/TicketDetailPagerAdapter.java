@@ -3,7 +3,7 @@ package org.ec.androidticket.activities.ticketDetail.adapters;
 import android.app.Fragment;
 import android.app.FragmentManager;
 
-import org.ec.androidticket.activities.custom.SmartFragmentStatePagerAdapter;
+import org.ec.androidticket.activities.SmartFragmentStatePagerAdapter;
 import org.ec.androidticket.activities.ticketDetail.fragments.TicketCommentFragment;
 import org.ec.androidticket.activities.ticketDetail.fragments.TicketDetailFragment;
 
