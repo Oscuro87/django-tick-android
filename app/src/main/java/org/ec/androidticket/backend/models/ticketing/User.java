@@ -5,8 +5,9 @@ import com.google.gson.annotations.SerializedName;
 
 public class User
 {
+    @SerializedName("pk")
     @Expose
-    private Integer pk;
+    private Integer userID;
     @SerializedName("first_name")
     @Expose
     private String firstName;
@@ -23,11 +24,11 @@ public class User
     private Boolean isStaff;
 
     public Integer getPk() {
-        return pk;
+        return userID;
     }
 
-    public void setPk(Integer pk) {
-        this.pk = pk;
+    public void setPk(Integer newUserID) {
+        this.userID = newUserID;
     }
 
     public String getFirstName() {

@@ -6,6 +6,7 @@ public class UserDataCache
 {
     private static UserDataCache instance;
 
+    private int userID;
     private String authtoken;
     private boolean loggedIn;
     private String email;
@@ -27,6 +28,7 @@ public class UserDataCache
 
     public void purge()
     {
+        this.userID = -1;
         this.authtoken = "";
         this.loggedIn = false;
         this.email = "";
@@ -39,6 +41,7 @@ public class UserDataCache
     {
         setAuthtoken(event.authtoken);
         setLoggedIn(true);
+        setUserID(event.pk);
         setStaff(event.is_staff);
         setActive(event.is_active);
         setEmail(event.email);
@@ -49,6 +52,11 @@ public class UserDataCache
     public String getAuthtoken()
     {
         return authtoken;
+    }
+
+    public int getUserID()
+    {
+        return userID;
     }
 
     public String getEmail()
@@ -119,5 +127,10 @@ public class UserDataCache
     public void setAuthtoken(String authtoken)
     {
         this.authtoken = authtoken;
+    }
+
+    public void setUserID(int userID)
+    {
+        this.userID = userID;
     }
 }
