@@ -5,12 +5,16 @@ import com.google.gson.annotations.SerializedName;
 
 public class Building
 {
+    @SerializedName("country")
     @Expose
     private String country;
+    @SerializedName("address")
     @Expose
     private String address;
+    @SerializedName("vicinity")
     @Expose
     private String vicinity;
+    @SerializedName("postcode")
     @Expose
     private String postcode;
     @SerializedName("building_name")

@@ -11,6 +11,7 @@ public class Category
     @SerializedName("fk_priority")
     @Expose
     private Priority priority;
+    @SerializedName("label")
     @Expose
     private String label;
 

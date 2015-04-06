@@ -60,4 +60,17 @@
     <string name="ticketHistory_title">Ticket history</string>
     <string name="ticketHistoryRow_dateUpdatedLabel">Update date :</string>
     <string name="ticketHistoryRow_newStatusLabel">New ticket status :</string>
+    <string name="title_activity_create_ticket">CreateTicketActivity</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="ticketCreate_title">Create a ticket</string>
+    <string name="createTicket_category">Category</string>
+    <string name="ticketCreate_category">Category</string>
+    <string name="ticketCreate_subcategory">Subcategory</string>
+    <string name="ticketCreate_building">Building</string>
+    <string name="ticketCreate_floor">Floor</string>
+    <string name="ticketCreate_office">Office</string>
+    <string name="ticketCreate_description">Description\\n(max. 200 words)</string>
+    <string name="ticketCreate_sendButton">Post the ticket</string>
+    <string name="ticketCreate_descriptionGreyText">Problem description</string>
 </resources>

@@ -36,6 +36,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activities.home.TicketHomeActivity" />
         </activity>
+        <activity
+            android:name=".activities.createTicket.CreateTicketActivity"
+            android:label="@string/title_activity_create_ticket"
+            android:parentActivityName=".activities.home.TicketHomeActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="org.ec.androidticket.activities.home.TicketHomeActivity" />
+        </activity>
     </application>
 
 </manifest>
