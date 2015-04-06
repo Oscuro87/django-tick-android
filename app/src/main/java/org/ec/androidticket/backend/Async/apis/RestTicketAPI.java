@@ -21,6 +21,11 @@ import retrofit.http.Header;
 import retrofit.http.POST;
 
 /**
+ * http://stackoverflow.com/questions/24049434/android-retrofit-post-custom-object-send-json-to-server
+ */
+
+
+/**
  * Contient l'API utilisable par toute l'application pour faire des requêtes REST vers le web service.
  * Configuration de l'adresse du web service : GlobalSettings.java
  */
@@ -74,6 +79,8 @@ public interface RestTicketAPI
     /*
     NOTE: Pour envoyer une photo via une requête http, utiliser l'annotation @MultiPart
      */
+
+
 
     /**
      * Requête envoyée au web service pour créer un ticket dans la DB.
