@@ -7,13 +7,24 @@ import com.squareup.otto.Subscribe;
 
 import org.ec.androidticket.backend.Async.BusDepot;
 import org.ec.androidticket.backend.Async.RESTClient;
-import org.ec.androidticket.backend.Async.events.ticketEvents.FullTicketFailureResponseEvent;
+import org.ec.androidticket.backend.Async.events.ticketEvents.CommentRequestEvent;
+import org.ec.androidticket.backend.Async.events.ticketEvents.CommentRequestFailureEvent;
+import org.ec.androidticket.backend.Async.events.ticketEvents.CommentRequestSuccessEvent;
+import org.ec.androidticket.backend.Async.events.ticketEvents.FullTicketRequestFailureEvent;
 import org.ec.androidticket.backend.Async.events.ticketEvents.FullTicketRequestEvent;
-import org.ec.androidticket.backend.Async.events.ticketEvents.FullTicketSuccessResponseEvent;
+import org.ec.androidticket.backend.Async.events.ticketEvents.FullTicketRequestSuccessEvent;
+import org.ec.androidticket.backend.Async.events.ticketEvents.HistoryRequestEvent;
+import org.ec.androidticket.backend.Async.events.ticketEvents.HistoryRequestFailureEvent;
+import org.ec.androidticket.backend.Async.events.ticketEvents.HistoryRequestSuccessEvent;
 import org.ec.androidticket.backend.Async.events.ticketEvents.SimpleTicketRequestEvent;
-import org.ec.androidticket.backend.Async.events.ticketEvents.SimpleTicketRequestResponseEvent;
+import org.ec.androidticket.backend.Async.events.ticketEvents.SimpleTicketRequestSuccessEvent;
+import org.ec.androidticket.backend.models.ticketing.CommentDiet;
+import org.ec.androidticket.backend.models.ticketing.ErrorResponse;
 import org.ec.androidticket.backend.models.ticketing.FullTicket;
+import org.ec.androidticket.backend.models.ticketing.HistoryDiet;
 import org.ec.androidticket.backend.models.ticketing.Tickets;
+
+import java.util.List;
 
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -48,7 +59,7 @@ public class TicketService
                     @Override
                     public void success(Tickets tickets, Response response)
                     {
-                        bus.post(new SimpleTicketRequestResponseEvent(tickets.getTickets()));
+                        bus.post(new SimpleTicketRequestSuccessEvent(tickets.getTickets()));
                     }
 
                     @Override
@@ -72,14 +83,64 @@ public class TicketService
                     public void success(FullTicket ticket, Response response)
                     {
                         Log.i("CustomLog", "Successfully retrieved ticket information for ticket code: " + ticket.getTicketCode());
-                        bus.post(new FullTicketSuccessResponseEvent(ticket));
+                        bus.post(new FullTicketRequestSuccessEvent(ticket));
                     }
 
                     @Override
                     public void failure(RetrofitError error)
                     {
                         Log.e("CustomLog", "Failed to retrieve ticket informations:\n" + error.getMessage());
-                        bus.post(new FullTicketFailureResponseEvent(error.getMessage()));
+                        bus.post(new FullTicketRequestFailureEvent(error.getMessage()));
+                    }
+                }
+        );
+    }
+
+    @Subscribe
+    public void onCommentRequest(CommentRequestEvent event)
+    {
+        RESTClient.getTicketAPI().requestTicketComments(
+                event.getAuthtoken(),
+                event.getTicketCode(),
+                new Callback<List<CommentDiet>>()
+                {
+                    @Override
+                    public void success(List<CommentDiet> commentDiets, Response response)
+                    {
+                        Log.i("CustomLog", "Retrieved ticket comments");
+                        bus.post(new CommentRequestSuccessEvent(commentDiets));
+                    }
+
+                    @Override
+                    public void failure(RetrofitError error)
+                    {
+                        Log.e("CustomLog", "Error retrieving ticket comments: " + error.getMessage());
+                        bus.post(new CommentRequestFailureEvent(error.getMessage()));
+                    }
+                }
+        );
+    }
+
+    @Subscribe
+    public void onHistoryRequest(HistoryRequestEvent event)
+    {
+        RESTClient.getTicketAPI().requestTicketHistory(
+                event.getAuthtoken(),
+                event.getTicketCode(),
+                new Callback<List<HistoryDiet>>()
+                {
+                    @Override
+                    public void success(List<HistoryDiet> historyDiets, Response response)
+                    {
+                        Log.i("CustomLog", "Retrieved ticket history");
+                        bus.post(new HistoryRequestSuccessEvent(historyDiets));
+                    }
+
+                    @Override
+                    public void failure(RetrofitError error)
+                    {
+                        Log.e("CustomLog", "Error retrieving ticket comments: " + error.getMessage());
+                        bus.post(new HistoryRequestFailureEvent(error.getMessage()));
                     }
                 }
         );

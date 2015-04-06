@@ -6,22 +6,28 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 
 import org.ec.androidticket.R;
+import org.ec.androidticket.activities.ticketDetail.adapters.HistoryListViewAdapter;
+import org.ec.androidticket.backend.models.internal.FullTicketCache;
+import org.ec.androidticket.backend.models.ticketing.HistoryDiet;
 
-public class TicketHistoryFragment extends Fragment
+import java.util.List;
+
+public class TicketHistoryFragment extends Fragment implements TicketFragmentInterface
 {
+    private ListView historyList;
+
     public TicketHistoryFragment()
     {
         // Required empty public constructor
     }
 
-    public static TicketHistoryFragment newInstance(String param1, String param2)
+    public static TicketHistoryFragment newInstance()
     {
         TicketHistoryFragment fragment = new TicketHistoryFragment();
         Bundle args = new Bundle();
-//        args.putString(ARG_PARAM1, param1);
-//        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -32,8 +38,7 @@ public class TicketHistoryFragment extends Fragment
         super.onCreate(savedInstanceState);
         if (getArguments() != null)
         {
-//            mParam1 = getArguments().getString(ARG_PARAM1);
-//            mParam2 = getArguments().getString(ARG_PARAM2);
+
         }
     }
 
@@ -43,5 +48,23 @@ public class TicketHistoryFragment extends Fragment
     {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_ticket_history, container, false);
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState)
+    {
+        super.onViewCreated(view, savedInstanceState);
+
+        historyList = (ListView) view.findViewById(R.id.historyListView);
+        historyList.setAdapter(new HistoryListViewAdapter(view.getContext(), FullTicketCache.get().getHistoryCache()));
+    }
+
+    @Override
+    public void onRefreshRequested()
+    {
+        List<HistoryDiet> historyCache = FullTicketCache.get().getHistoryCache();
+        if(historyCache == null) return;
+
+        ((HistoryListViewAdapter)this.historyList.getAdapter()).updateSourceList(historyCache);
     }
 }

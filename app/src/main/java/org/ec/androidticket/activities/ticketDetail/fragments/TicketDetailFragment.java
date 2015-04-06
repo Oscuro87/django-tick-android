@@ -9,7 +9,6 @@ import android.widget.TextView;
 
 import org.ec.androidticket.R;
 import org.ec.androidticket.backend.models.internal.FullTicketCache;
-import org.ec.androidticket.backend.models.ticketing.Company;
 import org.ec.androidticket.backend.models.ticketing.FullTicket;
 
 public class TicketDetailFragment extends Fragment implements TicketFragmentInterface
@@ -100,7 +99,13 @@ public class TicketDetailFragment extends Fragment implements TicketFragmentInte
     @Override
     public void onRefreshRequested()
     {
-        FullTicket ticket = FullTicketCache.get().getTicketInformations();
+        refreshMe();
+    }
+
+    private void refreshMe()
+    {
+        FullTicket ticket = FullTicketCache.get().getTicketCache();
+        if(ticket == null) return;
 
         codeTV.setText(ticket.getTicketCode());
         statusTV.setText(ticket.getStatus().getLabel());

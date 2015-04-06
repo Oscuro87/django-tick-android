@@ -4,11 +4,11 @@ import org.ec.androidticket.backend.models.ticketing.Ticket;
 
 import java.util.List;
 
-public class SimpleTicketRequestResponseEvent
+public class SimpleTicketRequestSuccessEvent
 {
     private List<Ticket> tickets;
 
-    public SimpleTicketRequestResponseEvent(List<Ticket> tickets)
+    public SimpleTicketRequestSuccessEvent(List<Ticket> tickets)
     {
         this.tickets = tickets;
     }

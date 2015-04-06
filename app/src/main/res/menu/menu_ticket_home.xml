@@ -2,16 +2,19 @@
       xmlns:app="http://schemas.android.com/apk/res-auto"
       xmlns:tools="http://schemas.android.com/tools"
       tools:context="org.ec.androidticket.activities.home.TicketHomeActivity">
-    <item android:id="@+id/action_logout"
-          android:title="@string/action_logout"
-          android:orderInCategory="100"
-          app:showAsAction="never"/>
-    <item android:id="@+id/action_createTicket"
-          android:title="@string/action_create_ticket"
-          android:orderInCategory="1"
-          app:showAsAction="never" />
-    <item android:id="@+id/action_createBuilding"
-          android:title="@string/action_create_building"
-          android:orderInCategory="1"
-          app:showAsAction="never" />
+    <item
+        android:id="@+id/action_logout"
+        android:orderInCategory="100"
+        android:title="@string/action_logout"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/action_createTicket"
+        android:orderInCategory="1"
+        android:title="@string/action_create_ticket"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/action_createBuilding"
+        android:orderInCategory="1"
+        android:title="@string/action_create_building"
+        app:showAsAction="never"/>
 </menu>

@@ -39,9 +39,6 @@ public class FullTicket
     private String floor;
     @Expose
     private String office;
-    @SerializedName("intervention_date")
-    @Expose
-    private Date interventionDate;
     @Expose
     private String description;
 
@@ -153,16 +150,6 @@ public class FullTicket
     public void setOffice(String office)
     {
         this.office = office;
-    }
-
-    public Date getInterventionDate()
-    {
-        return interventionDate;
-    }
-
-    public void setInterventionDate(Date interventionDate)
-    {
-        this.interventionDate = interventionDate;
     }
 
     public String getDescription()

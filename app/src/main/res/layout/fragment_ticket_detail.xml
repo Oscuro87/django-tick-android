@@ -1,53 +1,53 @@
 <ScrollView
-    android:layout_height="fill_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    android:layout_height="fill_parent">
 
     <TableLayout
+        android:id="@+id/ticketDetail_FragmentGridLayout"
+        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:shrinkColumns="1"
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/ticketDetail_FragmentGridLayout">
+        android:shrinkColumns="1">
 
         <TableRow>
             <!-- Title -->
             <TextView
+                android:id="@+id/title"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:textAlignment="center"
-                android:textSize="20sp"
-                android:textColor="#FF000000"
                 android:layout_column="0"
                 android:layout_columnSpan="2"
-                android:id="@+id/title"
+                android:layout_gravity="top|left"
+                android:gravity="center"
                 android:text="@string/ticketDetail_title"
-                android:layout_gravity="top|left"/>
+                android:textAlignment="center"
+                android:textColor="#FF000000"
+                android:textSize="20sp"/>
         </TableRow>
 
         <TableRow>
             <!-- Ticket code -->
             <TextView
+                android:id="@+id/ticketCodeLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/ticketDetail_ticketCodeLabel"
-                android:id="@+id/ticketCodeLabel"
-                android:textColor="#FF909090"
                 android:layout_column="0"
+                android:layout_gravity="top|left"
                 android:gravity="start"
                 android:paddingEnd="20dp"
-                android:layout_gravity="top|left"/>
+                android:text="@string/ticketDetail_ticketCodeLabel"
+                android:textColor="#FF909090"/>
 
             <TextView
+                android:id="@+id/ticketDetail_ticketCode"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="#FF000000"
-                android:id="@+id/ticketDetail_ticketCode"
-                android:layout_row="2"
                 android:layout_column="1"
+                android:layout_gravity="top|left"
+                android:layout_row="2"
                 android:gravity="end"
-                android:layout_gravity="top|left"/>
+                android:textColor="#FF000000"/>
         </TableRow>
 
         <!-- Ticket status -->
@@ -55,26 +55,26 @@
         <TableRow>
 
             <TextView
+                android:id="@+id/ticketStatusLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/ticketDetail_ticketStatusLabel"
-                android:id="@+id/ticketStatusLabel"
-                android:textColor="#FF909090"
-                android:layout_row="3"
                 android:layout_column="0"
+                android:layout_gravity="top|left"
+                android:layout_row="3"
                 android:gravity="start"
                 android:paddingEnd="20dp"
-                android:layout_gravity="top|left"/>
+                android:text="@string/ticketDetail_ticketStatusLabel"
+                android:textColor="#FF909090"/>
 
             <TextView
+                android:id="@+id/ticketDetail_ticketStatus"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="#FF000000"
-                android:id="@+id/ticketDetail_ticketStatus"
-                android:layout_row="3"
                 android:layout_column="1"
+                android:layout_gravity="top|left"
+                android:layout_row="3"
                 android:gravity="end"
-                android:layout_gravity="top|left"/>
+                android:textColor="#FF000000"/>
         </TableRow>
 
         <!-- Ticket category -->
@@ -82,26 +82,26 @@
         <TableRow>
 
             <TextView
+                android:id="@+id/ticketCategoryLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/ticketDetail_ticketCategoryLabel"
-                android:id="@+id/ticketCategoryLabel"
-                android:textColor="#FF909090"
-                android:layout_row="4"
                 android:layout_column="0"
+                android:layout_gravity="top|left"
+                android:layout_row="4"
                 android:gravity="start"
                 android:paddingEnd="20dp"
-                android:layout_gravity="top|left"/>
+                android:text="@string/ticketDetail_ticketCategoryLabel"
+                android:textColor="#FF909090"/>
 
             <TextView
+                android:id="@+id/ticketDetail_ticketCategory"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="#FF000000"
-                android:id="@+id/ticketDetail_ticketCategory"
-                android:layout_row="4"
                 android:layout_column="1"
+                android:layout_gravity="top|left"
+                android:layout_row="4"
                 android:gravity="end"
-                android:layout_gravity="top|left"/>
+                android:textColor="#FF000000"/>
         </TableRow>
 
         <!-- Ticket subcategory -->
@@ -109,26 +109,26 @@
         <TableRow>
 
             <TextView
+                android:id="@+id/ticketSubcategoryLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/ticketDetail_ticketSubcategoryLabel"
-                android:id="@+id/ticketSubcategoryLabel"
-                android:textColor="#FF909090"
-                android:layout_row="5"
                 android:layout_column="0"
+                android:layout_gravity="top|left"
+                android:layout_row="5"
                 android:gravity="start"
                 android:paddingEnd="20dp"
-                android:layout_gravity="top|left"/>
+                android:text="@string/ticketDetail_ticketSubcategoryLabel"
+                android:textColor="#FF909090"/>
 
             <TextView
+                android:id="@+id/ticketDetail_ticketSubcategory"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="#FF000000"
-                android:id="@+id/ticketDetail_ticketSubcategory"
-                android:layout_row="5"
                 android:layout_column="1"
+                android:layout_gravity="top|left"
+                android:layout_row="5"
                 android:gravity="end"
-                android:layout_gravity="top|left"/>
+                android:textColor="#FF000000"/>
         </TableRow>
 
         <!-- Ticket building -->
@@ -136,181 +136,181 @@
         <TableRow>
 
             <TextView
+                android:id="@+id/ticketBuildingLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/ticketDetail_ticketBuildingLabel"
-                android:id="@+id/ticketBuildingLabel"
-                android:textColor="#FF909090"
-                android:layout_row="6"
                 android:layout_column="0"
+                android:layout_gravity="top|left"
+                android:layout_row="6"
                 android:gravity="start"
                 android:paddingEnd="20dp"
-                android:layout_gravity="top|left"/>
+                android:text="@string/ticketDetail_ticketBuildingLabel"
+                android:textColor="#FF909090"/>
 
             <TextView
+                android:id="@+id/ticketDetail_ticketBuilding"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="#FF000000"
-                android:id="@+id/ticketDetail_ticketBuilding"
-                android:layout_row="6"
                 android:layout_column="1"
+                android:layout_gravity="top|left"
+                android:layout_row="6"
                 android:gravity="end"
-                android:layout_gravity="top|left"/>
+                android:textColor="#FF000000"/>
         </TableRow>
 
         <!-- Floor -->
         <TableRow>
 
             <TextView
+                android:id="@+id/ticketFloorLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/ticketDetail_ticketFloorLabel"
-                android:id="@+id/ticketFloorLabel"
-                android:textColor="#FF909090"
-                android:layout_row="7"
                 android:layout_column="0"
+                android:layout_gravity="top|left"
+                android:layout_row="7"
                 android:gravity="start"
                 android:paddingEnd="20dp"
-                android:layout_gravity="top|left"/>
+                android:text="@string/ticketDetail_ticketFloorLabel"
+                android:textColor="#FF909090"/>
 
             <TextView
+                android:id="@+id/ticketDetail_ticketFloor"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="#FF000000"
-                android:id="@+id/ticketDetail_ticketFloor"
-                android:layout_row="7"
                 android:layout_column="1"
+                android:layout_gravity="top|left"
+                android:layout_row="7"
                 android:gravity="end"
-                android:layout_gravity="top|left"/>
+                android:textColor="#FF000000"/>
         </TableRow>
 
         <!-- Office -->
         <TableRow>
 
             <TextView
+                android:id="@+id/ticketOfficeLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/ticketDetail_ticketOfficeLabel"
-                android:id="@+id/ticketOfficeLabel"
-                android:textColor="#FF909090"
-                android:layout_row="8"
                 android:layout_column="0"
+                android:layout_gravity="top|left"
+                android:layout_row="8"
                 android:gravity="start"
                 android:paddingEnd="20dp"
-                android:layout_gravity="top|left"/>
+                android:text="@string/ticketDetail_ticketOfficeLabel"
+                android:textColor="#FF909090"/>
 
             <TextView
+                android:id="@+id/ticketDetail_ticketOffice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="#FF000000"
-                android:id="@+id/ticketDetail_ticketOffice"
-                android:layout_row="8"
                 android:layout_column="1"
+                android:layout_gravity="top|left"
+                android:layout_row="8"
                 android:gravity="end"
-                android:layout_gravity="top|left"/>
+                android:textColor="#FF000000"/>
         </TableRow>
 
         <!-- Ticket reporter -->
         <TableRow>
 
             <TextView
+                android:id="@+id/ticketDetail_reporterLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/ticketDetail_ticketReporterLabel"
-                android:id="@+id/ticketDetail_reporterLabel"
-                android:textColor="#FF909090"
-                android:layout_row="9"
                 android:layout_column="0"
+                android:layout_gravity="top|left"
+                android:layout_row="9"
                 android:gravity="start"
                 android:paddingEnd="20dp"
-                android:layout_gravity="top|left"/>
+                android:text="@string/ticketDetail_ticketReporterLabel"
+                android:textColor="#FF909090"/>
 
             <TextView
+                android:id="@+id/ticketDetail_ticketReporter"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="#FF000000"
-                android:id="@+id/ticketDetail_ticketReporter"
-                android:layout_row="9"
                 android:layout_column="1"
+                android:layout_gravity="top|left"
+                android:layout_row="9"
                 android:gravity="end"
-                android:layout_gravity="top|left"/>
+                android:textColor="#FF000000"/>
         </TableRow>
 
         <!-- Ticket manager -->
         <TableRow>
 
             <TextView
+                android:id="@+id/ticketManagerLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/ticketDetail_ticketManagerLabel"
-                android:id="@+id/ticketManagerLabel"
-                android:textColor="#FF909090"
-                android:layout_row="10"
                 android:layout_column="0"
+                android:layout_gravity="top|left"
+                android:layout_row="10"
                 android:gravity="start"
                 android:paddingEnd="20dp"
-                android:layout_gravity="top|left"/>
+                android:text="@string/ticketDetail_ticketManagerLabel"
+                android:textColor="#FF909090"/>
 
             <TextView
+                android:id="@+id/ticketDetail_ticketManager"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="#FF000000"
-                android:id="@+id/ticketDetail_ticketManager"
-                android:layout_row="10"
                 android:layout_column="1"
+                android:layout_gravity="top|left"
+                android:layout_row="10"
                 android:gravity="end"
-                android:layout_gravity="top|left"/>
+                android:textColor="#FF000000"/>
         </TableRow>
 
         <!-- Company -->
         <TableRow>
 
             <TextView
+                android:id="@+id/ticketCompanyLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/ticketDetail_ticketCompanyLabel"
-                android:id="@+id/ticketCompanyLabel"
-                android:textColor="#FF909090"
-                android:layout_row="11"
                 android:layout_column="0"
+                android:layout_gravity="top|left"
+                android:layout_row="11"
                 android:gravity="start"
                 android:paddingEnd="20dp"
-                android:layout_gravity="top|left"/>
+                android:text="@string/ticketDetail_ticketCompanyLabel"
+                android:textColor="#FF909090"/>
 
             <TextView
+                android:id="@+id/ticketDetail_ticketCompany"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="#FF000000"
-                android:id="@+id/ticketDetail_ticketCompany"
-                android:layout_row="11"
                 android:layout_column="1"
+                android:layout_gravity="top|left"
+                android:layout_row="11"
                 android:gravity="end"
-                android:layout_gravity="top|left"/>
+                android:textColor="#FF000000"/>
         </TableRow>
 
         <!-- Description -->
         <TableRow>
 
             <TextView
+                android:id="@+id/ticketDescriptionLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/ticketDetail_ticketDescriptionLabel"
-                android:id="@+id/ticketDescriptionLabel"
-                android:textColor="#FF909090"
                 android:layout_column="0"
+                android:layout_gravity="top|start"
                 android:gravity="start"
                 android:paddingEnd="20dp"
-                android:layout_gravity="top|start"/>
+                android:text="@string/ticketDetail_ticketDescriptionLabel"
+                android:textColor="#FF909090"/>
 
             <TextView
+                android:id="@+id/ticketDetail_ticketDescription"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="#FF000000"
-                android:id="@+id/ticketDetail_ticketDescription"
                 android:layout_column="1"
-                android:gravity="start"
                 android:layout_gravity="top|start"
-                android:clickable="true"/>
+                android:clickable="true"
+                android:gravity="start"
+                android:textColor="#FF000000"/>
         </TableRow>
     </TableLayout>
 </ScrollView>

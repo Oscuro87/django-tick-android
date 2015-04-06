@@ -1,20 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
               android:layout_width="fill_parent"
-              android:layout_height="wrap_content">
+              android:layout_height="wrap_content"
+              android:orientation="vertical">
+
     <TextView
         android:id="@+id/simple_ticket_code"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="@string/simple_ticket_code_caption"
         android:textColor="#000000"
-        android:textSize="20sp" />
+        android:textSize="20sp"/>
+
     <TextView
         android:id="@+id/simple_ticket_status"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="@string/simple_ticket_status_caption"
         android:textColor="#ff909090"
-        android:textSize="16sp" />
+        android:textSize="16sp"/>
 </LinearLayout>

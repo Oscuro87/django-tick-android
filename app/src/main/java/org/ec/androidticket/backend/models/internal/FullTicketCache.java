@@ -1,6 +1,10 @@
 package org.ec.androidticket.backend.models.internal;
 
+import org.ec.androidticket.backend.models.ticketing.CommentDiet;
 import org.ec.androidticket.backend.models.ticketing.FullTicket;
+import org.ec.androidticket.backend.models.ticketing.HistoryDiet;
+
+import java.util.List;
 
 /**
  * Cache pour les informations complètes d'un ticket.
@@ -12,14 +16,12 @@ import org.ec.androidticket.backend.models.ticketing.FullTicket;
 public class FullTicketCache
 {
     private static FullTicketCache inst;
-
-    private FullTicket ticketInformations;
-    // TODO private List<TicketComment> comments;
-    // TODO private List<TicketHistory> historique;
+    private FullTicket ticketCache;
+    private List<CommentDiet> commentCache;
+    private List<HistoryDiet> historyCache;
 
     private FullTicketCache()
     {
-        ticketInformations = new FullTicket();
     }
 
     public static FullTicketCache get()
@@ -29,13 +31,40 @@ public class FullTicketCache
         return inst;
     }
 
-    public FullTicket getTicketInformations()
+    public void purgeCache()
     {
-        return ticketInformations;
+        ticketCache = null;
+        commentCache = null;
+        historyCache = null;
     }
 
-    public void setTicketInformations(FullTicket ticketInformations)
+    public FullTicket getTicketCache()
     {
-        this.ticketInformations = ticketInformations;
+        return ticketCache;
+    }
+
+    public List<CommentDiet> getCommentCache()
+    {
+        return commentCache;
+    }
+
+    public List<HistoryDiet> getHistoryCache()
+    {
+        return historyCache;
+    }
+
+    public void setTicketCache(FullTicket ticketCache)
+    {
+        this.ticketCache = ticketCache;
+    }
+
+    public void setCommentCache(List<CommentDiet> comments)
+    {
+        this.commentCache = comments;
+    }
+
+    public void setHistoryCache(List<HistoryDiet> histories)
+    {
+        this.historyCache = histories;
     }
 }

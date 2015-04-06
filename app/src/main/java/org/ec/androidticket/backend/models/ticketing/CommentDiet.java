@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.Date;
 
-public class DietComment
+public class CommentDiet
 {
     @SerializedName("comment")
     @Expose
@@ -19,7 +19,7 @@ public class DietComment
     @Expose
     private String commenterName;
 
-    public DietComment(String commentText, Date dateCreated, String commenterName)
+    public CommentDiet(String commentText, Date dateCreated, String commenterName)
     {
         this.commentText = commentText;
         this.dateCreated = dateCreated;

@@ -23,7 +23,7 @@ import org.ec.androidticket.activities.ticketDetail.TicketDetailActivity;
 import org.ec.androidticket.backend.Async.events.loginEvents.LoggedOutEvent;
 import org.ec.androidticket.backend.Async.events.loginEvents.LogoutEvent;
 import org.ec.androidticket.backend.Async.events.ticketEvents.SimpleTicketRequestEvent;
-import org.ec.androidticket.backend.Async.events.ticketEvents.SimpleTicketRequestResponseEvent;
+import org.ec.androidticket.backend.Async.events.ticketEvents.SimpleTicketRequestSuccessEvent;
 import org.ec.androidticket.backend.models.internal.UserDataCache;
 import org.ec.androidticket.backend.models.internal.SimpleTicketCache;
 import org.ec.androidticket.backend.models.ticketing.Ticket;
@@ -141,7 +141,7 @@ public class TicketHomeActivity extends MyActionBarActivity implements SearchVie
     }
 
     @Subscribe
-    public void onSimpleTicketRequestResponse(SimpleTicketRequestResponseEvent event)
+    public void onSimpleTicketRequestResponse(SimpleTicketRequestSuccessEvent event)
     {
         List<Ticket> ticketList = event.getTickets();
 

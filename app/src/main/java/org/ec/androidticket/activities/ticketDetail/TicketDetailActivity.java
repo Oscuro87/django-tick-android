@@ -13,18 +13,26 @@ import com.squareup.otto.Subscribe;
 import org.ec.androidticket.R;
 import org.ec.androidticket.activities.MyActionBarActivity;
 import org.ec.androidticket.activities.ticketDetail.adapters.TicketDetailPagerAdapter;
-import org.ec.androidticket.activities.ticketDetail.fragments.TicketFragmentInterface;
+import org.ec.androidticket.activities.ticketDetail.fragments.TicketCommentFragment;
+import org.ec.androidticket.activities.ticketDetail.fragments.TicketDetailFragment;
+import org.ec.androidticket.activities.ticketDetail.fragments.TicketHistoryFragment;
+import org.ec.androidticket.backend.Async.events.ticketEvents.CommentRequestEvent;
+import org.ec.androidticket.backend.Async.events.ticketEvents.CommentRequestFailureEvent;
+import org.ec.androidticket.backend.Async.events.ticketEvents.CommentRequestSuccessEvent;
 import org.ec.androidticket.backend.Async.events.ticketEvents.FullTicketRequestEvent;
-import org.ec.androidticket.backend.Async.events.ticketEvents.FullTicketSuccessResponseEvent;
+import org.ec.androidticket.backend.Async.events.ticketEvents.FullTicketRequestFailureEvent;
+import org.ec.androidticket.backend.Async.events.ticketEvents.FullTicketRequestSuccessEvent;
+import org.ec.androidticket.backend.Async.events.ticketEvents.HistoryRequestEvent;
+import org.ec.androidticket.backend.Async.events.ticketEvents.HistoryRequestFailureEvent;
+import org.ec.androidticket.backend.Async.events.ticketEvents.HistoryRequestSuccessEvent;
 import org.ec.androidticket.backend.models.internal.FullTicketCache;
 import org.ec.androidticket.backend.models.internal.UserDataCache;
-import org.ec.androidticket.backend.models.ticketing.FullTicket;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Vue détaillée d'un ticket, divisée en 3 parties:
+ * Vue détaillée d'un ticket, divisée en 3 parties (fragments):
  * La vue ticket contenant toutes ses informations
  * La vue commentaires qui permet de consulter ou écrire un nouveau commentaire
  * La vue historique ticket
@@ -65,7 +73,7 @@ public class TicketDetailActivity extends MyActionBarActivity implements android
         if (params != null)
         {
             this.ticketCode = params.getString("ticketCode");
-            requestFullTicketInformations(ticketCode);
+            requestTicketInfo(ticketCode);
             return true;
         } else
         {
@@ -74,22 +82,12 @@ public class TicketDetailActivity extends MyActionBarActivity implements android
         }
     }
 
-    private void requestFullTicketInformations(String ticketCode)
+    private void requestTicketInfo(String ticketCode)
     {
-        // Ne demander les informations ticket que si le cache est périmé. (ou si l'utilisateur demande un refresh)
         FullTicketCache cache = FullTicketCache.get();
-        if (cache.getTicketInformations().getTicketCode() == null)
-        {
-            bus.post(new FullTicketRequestEvent("Token " + UserDataCache.get().getAuthtoken(), ticketCode));
-        }
-        else
-        {
-            if(!FullTicketCache.get().getTicketInformations().getTicketCode().equals(this.ticketCode))
-                bus.post(new FullTicketRequestEvent("Token " + UserDataCache.get().getAuthtoken(), ticketCode));
-            else
-//                refreshFragmentsLayout();
-                bus.post(new FullTicketRequestEvent("Token " + UserDataCache.get().getAuthtoken(), ticketCode));
-        }
+        bus.post(new FullTicketRequestEvent("Token " + UserDataCache.get().getAuthtoken(), ticketCode));
+        bus.post(new CommentRequestEvent("Token " + UserDataCache.get().getAuthtoken(), ticketCode));
+        bus.post(new HistoryRequestEvent("Token " + UserDataCache.get().getAuthtoken(), ticketCode));
     }
 
     private void setupFragments()
@@ -98,7 +96,7 @@ public class TicketDetailActivity extends MyActionBarActivity implements android
             tabNames = new ArrayList<>();
         tabNames.add(getString(R.string.ticketDetail_tabNameDetail));
         tabNames.add(getString(R.string.ticketDetail_tabNameComments));
-//        tabNames.add(getString(R.string.ticketDetail_tabNameHistory));
+        tabNames.add(getString(R.string.ticketDetail_tabNameHistory));
     }
 
     private void setupPager()
@@ -106,10 +104,11 @@ public class TicketDetailActivity extends MyActionBarActivity implements android
         // Initilization
         viewPager = (ViewPager) findViewById(R.id.ticketDetail_viewpager);
         actionBar = getSupportActionBar();
-        if(pagerAdapter == null)
+        if (pagerAdapter == null)
             pagerAdapter = new TicketDetailPagerAdapter(getFragmentManager());
 
         viewPager.setAdapter(pagerAdapter);
+        viewPager.setOffscreenPageLimit(3);
         actionBar.setHomeButtonEnabled(false);
         actionBar.setNavigationMode(android.support.v7.app.ActionBar.NAVIGATION_MODE_TABS);
 
@@ -149,7 +148,10 @@ public class TicketDetailActivity extends MyActionBarActivity implements android
     @Override
     public void onBackPressed()
     {
-        finish();
+        if(viewPager.getCurrentItem() != 0)
+            viewPager.setCurrentItem(0, true);
+        else
+            finish();
     }
 
     @Override
@@ -167,31 +169,6 @@ public class TicketDetailActivity extends MyActionBarActivity implements android
         return super.onOptionsItemSelected(item);
     }
 
-    @Subscribe
-    public void onTicketInformationsReceived(FullTicketSuccessResponseEvent event)
-    {
-        // TODO: Gérer la réponse du web service + check erreurs
-        // Mettre en cache
-        FullTicket ticket = event.getTicket();
-        FullTicketCache.get().setTicketInformations(ticket);
-        refreshFragmentsLayout();
-        Log.i("CustomLog", "Received full ticket details loaded event");
-    }
-
-    private void refreshFragmentsLayout()
-    {
-        // Refresh tickets details
-        ((TicketFragmentInterface)pagerAdapter.getRegisteredFragment(0)).onRefreshRequested();
-        ((TicketFragmentInterface)pagerAdapter.getRegisteredFragment(1)).onRefreshRequested();
-        // TODO ((TicketFragmentInterface)pagerAdapter.getRegisteredFragment(2)).onRefreshRequested();
-    }
-
-    @Override
-    public void onTabSelected(android.support.v7.app.ActionBar.Tab tab, android.support.v4.app.FragmentTransaction fragmentTransaction)
-    {
-        viewPager.setCurrentItem(tab.getPosition());
-    }
-
     @Override
     public void onTabUnselected(android.support.v7.app.ActionBar.Tab tab, android.support.v4.app.FragmentTransaction fragmentTransaction)
     {
@@ -201,6 +178,70 @@ public class TicketDetailActivity extends MyActionBarActivity implements android
     @Override
     public void onTabReselected(android.support.v7.app.ActionBar.Tab tab, android.support.v4.app.FragmentTransaction fragmentTransaction)
     {
+
+    }
+
+    @Override
+    public void onTabSelected(android.support.v7.app.ActionBar.Tab tab, android.support.v4.app.FragmentTransaction fragmentTransaction)
+    {
         viewPager.setCurrentItem(tab.getPosition());
+    }
+
+    public void refreshFragments()
+    {
+        TicketDetailFragment tdf = (TicketDetailFragment) pagerAdapter.getRegisteredFragment(0);
+        TicketCommentFragment tcf = (TicketCommentFragment) pagerAdapter.getRegisteredFragment(1);
+        TicketHistoryFragment thf = (TicketHistoryFragment) pagerAdapter.getRegisteredFragment(2);
+
+        if(tdf != null)
+            tdf.onRefreshRequested();
+        if(tcf != null)
+            tcf.onRefreshRequested();
+        if(thf != null)
+            thf.onRefreshRequested();
+    }
+
+    @Subscribe
+    public void onTicketInformationsReceived(FullTicketRequestSuccessEvent event)
+    {
+        // Mettre en cache
+        FullTicketCache.get().setTicketCache(event.getTicket());
+        refreshFragments();
+        Log.i("CustomLog", "Received full ticket details loaded event");
+    }
+
+    @Subscribe
+    public void onTicketInformationsNotReceived(FullTicketRequestFailureEvent event)
+    {
+        Toast.makeText(getApplicationContext(), getString(R.string.TicketDetail_informationsFail), Toast.LENGTH_SHORT).show();
+        finish();
+    }
+
+    @Subscribe
+    public void onTicketCommentsReceived(CommentRequestSuccessEvent event)
+    {
+        FullTicketCache.get().setCommentCache(event.getComments());
+        refreshFragments();
+    }
+
+    @Subscribe
+    public void onTicketCommentsNotReceived(CommentRequestFailureEvent event)
+    {
+        Toast.makeText(getApplicationContext(), getString(R.string.TicketDetail_commentsFail), Toast.LENGTH_SHORT).show();
+        finish();
+    }
+
+    @Subscribe
+    public void onTicketCommentsReceived(HistoryRequestSuccessEvent event)
+    {
+        FullTicketCache.get().setHistoryCache(event.getHistory());
+        refreshFragments();
+    }
+
+    @Subscribe
+    public void onTicketCommentsNotReceived(HistoryRequestFailureEvent event)
+    {
+        Toast.makeText(getApplicationContext(), getString(R.string.TicketDetail_historyFail), Toast.LENGTH_SHORT).show();
+        finish();
     }
 }
