@@ -57,7 +57,7 @@ public class AuthService
                     {
                         Log.i("CustomLog", auth.toString());
                         bus.post(new LoginSuccessEvent(
-                                auth.getUserID(),
+                                auth.getPk(),
                                 auth.getAuthtoken(),
                                 auth.getFirst_name(),
                                 auth.getLast_name(),

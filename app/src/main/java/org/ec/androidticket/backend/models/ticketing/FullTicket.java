@@ -5,7 +5,6 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.Date;
 
-@SuppressWarnings("UnusedDeclaration")
 public class FullTicket
 {
     @SerializedName("fk_building")
@@ -32,6 +31,9 @@ public class FullTicket
     @SerializedName("fk_company")
     @Expose
     private Company company;
+    @SerializedName("pk")
+    @Expose
+    private Integer pk;
     @SerializedName("ticket_code")
     @Expose
     private String ticketCode;
@@ -160,5 +162,10 @@ public class FullTicket
     public void setDescription(String description)
     {
         this.description = description;
+    }
+
+    public int getTicketID()
+    {
+        return pk;
     }
 }

@@ -3,9 +3,11 @@ package org.ec.androidticket.backend.Async.apis;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import org.ec.androidticket.backend.Async.responses.PostResponseEvent;
 import org.ec.androidticket.backend.models.ticketing.Building;
 import org.ec.androidticket.backend.models.ticketing.Category;
 import org.ec.androidticket.backend.models.ticketing.Channel;
+import org.ec.androidticket.backend.models.ticketing.Comment;
 import org.ec.androidticket.backend.models.ticketing.CommentDiet;
 import org.ec.androidticket.backend.models.ticketing.FullTicket;
 import org.ec.androidticket.backend.models.ticketing.HistoryDiet;
@@ -14,11 +16,7 @@ import org.ec.androidticket.backend.models.ticketing.Tickets;
 import java.util.List;
 
 import retrofit.Callback;
-import retrofit.http.Body;
-import retrofit.http.Field;
-import retrofit.http.FormUrlEncoded;
-import retrofit.http.Header;
-import retrofit.http.POST;
+import retrofit.http.*;
 
 /**
  * http://stackoverflow.com/questions/24049434/android-retrofit-post-custom-object-send-json-to-server
@@ -80,7 +78,12 @@ public interface RestTicketAPI
     NOTE: Pour envoyer une photo via une requête http, utiliser l'annotation @MultiPart
      */
 
-
+    @POST("/rest/tickets/full/createComment")
+    void createComment(
+            @NonNull @Header("Authorization") String authtoken,
+            @NonNull @Body Comment commentObject,
+            Callback<PostResponseEvent> callback
+    );
 
     /**
      * Requête envoyée au web service pour créer un ticket dans la DB.

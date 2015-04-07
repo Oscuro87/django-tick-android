@@ -1,11 +1,11 @@
-package org.ec.androidticket.backend.Async.events.ticketEvents;
+package org.ec.androidticket.backend.Async.events.ticketEvents.history;
 
-public class CommentRequestEvent
+public class HistoryRequestEvent
 {
     private final String authtoken;
     private final String ticketCode;
 
-    public CommentRequestEvent(String authtoken, String ticketCode)
+    public HistoryRequestEvent(String authtoken, String ticketCode)
     {
         this.authtoken = authtoken;
         this.ticketCode = ticketCode;

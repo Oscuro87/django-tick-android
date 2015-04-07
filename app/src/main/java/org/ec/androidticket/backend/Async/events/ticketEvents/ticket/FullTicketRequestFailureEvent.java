@@ -1,4 +1,4 @@
-package org.ec.androidticket.backend.Async.events.ticketEvents;
+package org.ec.androidticket.backend.Async.events.ticketEvents.ticket;
 
 /**
  * Event représentant un problème lors de la réponse rendue par le serveur.

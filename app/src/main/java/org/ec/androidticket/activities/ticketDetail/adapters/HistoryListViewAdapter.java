@@ -61,12 +61,12 @@ public class HistoryListViewAdapter extends BaseAdapter
     @Override
     public View getView(int position, View convertView, ViewGroup parent)
     {
-        HistoryHolder stockage;
+        HistoryDietHolder stockage;
         if (convertView == null)
         {
             convertView = LayoutInflater.from(context).inflate(R.layout.ticket_history_row, parent, false);
 
-            stockage = new HistoryHolder();
+            stockage = new HistoryDietHolder();
             stockage.newStatus = (TextView) convertView.findViewById(R.id.ticketHistory_ticketStatus);
             stockage.updateDate = (TextView) convertView.findViewById(R.id.ticketHistory_dateUpdated);
             stockage.reason = (TextView) convertView.findViewById(R.id.ticketHistory_reason);
@@ -74,7 +74,7 @@ public class HistoryListViewAdapter extends BaseAdapter
             convertView.setTag(stockage);
         } else
         {
-            stockage = (HistoryHolder) convertView.getTag();
+            stockage = (HistoryDietHolder) convertView.getTag();
         }
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy h:m:s");

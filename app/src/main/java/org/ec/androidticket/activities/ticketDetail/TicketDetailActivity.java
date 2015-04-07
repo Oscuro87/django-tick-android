@@ -16,17 +16,19 @@ import org.ec.androidticket.activities.ticketDetail.adapters.TicketDetailPagerAd
 import org.ec.androidticket.activities.ticketDetail.fragments.TicketCommentFragment;
 import org.ec.androidticket.activities.ticketDetail.fragments.TicketDetailFragment;
 import org.ec.androidticket.activities.ticketDetail.fragments.TicketHistoryFragment;
-import org.ec.androidticket.backend.Async.events.ticketEvents.CommentRequestEvent;
-import org.ec.androidticket.backend.Async.events.ticketEvents.CommentRequestFailureEvent;
-import org.ec.androidticket.backend.Async.events.ticketEvents.CommentRequestSuccessEvent;
-import org.ec.androidticket.backend.Async.events.ticketEvents.FullTicketRequestEvent;
-import org.ec.androidticket.backend.Async.events.ticketEvents.FullTicketRequestFailureEvent;
-import org.ec.androidticket.backend.Async.events.ticketEvents.FullTicketRequestSuccessEvent;
-import org.ec.androidticket.backend.Async.events.ticketEvents.HistoryRequestEvent;
-import org.ec.androidticket.backend.Async.events.ticketEvents.HistoryRequestFailureEvent;
-import org.ec.androidticket.backend.Async.events.ticketEvents.HistoryRequestSuccessEvent;
+import org.ec.androidticket.backend.Async.events.ticketEvents.comment.CommentCreationResponseEvent;
+import org.ec.androidticket.backend.Async.events.ticketEvents.comment.CommentRequestEvent;
+import org.ec.androidticket.backend.Async.events.ticketEvents.comment.CommentRequestFailureEvent;
+import org.ec.androidticket.backend.Async.events.ticketEvents.comment.CommentRequestSuccessEvent;
+import org.ec.androidticket.backend.Async.events.ticketEvents.ticket.FullTicketRequestEvent;
+import org.ec.androidticket.backend.Async.events.ticketEvents.ticket.FullTicketRequestFailureEvent;
+import org.ec.androidticket.backend.Async.events.ticketEvents.ticket.FullTicketRequestSuccessEvent;
+import org.ec.androidticket.backend.Async.events.ticketEvents.history.HistoryRequestEvent;
+import org.ec.androidticket.backend.Async.events.ticketEvents.history.HistoryRequestFailureEvent;
+import org.ec.androidticket.backend.Async.events.ticketEvents.history.HistoryRequestSuccessEvent;
 import org.ec.androidticket.backend.models.internal.FullTicketCache;
 import org.ec.androidticket.backend.models.internal.UserDataCache;
+import org.ec.androidticket.backend.models.ticketing.CommentDiet;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -235,6 +237,19 @@ public class TicketDetailActivity extends MyActionBarActivity implements android
     public void onTicketCommentsReceived(HistoryRequestSuccessEvent event)
     {
         FullTicketCache.get().setHistoryCache(event.getHistory());
+        refreshFragments();
+    }
+
+    @Subscribe
+    public void onCommentResponseReceived(CommentCreationResponseEvent event)
+    {
+        if(event.isSuccess())
+        {
+            Toast.makeText(getApplicationContext(), getString(R.string.commentPostSuccessText), Toast.LENGTH_SHORT).show();
+            bus.post(new CommentRequestEvent("Token " + UserDataCache.get().getAuthtoken(), ticketCode));
+        }
+        else
+            Toast.makeText(getApplicationContext(), getString(R.string.commentPostFailureText), Toast.LENGTH_SHORT).show();
         refreshFragments();
     }
 

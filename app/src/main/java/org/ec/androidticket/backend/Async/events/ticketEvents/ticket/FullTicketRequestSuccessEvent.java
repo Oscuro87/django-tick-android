@@ -1,4 +1,4 @@
-package org.ec.androidticket.backend.Async.events.ticketEvents;
+package org.ec.androidticket.backend.Async.events.ticketEvents.ticket;
 
 import org.ec.androidticket.backend.models.ticketing.FullTicket;
 

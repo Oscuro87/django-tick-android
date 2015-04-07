@@ -48,6 +48,11 @@ public class FullTicketCache
         return commentCache;
     }
 
+    public void addPostedCommentToCache(CommentDiet comment)
+    {
+
+    }
+
     public List<HistoryDiet> getHistoryCache()
     {
         return historyCache;

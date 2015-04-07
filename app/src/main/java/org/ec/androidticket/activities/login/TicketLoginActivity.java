@@ -17,16 +17,16 @@ import com.squareup.otto.Subscribe;
 import org.ec.androidticket.R;
 import org.ec.androidticket.activities.MyActionBarActivity;
 import org.ec.androidticket.activities.home.TicketHomeActivity;
-import org.ec.androidticket.backend.Async.events.loginEvents.LoginFailureEvent;
 import org.ec.androidticket.backend.Async.events.loginEvents.LoginSuccessEvent;
 import org.ec.androidticket.backend.Async.events.loginEvents.LoggedOutEvent;
 import org.ec.androidticket.backend.Async.events.loginEvents.LoginEvent;
 import org.ec.androidticket.backend.Async.events.loginEvents.LogoutEvent;
+import org.ec.androidticket.backend.Async.responses.PostResponseEvent;
 import org.ec.androidticket.backend.managers.CookieManager;
 import org.ec.androidticket.backend.models.internal.CredentialCookie;
 import org.ec.androidticket.backend.models.internal.UserDataCache;
 
-public class TicketLoginActionBarActivity extends MyActionBarActivity
+public class TicketLoginActivity extends MyActionBarActivity
 {
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -129,7 +129,7 @@ public class TicketLoginActionBarActivity extends MyActionBarActivity
         Context context = getApplicationContext();
         if(UserDataCache.get().isActive())
         {
-            Intent toHome = new Intent(TicketLoginActionBarActivity.this, TicketHomeActivity.class);
+            Intent toHome = new Intent(TicketLoginActivity.this, TicketHomeActivity.class);
             toHome.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
             context.startActivity(toHome);
         }
@@ -140,7 +140,7 @@ public class TicketLoginActionBarActivity extends MyActionBarActivity
     }
 
     @Subscribe
-    public void onLoginFailure(LoginFailureEvent event)
+    public void onLoginFailure(PostResponseEvent event)
     {
         Toast.makeText(getApplicationContext(), event.reason, Toast.LENGTH_SHORT).show();
     }

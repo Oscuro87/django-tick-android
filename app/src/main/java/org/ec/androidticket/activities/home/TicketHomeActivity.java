@@ -22,8 +22,8 @@ import org.ec.androidticket.activities.home.adapters.SimpleTicketListViewAdapter
 import org.ec.androidticket.activities.ticketDetail.TicketDetailActivity;
 import org.ec.androidticket.backend.Async.events.loginEvents.LoggedOutEvent;
 import org.ec.androidticket.backend.Async.events.loginEvents.LogoutEvent;
-import org.ec.androidticket.backend.Async.events.ticketEvents.SimpleTicketRequestEvent;
-import org.ec.androidticket.backend.Async.events.ticketEvents.SimpleTicketRequestSuccessEvent;
+import org.ec.androidticket.backend.Async.events.ticketEvents.ticket.SimpleTicketRequestEvent;
+import org.ec.androidticket.backend.Async.events.ticketEvents.ticket.SimpleTicketRequestSuccessEvent;
 import org.ec.androidticket.backend.models.internal.UserDataCache;
 import org.ec.androidticket.backend.models.internal.SimpleTicketCache;
 import org.ec.androidticket.backend.models.ticketing.Ticket;

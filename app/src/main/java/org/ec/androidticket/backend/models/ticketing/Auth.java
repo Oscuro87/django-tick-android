@@ -2,7 +2,7 @@ package org.ec.androidticket.backend.models.ticketing;
 
 public class Auth
 {
-    private int userID;
+    private int pk;
     private String authtoken;
     private String first_name;
     private String last_name;
@@ -14,9 +14,9 @@ public class Auth
     {
     }
 
-    public int getUserID()
+    public int getPk()
     {
-        return userID;
+        return pk;
     }
 
     public String getAuthtoken()

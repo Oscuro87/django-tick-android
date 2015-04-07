@@ -7,19 +7,21 @@ import com.squareup.otto.Subscribe;
 
 import org.ec.androidticket.backend.Async.BusDepot;
 import org.ec.androidticket.backend.Async.RESTClient;
-import org.ec.androidticket.backend.Async.events.ticketEvents.CommentRequestEvent;
-import org.ec.androidticket.backend.Async.events.ticketEvents.CommentRequestFailureEvent;
-import org.ec.androidticket.backend.Async.events.ticketEvents.CommentRequestSuccessEvent;
-import org.ec.androidticket.backend.Async.events.ticketEvents.FullTicketRequestFailureEvent;
-import org.ec.androidticket.backend.Async.events.ticketEvents.FullTicketRequestEvent;
-import org.ec.androidticket.backend.Async.events.ticketEvents.FullTicketRequestSuccessEvent;
-import org.ec.androidticket.backend.Async.events.ticketEvents.HistoryRequestEvent;
-import org.ec.androidticket.backend.Async.events.ticketEvents.HistoryRequestFailureEvent;
-import org.ec.androidticket.backend.Async.events.ticketEvents.HistoryRequestSuccessEvent;
-import org.ec.androidticket.backend.Async.events.ticketEvents.SimpleTicketRequestEvent;
-import org.ec.androidticket.backend.Async.events.ticketEvents.SimpleTicketRequestSuccessEvent;
+import org.ec.androidticket.backend.Async.events.ticketEvents.comment.CommentCreationResponseEvent;
+import org.ec.androidticket.backend.Async.events.ticketEvents.comment.CommentRequestEvent;
+import org.ec.androidticket.backend.Async.events.ticketEvents.comment.CommentRequestFailureEvent;
+import org.ec.androidticket.backend.Async.events.ticketEvents.comment.CommentRequestSuccessEvent;
+import org.ec.androidticket.backend.Async.events.ticketEvents.comment.CommentCreationEvent;
+import org.ec.androidticket.backend.Async.events.ticketEvents.ticket.FullTicketRequestFailureEvent;
+import org.ec.androidticket.backend.Async.events.ticketEvents.ticket.FullTicketRequestEvent;
+import org.ec.androidticket.backend.Async.events.ticketEvents.ticket.FullTicketRequestSuccessEvent;
+import org.ec.androidticket.backend.Async.events.ticketEvents.history.HistoryRequestEvent;
+import org.ec.androidticket.backend.Async.events.ticketEvents.history.HistoryRequestFailureEvent;
+import org.ec.androidticket.backend.Async.events.ticketEvents.history.HistoryRequestSuccessEvent;
+import org.ec.androidticket.backend.Async.events.ticketEvents.ticket.SimpleTicketRequestEvent;
+import org.ec.androidticket.backend.Async.events.ticketEvents.ticket.SimpleTicketRequestSuccessEvent;
+import org.ec.androidticket.backend.Async.responses.PostResponseEvent;
 import org.ec.androidticket.backend.models.ticketing.CommentDiet;
-import org.ec.androidticket.backend.models.ticketing.ErrorResponse;
 import org.ec.androidticket.backend.models.ticketing.FullTicket;
 import org.ec.androidticket.backend.models.ticketing.HistoryDiet;
 import org.ec.androidticket.backend.models.ticketing.Tickets;
@@ -116,6 +118,29 @@ public class TicketService
                     {
                         Log.e("CustomLog", "Error retrieving ticket comments: " + error.getMessage());
                         bus.post(new CommentRequestFailureEvent(error.getMessage()));
+                    }
+                }
+        );
+    }
+
+    @Subscribe
+    public void onCommentCreationRequest(CommentCreationEvent event)
+    {
+        RESTClient.getTicketAPI().createComment(
+                event.getAuthtoken(),
+                event.getComment(),
+                new Callback<PostResponseEvent>()
+                {
+                    @Override
+                    public void success(PostResponseEvent postResponse, Response response)
+                    {
+                        bus.post(new CommentCreationResponseEvent(postResponse.isSuccess(), postResponse.getReason()));
+                    }
+
+                    @Override
+                    public void failure(RetrofitError error)
+                    {
+                        bus.post(new CommentCreationResponseEvent(false, error.getMessage()));
                     }
                 }
         );

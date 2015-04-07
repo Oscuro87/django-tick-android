@@ -54,4 +54,18 @@
     <string name="ticketComment_createCommentButtonFlavour">Poster un commentaire</string>
     <string name="ticketHistory_title">Historique ticket</string>
     <string name="ticketHistoryRow_dateUpdatedLabel">Date de mise à jour :</string>
+    <string name="createTicket_category">Catégorie</string>
+    <string name="ticketCommentCreate_title">Créer un commentaire</string>
+    <string name="ticketCreate_building">Bâtiment</string>
+    <string name="ticketCreate_category">Catégorie</string>
+    <string name="ticketCreate_description">Description\\n(200 mots max.)</string>
+    <string name="ticketCreate_descriptionGreyText">Description de l\'incident</string>
+    <string name="ticketCreate_floor">Étage</string>
+    <string name="ticketCreate_office">Bureau</string>
+    <string name="ticketCreate_sendButton">Créer le ticket</string>
+    <string name="ticketCreate_subcategory">Sous-catégorie</string>
+    <string name="ticketCreate_title">Créer un ticket</string>
+    <string name="ticketHistoryRow_newStatusLabel">Nouveau statut ticket :</string>
+    <string name="title_activity_create_comment">Créer commentaire</string>
+    <string name="title_activity_create_ticket">Créer ticket</string>
 </resources>

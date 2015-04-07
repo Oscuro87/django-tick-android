@@ -1,4 +1,4 @@
-package org.ec.androidticket.backend.Async.events.ticketEvents;
+package org.ec.androidticket.backend.Async.events.ticketEvents.ticket;
 
 public class FullTicketRequestEvent
 {

@@ -60,9 +60,9 @@
     <string name="ticketHistory_title">Ticket history</string>
     <string name="ticketHistoryRow_dateUpdatedLabel">Update date :</string>
     <string name="ticketHistoryRow_newStatusLabel">New ticket status :</string>
-    <string name="title_activity_create_ticket">CreateTicketActivity</string>
+    <string name="title_activity_create_ticket">Create ticket</string>
 
-    <string name="hello_world">Hello world!</string>
+    <string name="hello_world" translatable="false">Hello world!</string>
     <string name="ticketCreate_title">Create a ticket</string>
     <string name="createTicket_category">Category</string>
     <string name="ticketCreate_category">Category</string>
@@ -71,6 +71,12 @@
     <string name="ticketCreate_floor">Floor</string>
     <string name="ticketCreate_office">Office</string>
     <string name="ticketCreate_description">Description\\n(max. 200 words)</string>
-    <string name="ticketCreate_sendButton">Post the ticket</string>
+    <string name="ticketCreate_sendButton"> Create ticket</string>
     <string name="ticketCreate_descriptionGreyText">Problem description</string>
+    <string name="ticketCommentCreate_title">Create a comment</string>
+    <string name="title_activity_create_comment">Create comment</string>
+    <string name="createComment_title">Create comment</string>
+    <string name="createComment_sendCommentButton">Send this comment</string>
+    <string name="commentPostSuccessText">Comment posted successfully</string>
+    <string name="commentPostFailureText">Posting comment failed, please try again.</string>
 </resources>

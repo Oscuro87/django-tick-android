@@ -25,7 +25,7 @@
         android:layout_height="fill_parent">
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/ticketComment_postCommentButton"
             style="?android:attr/buttonStyleSmall"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -33,6 +33,21 @@
             android:layout_gravity="top"
             android:layout_weight="1"
             android:text="@string/ticketComment_createCommentButtonFlavour"/>
+    </TableRow>
+
+    <TableRow
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+        <ListView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/ticketComment_commentsList"
+            android:choiceMode="none"
+            android:fastScrollEnabled="true"
+            android:fastScrollAlwaysVisible="false"
+            android:nestedScrollingEnabled="true"
+            android:focusable="false"/>
     </TableRow>
 
 </TableLayout>

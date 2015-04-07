@@ -1,6 +1,4 @@
-package org.ec.androidticket.backend.Async.events.ticketEvents;
-
-import org.ec.androidticket.backend.models.ticketing.ErrorResponse;
+package org.ec.androidticket.backend.Async.events.ticketEvents.comment;
 
 public class CommentRequestFailureEvent
 {
