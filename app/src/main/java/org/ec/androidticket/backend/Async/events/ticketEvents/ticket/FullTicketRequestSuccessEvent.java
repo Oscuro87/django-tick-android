@@ -1,6 +1,6 @@
 package org.ec.androidticket.backend.Async.events.ticketEvents.ticket;
 
-import org.ec.androidticket.backend.models.ticketing.FullTicket;
+import org.ec.androidticket.backend.models.ticketing.variants.FullTicket;
 
 public class FullTicketRequestSuccessEvent
 {

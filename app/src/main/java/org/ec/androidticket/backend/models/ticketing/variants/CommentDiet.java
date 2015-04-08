@@ -1,4 +1,4 @@
-package org.ec.androidticket.backend.models.ticketing;
+package org.ec.androidticket.backend.models.ticketing.variants;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

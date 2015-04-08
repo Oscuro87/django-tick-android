@@ -1,8 +1,8 @@
 package org.ec.androidticket.backend.models.internal;
 
-import org.ec.androidticket.backend.models.ticketing.CommentDiet;
-import org.ec.androidticket.backend.models.ticketing.FullTicket;
-import org.ec.androidticket.backend.models.ticketing.HistoryDiet;
+import org.ec.androidticket.backend.models.ticketing.variants.CommentDiet;
+import org.ec.androidticket.backend.models.ticketing.variants.FullTicket;
+import org.ec.androidticket.backend.models.ticketing.variants.HistoryDiet;
 
 import java.util.List;
 

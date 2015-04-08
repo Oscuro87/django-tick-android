@@ -11,7 +11,7 @@ import android.widget.ListView;
 import org.ec.androidticket.R;
 import org.ec.androidticket.activities.ticketDetail.adapters.HistoryListViewAdapter;
 import org.ec.androidticket.backend.models.internal.FullTicketCache;
-import org.ec.androidticket.backend.models.ticketing.HistoryDiet;
+import org.ec.androidticket.backend.models.ticketing.variants.HistoryDiet;
 
 import java.util.List;
 

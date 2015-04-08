@@ -3,6 +3,7 @@
     package="org.ec.androidticket" >
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
@@ -51,6 +52,14 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="org.ec.androidticket.activities.ticketDetail.TicketDetailActivity" />
+        </activity>
+        <activity
+            android:name=".activities.createBuilding.CreateBuildingActivity"
+            android:label="@string/title_activity_create_building"
+            android:parentActivityName=".activities.home.TicketHomeActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="org.ec.androidticket.activities.home.TicketHomeActivity" />
         </activity>
     </application>
 

@@ -8,7 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import org.ec.androidticket.R;
-import org.ec.androidticket.backend.models.ticketing.CommentDiet;
+import org.ec.androidticket.backend.models.ticketing.variants.CommentDiet;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;

@@ -3,15 +3,17 @@ package org.ec.androidticket.backend.Async.apis;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import org.ec.androidticket.backend.Async.events.buildingEvents.BuildingCreationResponseEvent;
 import org.ec.androidticket.backend.Async.responses.PostResponseEvent;
 import org.ec.androidticket.backend.models.ticketing.Building;
 import org.ec.androidticket.backend.models.ticketing.Category;
 import org.ec.androidticket.backend.models.ticketing.Channel;
 import org.ec.androidticket.backend.models.ticketing.Comment;
-import org.ec.androidticket.backend.models.ticketing.CommentDiet;
-import org.ec.androidticket.backend.models.ticketing.FullTicket;
-import org.ec.androidticket.backend.models.ticketing.HistoryDiet;
+import org.ec.androidticket.backend.models.ticketing.variants.CommentDiet;
+import org.ec.androidticket.backend.models.ticketing.variants.FullTicket;
+import org.ec.androidticket.backend.models.ticketing.variants.HistoryDiet;
 import org.ec.androidticket.backend.models.ticketing.Tickets;
+import org.ec.androidticket.backend.models.ticketing.variants.NewBuilding;
 
 import java.util.List;
 
@@ -83,6 +85,13 @@ public interface RestTicketAPI
             @NonNull @Header("Authorization") String authtoken,
             @NonNull @Body Comment commentObject,
             Callback<PostResponseEvent> callback
+    );
+
+    @POST("/rest/tickets/createbuilding")
+    void createBuilding(
+            @NonNull @Header("Authorization") String authtoken,
+            @NonNull @Body NewBuilding building,
+            Callback<BuildingCreationResponseEvent> callback
     );
 
     /**

@@ -16,7 +16,7 @@ public class RESTClient
 {
     private static RestLoginAPI REST_LOGIN_API;
     private static RestTicketAPI REST_TICKET_API;
-    private static String ROOT = GlobalSettings.WEBSERVICE_ADDRESS;
+    private static String ROOT = GlobalSettings.getDevelopmentWebserviceAddress();
 
     static {
         setupRestClient();

@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import org.ec.androidticket.R;
 import org.ec.androidticket.backend.models.internal.FullTicketCache;
-import org.ec.androidticket.backend.models.ticketing.FullTicket;
+import org.ec.androidticket.backend.models.ticketing.variants.FullTicket;
 
 public class TicketDetailFragment extends Fragment implements TicketFragmentInterface
 {

@@ -18,6 +18,7 @@ import com.squareup.otto.Subscribe;
 
 import org.ec.androidticket.R;
 import org.ec.androidticket.activities.MyActionBarActivity;
+import org.ec.androidticket.activities.createBuilding.CreateBuildingActivity;
 import org.ec.androidticket.activities.home.adapters.SimpleTicketListViewAdapter;
 import org.ec.androidticket.activities.ticketDetail.TicketDetailActivity;
 import org.ec.androidticket.backend.Async.events.loginEvents.LoggedOutEvent;
@@ -106,7 +107,8 @@ public class TicketHomeActivity extends MyActionBarActivity implements SearchVie
                 bus.post(new LogoutEvent(UserDataCache.get().getAuthtoken()));
                 return true;
             case R.id.action_createBuilding:
-                // TODO: bouton create building
+                Intent intent = new Intent(TicketHomeActivity.this, CreateBuildingActivity.class);
+                startActivity(intent);
                 return true;
             case R.id.action_createTicket:
                 // TODO: bouton create ticket

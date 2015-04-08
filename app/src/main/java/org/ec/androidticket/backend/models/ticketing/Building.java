@@ -5,6 +5,9 @@ import com.google.gson.annotations.SerializedName;
 
 public class Building
 {
+    @SerializedName("pk")
+    @Expose
+    private int pk;
     @SerializedName("country")
     @Expose
     private String country;
@@ -27,11 +30,6 @@ public class Building
     public String getCountry()
     {
         return country;
-    }
-
-    public void setCountry(String country)
-    {
-        this.country = country;
     }
 
     public String getAddress()
@@ -79,8 +77,4 @@ public class Building
         return buildingCode;
     }
 
-    public void setBuildingCode(String buildingCode)
-    {
-        this.buildingCode = buildingCode;
-    }
 }

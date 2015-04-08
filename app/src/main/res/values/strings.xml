@@ -79,4 +79,15 @@
     <string name="createComment_sendCommentButton">Send this comment</string>
     <string name="commentPostSuccessText">Comment posted successfully</string>
     <string name="commentPostFailureText">Posting comment failed, please try again.</string>
+    <string name="title_activity_create_building">Create building</string>
+    <string name="createBuilding_title">Create building for you</string>
+    <string name="createBuilding_countryLabel">Country</string>
+    <string name="createBuilding_address">Address</string>
+    <string name="createBuilding_postcode">Post code</string>
+    <string name="createBuilding_vicinity">Vicinity</string>
+    <string name="createBuilding_buildingName">Building name</string>
+    <string name="createBuilding_sendButtonCaption">Create building</string>
+    <string name="buildingCreationSuccess">Building created successfully</string>
+    <string name="buildingCreationFailure">Building creation failed, please try again</string>
+    <string name="createBuildingWrongCountryInput">You entered a wrong country name</string>
 </resources>

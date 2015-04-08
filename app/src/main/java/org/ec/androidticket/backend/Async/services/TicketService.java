@@ -7,6 +7,8 @@ import com.squareup.otto.Subscribe;
 
 import org.ec.androidticket.backend.Async.BusDepot;
 import org.ec.androidticket.backend.Async.RESTClient;
+import org.ec.androidticket.backend.Async.events.buildingEvents.BuildingCreationEvent;
+import org.ec.androidticket.backend.Async.events.buildingEvents.BuildingCreationResponseEvent;
 import org.ec.androidticket.backend.Async.events.ticketEvents.comment.CommentCreationResponseEvent;
 import org.ec.androidticket.backend.Async.events.ticketEvents.comment.CommentRequestEvent;
 import org.ec.androidticket.backend.Async.events.ticketEvents.comment.CommentRequestFailureEvent;
@@ -21,9 +23,9 @@ import org.ec.androidticket.backend.Async.events.ticketEvents.history.HistoryReq
 import org.ec.androidticket.backend.Async.events.ticketEvents.ticket.SimpleTicketRequestEvent;
 import org.ec.androidticket.backend.Async.events.ticketEvents.ticket.SimpleTicketRequestSuccessEvent;
 import org.ec.androidticket.backend.Async.responses.PostResponseEvent;
-import org.ec.androidticket.backend.models.ticketing.CommentDiet;
-import org.ec.androidticket.backend.models.ticketing.FullTicket;
-import org.ec.androidticket.backend.models.ticketing.HistoryDiet;
+import org.ec.androidticket.backend.models.ticketing.variants.CommentDiet;
+import org.ec.androidticket.backend.models.ticketing.variants.FullTicket;
+import org.ec.androidticket.backend.models.ticketing.variants.HistoryDiet;
 import org.ec.androidticket.backend.models.ticketing.Tickets;
 
 import java.util.List;
@@ -166,6 +168,29 @@ public class TicketService
                     {
                         Log.e("CustomLog", "Error retrieving ticket comments: " + error.getMessage());
                         bus.post(new HistoryRequestFailureEvent(error.getMessage()));
+                    }
+                }
+        );
+    }
+
+    @Subscribe
+    public void onBuildingCreationRequest(BuildingCreationEvent event)
+    {
+        RESTClient.getTicketAPI().createBuilding(
+                event.getAuthtoken(),
+                event.getBuilding(),
+                new Callback<BuildingCreationResponseEvent>()
+                {
+                    @Override
+                    public void success(BuildingCreationResponseEvent event1, Response response)
+                    {
+                        bus.post(new BuildingCreationResponseEvent(event1.success, event1.reason));
+                    }
+
+                    @Override
+                    public void failure(RetrofitError error)
+                    {
+                        bus.post(new BuildingCreationResponseEvent(false, error.getMessage()));
                     }
                 }
         );

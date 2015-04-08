@@ -68,4 +68,16 @@
     <string name="ticketHistoryRow_newStatusLabel">Nouveau statut ticket :</string>
     <string name="title_activity_create_comment">Créer commentaire</string>
     <string name="title_activity_create_ticket">Créer ticket</string>
+    <string name="commentPostFailureText">Échec de l\'envoi du commentaire, veuillez réessayer.</string>
+    <string name="commentPostSuccessText">Commentaire posté avec succès</string>
+    <string name="createBuilding_address">Adresse</string>
+    <string name="createBuilding_countryLabel">Pays</string>
+    <string name="createBuilding_title">Créer un bâtiment pour vous</string>
+    <string name="createComment_sendCommentButton">Envoyer commentaire</string>
+    <string name="createComment_title">Créer commentaire</string>
+    <string name="title_activity_create_building">Créer bâtiment</string>
+    <string name="createBuilding_postcode">Code postal</string>
+    <string name="createBuilding_buildingName">Nom du bâtiment</string>
+    <string name="createBuilding_sendButtonCaption">Créer le bâtiment</string>
+    <string name="createBuilding_vicinity">Commune</string>
 </resources>

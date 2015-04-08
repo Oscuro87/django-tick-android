@@ -28,7 +28,6 @@ import org.ec.androidticket.backend.Async.events.ticketEvents.history.HistoryReq
 import org.ec.androidticket.backend.Async.events.ticketEvents.history.HistoryRequestSuccessEvent;
 import org.ec.androidticket.backend.models.internal.FullTicketCache;
 import org.ec.androidticket.backend.models.internal.UserDataCache;
-import org.ec.androidticket.backend.models.ticketing.CommentDiet;
 
 import java.util.ArrayList;
 import java.util.List;

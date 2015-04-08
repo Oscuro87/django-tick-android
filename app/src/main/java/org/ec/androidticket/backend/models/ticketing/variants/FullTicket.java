@@ -1,7 +1,15 @@
-package org.ec.androidticket.backend.models.ticketing;
+package org.ec.androidticket.backend.models.ticketing.variants;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+
+import org.ec.androidticket.backend.models.ticketing.Building;
+import org.ec.androidticket.backend.models.ticketing.Category;
+import org.ec.androidticket.backend.models.ticketing.Channel;
+import org.ec.androidticket.backend.models.ticketing.Company;
+import org.ec.androidticket.backend.models.ticketing.Priority;
+import org.ec.androidticket.backend.models.ticketing.TicketStatus;
+import org.ec.androidticket.backend.models.ticketing.User;
 
 import java.util.Date;
 

@@ -13,7 +13,6 @@ import org.ec.androidticket.R;
 import org.ec.androidticket.activities.createComment.CreateCommentActivity;
 import org.ec.androidticket.activities.ticketDetail.adapters.CommentListViewAdapter;
 import org.ec.androidticket.backend.models.internal.FullTicketCache;
-import org.ec.androidticket.backend.models.ticketing.FullTicket;
 
 public class TicketCommentFragment extends Fragment implements TicketFragmentInterface
 {

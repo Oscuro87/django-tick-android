@@ -1,26 +1,19 @@
 package org.ec.androidticket.activities.createComment;
 
 import android.os.Bundle;
-import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.squareup.otto.Bus;
-import com.squareup.otto.Subscribe;
 
 import org.ec.androidticket.R;
 import org.ec.androidticket.backend.Async.BusDepot;
 import org.ec.androidticket.backend.Async.events.ticketEvents.comment.CommentCreationEvent;
-import org.ec.androidticket.backend.Async.events.ticketEvents.comment.CommentCreationResponseEvent;
-import org.ec.androidticket.backend.Async.responses.PostResponseEvent;
-import org.ec.androidticket.backend.models.internal.FullTicketCache;
 import org.ec.androidticket.backend.models.internal.UserDataCache;
-import org.ec.androidticket.backend.models.ticketing.CommentDiet;
 
 import java.util.Date;
 
