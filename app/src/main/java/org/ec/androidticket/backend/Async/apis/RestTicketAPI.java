@@ -3,6 +3,7 @@ package org.ec.androidticket.backend.Async.apis;
 import android.support.annotation.NonNull;
 
 import org.ec.androidticket.backend.Async.events.buildingEvents.BuildingCreationResponseEvent;
+import org.ec.androidticket.backend.Async.events.ticketEvents.ticket.SimpleTicketResponseEvent;
 import org.ec.androidticket.backend.Async.events.ticketEvents.ticket.create.RequestCategoriesResponseEvent;
 import org.ec.androidticket.backend.Async.events.ticketEvents.ticket.create.RequestUserBuildingsResponseEvent;
 import org.ec.androidticket.backend.Async.events.ticketEvents.ticket.create.TicketCreationResponseEvent;
@@ -11,14 +12,18 @@ import org.ec.androidticket.backend.models.ticketing.Comment;
 import org.ec.androidticket.backend.models.ticketing.variants.CommentDiet;
 import org.ec.androidticket.backend.models.ticketing.variants.FullTicket;
 import org.ec.androidticket.backend.models.ticketing.variants.HistoryDiet;
-import org.ec.androidticket.backend.models.ticketing.Tickets;
 import org.ec.androidticket.backend.models.ticketing.variants.NewBuilding;
 import org.ec.androidticket.backend.models.ticketing.variants.TicketCreation;
 
 import java.util.List;
 
 import retrofit.Callback;
-import retrofit.http.*;
+import retrofit.http.Body;
+import retrofit.http.Field;
+import retrofit.http.FormUrlEncoded;
+import retrofit.http.GET;
+import retrofit.http.Header;
+import retrofit.http.POST;
 
 /**
  * http://stackoverflow.com/questions/24049434/android-retrofit-post-custom-object-send-json-to-server
@@ -41,7 +46,7 @@ public interface RestTicketAPI
     void requestSimpleTickets(
             @NonNull @Header("Authorization") String authtoken,
             @NonNull @Field("ticketType") String ticketType,
-            Callback<Tickets> callback);
+            Callback<SimpleTicketResponseEvent> callback);
 
     /**
      * Demande des informations complètes d'un ticket en particulier.

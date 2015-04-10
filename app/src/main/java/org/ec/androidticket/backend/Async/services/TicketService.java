@@ -5,7 +5,6 @@ import android.util.Log;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 
-import org.ec.androidticket.R;
 import org.ec.androidticket.backend.Async.BusDepot;
 import org.ec.androidticket.backend.Async.RESTClient;
 import org.ec.androidticket.backend.Async.events.buildingEvents.BuildingCreationEvent;
@@ -22,7 +21,7 @@ import org.ec.androidticket.backend.Async.events.ticketEvents.history.HistoryReq
 import org.ec.androidticket.backend.Async.events.ticketEvents.history.HistoryRequestFailureEvent;
 import org.ec.androidticket.backend.Async.events.ticketEvents.history.HistoryRequestSuccessEvent;
 import org.ec.androidticket.backend.Async.events.ticketEvents.ticket.SimpleTicketRequestEvent;
-import org.ec.androidticket.backend.Async.events.ticketEvents.ticket.SimpleTicketRequestSuccessEvent;
+import org.ec.androidticket.backend.Async.events.ticketEvents.ticket.SimpleTicketResponseEvent;
 import org.ec.androidticket.backend.Async.events.ticketEvents.ticket.create.RequestCategoriesResponseEvent;
 import org.ec.androidticket.backend.Async.events.ticketEvents.ticket.create.RequestUserBuildingsEvent;
 import org.ec.androidticket.backend.Async.events.ticketEvents.ticket.create.RequestUserBuildingsResponseEvent;
@@ -35,9 +34,7 @@ import org.ec.androidticket.backend.models.ticketing.Category;
 import org.ec.androidticket.backend.models.ticketing.variants.CommentDiet;
 import org.ec.androidticket.backend.models.ticketing.variants.FullTicket;
 import org.ec.androidticket.backend.models.ticketing.variants.HistoryDiet;
-import org.ec.androidticket.backend.models.ticketing.Tickets;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import retrofit.Callback;
@@ -68,18 +65,18 @@ public class TicketService
         RESTClient.getTicketAPI().requestSimpleTickets(
                 event.getAuthorizationToken(),
                 event.getTicketType(),
-                new Callback<Tickets>()
+                new Callback<SimpleTicketResponseEvent>()
                 {
                     @Override
-                    public void success(Tickets tickets, Response response)
+                    public void success(SimpleTicketResponseEvent responseEvent, Response response)
                     {
-                        bus.post(new SimpleTicketRequestSuccessEvent(tickets.getTickets()));
+                        bus.post(responseEvent);
                     }
 
                     @Override
                     public void failure(RetrofitError error)
                     {
-                        Log.e("CustomLog", "Error with Retrofit: " + error.getMessage());
+                        bus.post(new SimpleTicketResponseEvent(error));
                     }
                 }
         );

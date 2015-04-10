@@ -115,4 +115,8 @@
     <string name="ticketCreateConfirmation_buttonLabel">Confirm ticket creation</string>
     <string name="ticketCreateConfirmation_notice">You can still modify your ticket\'s informations!</string>
     <string name="ticketCreateResponse_success">The ticket has been created, thanks for your report.</string>
+    <string name="simpleTicket_failedTicketsLoad">Could not load tickets list.</string>
+    <string name="action_show_own_tickets">Show your own tickets</string>
+    <string name="action_show_managed_tickets">Show tickets managed by you</string>
+    <string name="action_show_unmanaged_tickets">Show unmanaged tickets</string>
 </resources>

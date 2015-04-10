@@ -25,7 +25,7 @@ import org.ec.androidticket.activities.ticketDetail.TicketDetailActivity;
 import org.ec.androidticket.backend.Async.events.loginEvents.LoggedOutEvent;
 import org.ec.androidticket.backend.Async.events.loginEvents.LogoutEvent;
 import org.ec.androidticket.backend.Async.events.ticketEvents.ticket.SimpleTicketRequestEvent;
-import org.ec.androidticket.backend.Async.events.ticketEvents.ticket.SimpleTicketRequestSuccessEvent;
+import org.ec.androidticket.backend.Async.events.ticketEvents.ticket.SimpleTicketResponseEvent;
 import org.ec.androidticket.backend.models.internal.UserDataCache;
 import org.ec.androidticket.backend.models.internal.SimpleTicketCache;
 import org.ec.androidticket.backend.models.ticketing.Ticket;
@@ -37,6 +37,7 @@ public class TicketHomeActivity extends MyActionBarActivity implements SearchVie
     private SearchView searchView;
     private ListView listView;
     private Filter searchFilter;
+    private SimpleTicketListViewAdapter adapter;
 
 
     @Override
@@ -94,6 +95,14 @@ public class TicketHomeActivity extends MyActionBarActivity implements SearchVie
     public boolean onCreateOptionsMenu(Menu menu)
     {
         getMenuInflater().inflate(R.menu.menu_ticket_home, menu);
+
+        if(UserDataCache.get().isStaff())
+        {
+            ((MenuItem)menu.findItem(R.id.action_show_own_tickets)).setVisible(true);
+            ((MenuItem)menu.findItem(R.id.action_show_managed_tickets)).setVisible(true);
+            ((MenuItem)menu.findItem(R.id.action_show_unmanaged_tickets)).setVisible(true);
+        }
+
         return true;
     }
 
@@ -115,6 +124,18 @@ public class TicketHomeActivity extends MyActionBarActivity implements SearchVie
             case R.id.action_createTicket:
                 intent = new Intent(TicketHomeActivity.this, CreateTicketActivity.class);
                 startActivity(intent);
+                return true;
+            case R.id.action_show_own_tickets:
+                SimpleTicketCache.get().setBrowsingMode(SimpleTicketCache.BrowsingMode.OWN_TICKETS);
+                refreshTicketView();
+                return true;
+            case R.id.action_show_managed_tickets:
+                SimpleTicketCache.get().setBrowsingMode(SimpleTicketCache.BrowsingMode.MANAGED_TICKETS);
+                refreshTicketView();
+                return true;
+            case R.id.action_show_unmanaged_tickets:
+                SimpleTicketCache.get().setBrowsingMode(SimpleTicketCache.BrowsingMode.UNMANAGED_TICKETS);
+                refreshTicketView();
                 return true;
         }
 
@@ -146,17 +167,35 @@ public class TicketHomeActivity extends MyActionBarActivity implements SearchVie
     }
 
     @Subscribe
-    public void onSimpleTicketRequestResponse(SimpleTicketRequestSuccessEvent event)
+    public void onSimpleTicketRequestResponse(SimpleTicketResponseEvent event)
     {
-        List<Ticket> ticketList = event.getTickets();
+        if(!event.hasErrors())
+        {
+            List<Ticket> userTickets = event.getTickets();
 
-        SimpleTicketCache cache = SimpleTicketCache.get();
+            SimpleTicketCache cache = SimpleTicketCache.get();
 
-        cache.purge();
-        for (Ticket t : ticketList)
-            cache.putTicketInCache(t);
+            cache.purge();
 
-        refreshTicketView();
+            // mise en cache des tickets de l'utilisateur
+            for (Ticket t : userTickets)
+                cache.putUserTicket(t);
+
+            // mise en cache des tickets gérés par l'utilsiateur
+            for(Ticket t : event.getManagedByUser())
+                cache.putManagedTicket(t);
+
+            // mise en cache des ticktes non gérés par quiconque
+            for(Ticket t : event.getUnmanagedTickets())
+                cache.putUnmanagedTicket(t);
+
+            refreshTicketView();
+        }
+        else
+        {
+            Toast.makeText(getApplicationContext(), getString(R.string.simpleTicket_failedTicketsLoad), Toast.LENGTH_SHORT).show();
+            finish();
+        }
     }
 
     private void goToTicketDetailView(String ticketCode)
@@ -171,7 +210,7 @@ public class TicketHomeActivity extends MyActionBarActivity implements SearchVie
     private void setupListView()
     {
         SimpleTicketCache cache = SimpleTicketCache.get();
-        SimpleTicketListViewAdapter adapter = new SimpleTicketListViewAdapter(getApplicationContext(), cache.getCache());
+        adapter = new SimpleTicketListViewAdapter(getApplicationContext(), cache.getCache());
         final ListView listView = (ListView) findViewById(R.id.listView);
 
         listView.setAdapter(adapter);

@@ -7,7 +7,17 @@ import java.util.List;
 
 public class SimpleTicketCache
 {
+    public enum BrowsingMode
+    {
+        OWN_TICKETS,
+        MANAGED_TICKETS,
+        UNMANAGED_TICKETS,
+    }
+
     private static SimpleTicketCache instance = null;
+
+    private BrowsingMode mode = BrowsingMode.OWN_TICKETS;
+
     private List<Ticket> cache;
     private List<Ticket> unmanagedCache;
     private List<Ticket> managedByUserCache;
@@ -29,22 +39,45 @@ public class SimpleTicketCache
     public void purge()
     {
         cache.clear();
+        unmanagedCache.clear();
+        managedByUserCache.clear();
     }
 
-    public void putTicketInCache(Ticket ticket)
+    public void putUserTicket(Ticket ticket)
     {
-        // Cas 1: le ticket appartient à l'user
         if(ticket.getReporter().getEmail().equals(UserDataCache.get().getEmail()))
             cache.add(ticket);
-        // Cas 2: le ticket est un ticket non géré et l'utilisateur est manager
-        else if(ticket.getManager() == null && UserDataCache.get().isStaff())
+    }
+
+    public void putUnmanagedTicket(Ticket ticket)
+    {
+        if(ticket.getManager() == null)
             unmanagedCache.add(ticket);
-        else if(ticket.getManager().getEmail().equals(UserDataCache.get().getEmail()))
+    }
+
+    public void putManagedTicket(Ticket ticket)
+    {
+        if(ticket.getManager().getEmail().equals(UserDataCache.get().getEmail()))
             managedByUserCache.add(ticket);
     }
 
     public List<Ticket> getCache()
     {
-        return cache;
+        switch(this.mode)
+        {
+            case OWN_TICKETS:
+                return cache;
+            case MANAGED_TICKETS:
+                return managedByUserCache;
+            case UNMANAGED_TICKETS:
+                return unmanagedCache;
+            default:
+                return cache;
+        }
+    }
+
+    public void setBrowsingMode(BrowsingMode mode)
+    {
+        this.mode = mode;
     }
 }
