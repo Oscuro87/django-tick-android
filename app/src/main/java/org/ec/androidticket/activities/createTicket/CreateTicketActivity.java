@@ -45,7 +45,7 @@ public class CreateTicketActivity extends MyActionBarActivity implements ActionB
     private ViewPager viewPager;
     private TicketCreationPagerAdapter pagerAdapter;
     private ActionBar actionBar;
-    private TicketCreationInformationHolder creationInformation;
+    public static TicketCreationInformationHolder creationInformation;
 
 
     public CreateTicketActivity()
@@ -71,7 +71,7 @@ public class CreateTicketActivity extends MyActionBarActivity implements ActionB
         pageNames.add(getString(R.string.ticketCreate_category));
         pageNames.add(getString(R.string.ticketCreate_building));
         pageNames.add(getString(R.string.ticketCreate_description));
-        pageNames.add(getString(R.string.ticketCreate_image));
+//        pageNames.add(getString(R.string.ticketCreate_image));
         pageNames.add(getString(R.string.ticketCreate_confirmationPage));
     }
 

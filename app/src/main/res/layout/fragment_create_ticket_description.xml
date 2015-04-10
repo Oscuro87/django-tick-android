@@ -1,0 +1,36 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             tools:context="org.ec.androidticket.activities.createTicket.fragments.CreateTicketDescriptionFragment">
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/ticketCreateDescription_descriptionLabel"
+            android:textSize="20sp"
+            android:layout_marginBottom="40dp"
+        />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/ticketCreate_description"
+            android:lines="2"
+            android:maxLength="200"
+            android:maxLines="5"
+        />
+
+        <Button
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/ticketCreate_descriptionNextStep"
+            android:id="@+id/ticketCreateDescription_nextStepButton"
+        />
+    </LinearLayout>
+
+</FrameLayout>

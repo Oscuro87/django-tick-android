@@ -101,4 +101,16 @@
     <string name="ticketCreateBuilding_office">Office</string>
     <string name="ticketCreate_image">Ticket picture</string>
     <string name="ticketCreate_confirmationPage">Confirmation</string>
+    <string name="ticketCreateDescription_descriptionLabel">Problem description</string>
+    <string name="ticketCreate_descriptionNextStep">Next step</string>
+    <string name="ticketCreate_pleaseSelectCategory">Please select a category</string>
+    <string name="ticketCreate_confirmationLabel">Confirm the new ticket\'s informations:</string>
+    <string name="createTicketConfirmation_category">Category</string>
+    <string name="ticketCreateConfirmation_subcategory">Subcategory</string>
+    <string name="ticketCreateConfirmation_undefined">Not defined</string>
+    <string name="ticketCreateConfirmation_buildingName">Building name</string>
+    <string name="ticketCreateConfirmation_floor">Floor</string>
+    <string name="ticketCreateConfirmation_office">Office</string>
+    <string name="ticketCreateConfirmation_description">Description</string>
+    <string name="ticketCreateConfirmation_buttonLabel">Confirm ticket creation</string>
 </resources>

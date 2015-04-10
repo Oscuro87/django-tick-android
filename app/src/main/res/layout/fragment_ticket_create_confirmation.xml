@@ -1,0 +1,208 @@
+<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="fill_parent"
+             android:layout_height="wrap_content"
+             tools:context="org.ec.androidticket.activities.createTicket.fragments.CreateTicketConfirmationFragment"
+             android:columnCount="3"
+             android:rowCount="9"
+             android:nestedScrollingEnabled="true"
+    >
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_row="0"
+        android:layout_column="0">
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="@string/ticketCreate_confirmationLabel"
+            android:id="@+id/textView8"
+            android:layout_row="0"
+            android:layout_column="0"
+            android:gravity="center_vertical|center_horizontal"
+            android:layout_marginBottom="20dp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_column="0"
+        android:layout_row="1">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="@string/createTicketConfirmation_category"
+            android:id="@+id/textView9"
+            android:layout_row="1"
+            android:layout_column="0"
+            android:layout_marginRight="10dp"/>
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:id="@+id/ticketCreateConfirmation_category"
+            android:layout_column="1"
+            android:layout_row="1"
+            android:gravity="right"
+            android:textColor="#FF000000"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_row="2"
+        android:layout_column="0">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="@string/ticketCreateConfirmation_subcategory"
+            android:id="@+id/textView10"
+            android:layout_marginRight="10dp"/>
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:id="@+id/ticketCreateConfirmation_subcategory"
+            android:text="@string/ticketCreateConfirmation_undefined"
+            android:gravity="end"
+            android:textColor="#FF000000"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_row="3"
+        android:layout_column="0">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="@string/ticketCreateConfirmation_buildingName"
+            android:id="@+id/textView11"
+            android:layout_marginEnd="10dp"/>
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:id="@+id/ticketCreateConfirmation_buildingName"
+            android:text="@string/ticketCreateConfirmation_undefined"
+            android:gravity="end"
+            android:textColor="#FF000000"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_row="4"
+        android:layout_column="0">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="@string/ticketCreateConfirmation_floor"
+            android:id="@+id/textView11"
+            android:layout_marginEnd="10dp"/>
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:id="@+id/ticketCreateConfirmation_floor"
+            android:text="@string/ticketCreateConfirmation_undefined"
+            android:gravity="end"
+            android:textColor="#FF000000"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_row="5"
+        android:layout_column="0">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="@string/ticketCreateConfirmation_office"
+            android:id="@+id/textView11"
+            android:layout_marginEnd="10dp"/>
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:id="@+id/ticketCreateConfirmation_office"
+            android:text="@string/ticketCreateConfirmation_undefined"
+            android:gravity="end"
+            android:textColor="#FF000000"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_row="6"
+        android:layout_column="0"
+        android:layout_columnSpan="1">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="@string/ticketCreateConfirmation_description"
+            android:id="@+id/textView11"
+            android:layout_marginBottom="5dp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_row="7"
+        android:layout_column="0"
+        android:layout_columnSpan="1">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="@string/ticketCreateConfirmation_undefined"
+            android:id="@+id/ticketCreateConfirmation_description"
+            android:layout_marginEnd="10dp"
+            android:textColor="#FF000000"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_row="8"
+        android:layout_column="0"
+        android:layout_columnSpan="1">
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/ticketCreateConfirmation_buttonLabel"
+            android:id="@+id/button"/>
+    </LinearLayout>
+
+</GridLayout>

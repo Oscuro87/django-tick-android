@@ -72,8 +72,8 @@ public class CreateTicketCategoryFragment extends MyFragment
         subcategorySpinner = (Spinner)view.findViewById(R.id.ticketCreate_subcategorySpinner);
         subcategoryLabel = (TextView)view.findViewById(R.id.createTicket_subcategoryLabel);
 
-        categoriesAdapter = new ArrayAdapter<Category>(view.getContext(), R.layout.create_ticket_category_subcategory_row);
-        subcategoriesAdapter = new ArrayAdapter<Category>(view.getContext(), R.layout.create_ticket_category_subcategory_row);
+        categoriesAdapter = new ArrayAdapter<>(view.getContext(), R.layout.create_ticket_category_subcategory_row);
+        subcategoriesAdapter = new ArrayAdapter<>(view.getContext(), R.layout.create_ticket_category_subcategory_row);
 
         categorySpinner.setAdapter(categoriesAdapter);
         subcategorySpinner.setAdapter(subcategoriesAdapter);
@@ -124,7 +124,7 @@ public class CreateTicketCategoryFragment extends MyFragment
             for(Category c : subcategoryFullList)
             {
                 if(c.getParentCategory() == null) continue;
-                if(c.getParentCategory().getPrimaryKey() == selected.getPrimaryKey())
+                if(c.getParentCategory().getPrimaryKey() == selected.getPrimaryKey() || c.getParentCategory().getPrimaryKey() == -1)
                     subcategoriesAdapter.add(c);
             }
         }
@@ -140,7 +140,10 @@ public class CreateTicketCategoryFragment extends MyFragment
             @Override
             public void onClick(View v)
             {
-                activityInterface.onNextStepCalled();
+                if(((Category)categorySpinner.getSelectedItem()).getPrimaryKey() == -1)
+                    Toast.makeText(v.getContext(), getString(R.string.ticketCreate_pleaseSelectCategory), Toast.LENGTH_SHORT).show();
+                else
+                    activityInterface.onNextStepCalled();
             }
         });
 
@@ -151,7 +154,7 @@ public class CreateTicketCategoryFragment extends MyFragment
             {
                 Category selected = (Category) categorySpinner.getItemAtPosition(position);
                 Log.d("CustomLog", "" + selected.getPrimaryKey());
-                if(selected.getPrimaryKey() == -1)
+                if(position <= 0)
                 {
 //                    Toast.makeText(getView().getContext(), getString(R.string.pleaseSelectACategory), Toast.LENGTH_SHORT).show();
                     subcategoryLabel.setVisibility(View.INVISIBLE);

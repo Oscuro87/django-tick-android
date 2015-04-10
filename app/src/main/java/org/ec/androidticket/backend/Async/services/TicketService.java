@@ -239,7 +239,7 @@ public class TicketService
                     public void success(RequestCategoriesResponseEvent requestCategoriesResponseEvent, Response response)
                     {
                         requestCategoriesResponseEvent.getCategories().add(0, new Category(-1, null, null, ""));
-                        requestCategoriesResponseEvent.getSubcategories().add(0, new Category(-1, null, null, ""));
+                        requestCategoriesResponseEvent.getSubcategories().add(0, new Category(-1, new Category(-1, null, null, ""), null, ""));
                         bus.post(requestCategoriesResponseEvent);
                     }
 
