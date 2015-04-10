@@ -5,9 +5,9 @@ import com.google.gson.annotations.SerializedName;
 
 public class Building
 {
-    @SerializedName("pk")
+    @SerializedName("id")
     @Expose
-    private int pk;
+    private int id;
     @SerializedName("country")
     @Expose
     private String country;
@@ -27,6 +27,29 @@ public class Building
     @Expose
     private String buildingCode;
 
+    public Building()
+    {
+    }
+
+    public Building(boolean dummyBuilding)
+    {
+        if(dummyBuilding)
+        {
+            this.id = -1;
+            this.country = "";
+            this.address = "";
+            this.vicinity = "";
+            this.postcode = "";
+            this.buildingName = "";
+            this.buildingCode = "";
+        }
+    }
+
+    public int getId()
+    {
+        return id;
+    }
+
     public String getCountry()
     {
         return country;
@@ -37,19 +60,9 @@ public class Building
         return address;
     }
 
-    public void setAddress(String address)
-    {
-        this.address = address;
-    }
-
     public String getVicinity()
     {
         return vicinity;
-    }
-
-    public void setVicinity(String vicinity)
-    {
-        this.vicinity = vicinity;
     }
 
     public String getPostcode()
@@ -57,19 +70,9 @@ public class Building
         return postcode;
     }
 
-    public void setPostcode(String postcode)
-    {
-        this.postcode = postcode;
-    }
-
     public String getBuildingName()
     {
         return buildingName;
-    }
-
-    public void setBuildingName(String buildingName)
-    {
-        this.buildingName = buildingName;
     }
 
     public String getBuildingCode()
@@ -77,4 +80,9 @@ public class Building
         return buildingCode;
     }
 
+    @Override
+    public String toString()
+    {
+        return buildingName;
+    }
 }

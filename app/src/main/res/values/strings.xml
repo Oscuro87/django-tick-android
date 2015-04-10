@@ -70,7 +70,7 @@
     <string name="ticketCreate_building">Building</string>
     <string name="ticketCreate_floor">Floor</string>
     <string name="ticketCreate_office">Office</string>
-    <string name="ticketCreate_description">Description\\n(max. 200 words)</string>
+    <string name="ticketCreate_description">Description</string>
     <string name="ticketCreate_sendButton"> Create ticket</string>
     <string name="ticketCreate_descriptionGreyText">Problem description</string>
     <string name="ticketCommentCreate_title">Create a comment</string>
@@ -90,4 +90,15 @@
     <string name="buildingCreationSuccess">Building created successfully</string>
     <string name="buildingCreationFailure">Building creation failed, please try again</string>
     <string name="createBuildingWrongCountryInput">You entered a wrong country name</string>
+    <string name="ticketCreate_cancelled">Ticket creation cancelled</string>
+    <string name="createTicket_subcategory">Subcategory</string>
+    <string name="emptyCategoryName">None</string>
+    <string name="pleaseSelectACategory">Please select a category</string>
+    <string name="createTicket_nextStepButton">Next step</string>
+    <string name="createTicketBuilding_building">Building</string>
+    <string name="createTicket_floor">Floor</string>
+    <string name="ticketCreateBuilding_nextStepButton">Next step</string>
+    <string name="ticketCreateBuilding_office">Office</string>
+    <string name="ticketCreate_image">Ticket picture</string>
+    <string name="ticketCreate_confirmationPage">Confirmation</string>
 </resources>

@@ -5,6 +5,7 @@ import android.util.Log;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 
+import org.ec.androidticket.R;
 import org.ec.androidticket.backend.Async.BusDepot;
 import org.ec.androidticket.backend.Async.RESTClient;
 import org.ec.androidticket.backend.Async.events.buildingEvents.BuildingCreationEvent;
@@ -22,12 +23,21 @@ import org.ec.androidticket.backend.Async.events.ticketEvents.history.HistoryReq
 import org.ec.androidticket.backend.Async.events.ticketEvents.history.HistoryRequestSuccessEvent;
 import org.ec.androidticket.backend.Async.events.ticketEvents.ticket.SimpleTicketRequestEvent;
 import org.ec.androidticket.backend.Async.events.ticketEvents.ticket.SimpleTicketRequestSuccessEvent;
+import org.ec.androidticket.backend.Async.events.ticketEvents.ticket.create.RequestCategoriesResponseEvent;
+import org.ec.androidticket.backend.Async.events.ticketEvents.ticket.create.RequestUserBuildingsEvent;
+import org.ec.androidticket.backend.Async.events.ticketEvents.ticket.create.RequestUserBuildingsResponseEvent;
+import org.ec.androidticket.backend.Async.events.ticketEvents.ticket.create.TicketCreationEvent;
+import org.ec.androidticket.backend.Async.events.ticketEvents.ticket.create.TicketCreationResponseEvent;
+import org.ec.androidticket.backend.Async.events.ticketEvents.ticket.create.RequestCategoriesEvent;
 import org.ec.androidticket.backend.Async.responses.PostResponseEvent;
+import org.ec.androidticket.backend.models.ticketing.Building;
+import org.ec.androidticket.backend.models.ticketing.Category;
 import org.ec.androidticket.backend.models.ticketing.variants.CommentDiet;
 import org.ec.androidticket.backend.models.ticketing.variants.FullTicket;
 import org.ec.androidticket.backend.models.ticketing.variants.HistoryDiet;
 import org.ec.androidticket.backend.models.ticketing.Tickets;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit.Callback;
@@ -191,6 +201,79 @@ public class TicketService
                     public void failure(RetrofitError error)
                     {
                         bus.post(new BuildingCreationResponseEvent(false, error.getMessage()));
+                    }
+                }
+        );
+    }
+
+    @Subscribe
+    public void onTicketCreationRequest(TicketCreationEvent event)
+    {
+        RESTClient.getTicketAPI().createTicket(
+                event.getAuthtoken(),
+                event.getNewTicket(),
+                new Callback<TicketCreationResponseEvent>()
+                {
+                    @Override
+                    public void success(TicketCreationResponseEvent ticketCreationResponseEvent, Response response)
+                    {
+                        bus.post(ticketCreationResponseEvent);
+                    }
+
+                    @Override
+                    public void failure(RetrofitError error)
+                    {
+                        bus.post(new TicketCreationResponseEvent(false, "Retrofit error: " + error.getMessage()));
+                    }
+                }
+        );
+    }
+
+    @Subscribe
+    public void onCategoriesRequest(RequestCategoriesEvent event)
+    {
+        RESTClient.getTicketAPI().requestAllCategories(
+                new Callback<RequestCategoriesResponseEvent>()
+                {
+                    @Override
+                    public void success(RequestCategoriesResponseEvent requestCategoriesResponseEvent, Response response)
+                    {
+                        requestCategoriesResponseEvent.getCategories().add(0, new Category(-1, null, null, ""));
+                        requestCategoriesResponseEvent.getSubcategories().add(0, new Category(-1, null, null, ""));
+                        bus.post(requestCategoriesResponseEvent);
+                    }
+
+                    @Override
+                    public void failure(RetrofitError error)
+                    {
+                        bus.post(new RequestCategoriesResponseEvent());
+                    }
+                }
+        );
+    }
+
+    @Subscribe
+    public void onBuildingsRequest(RequestUserBuildingsEvent event)
+    {
+        RESTClient.getTicketAPI().requestUserBuildings(
+                event.getAuthtoken(),
+                new Callback<RequestUserBuildingsResponseEvent>()
+                {
+                    @Override
+                    public void success(RequestUserBuildingsResponseEvent responseEvent, Response response)
+                    {
+                        Log.i("CustomLog", "Retrieve buildings for user success");
+                        Building emptyBuilding = new Building();
+//                        emptyBuilding.
+                        responseEvent.getUserBuildings().add(0, emptyBuilding);
+                        bus.post(responseEvent);
+                    }
+
+                    @Override
+                    public void failure(RetrofitError error)
+                    {
+                        Log.e("CustomLog", error.getMessage());
+                        bus.post(new RequestUserBuildingsResponseEvent(error));
                     }
                 }
         );

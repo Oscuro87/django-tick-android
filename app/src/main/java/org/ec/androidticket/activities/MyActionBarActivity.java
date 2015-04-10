@@ -20,7 +20,9 @@ public abstract class MyActionBarActivity extends ActionBarActivity
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+
         bus = BusDepot.get().getBus(BusDepot.BusType.GENERAL);
+
         authService = AuthService.get();
         ticketService = TicketService.get();
     }

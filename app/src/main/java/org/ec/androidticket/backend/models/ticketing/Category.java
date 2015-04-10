@@ -5,6 +5,9 @@ import com.google.gson.annotations.SerializedName;
 
 public class Category
 {
+    @SerializedName("id")
+    @Expose
+    private int primaryKey;
     @SerializedName("fk_parent_category")
     @Expose
     private Category parentCategory;
@@ -15,27 +18,41 @@ public class Category
     @Expose
     private String label;
 
-    public Category getParentCategory() {
+    public Category()
+    {
+    }
+
+    public Category(Integer primaryKey, Category parentCategory, Priority priority, String label)
+    {
+        this.primaryKey = primaryKey;
+        this.parentCategory = parentCategory;
+        this.priority = priority;
+        this.label = label;
+    }
+
+    public int getPrimaryKey()
+    {
+        return primaryKey;
+    }
+
+    public Category getParentCategory()
+    {
         return parentCategory;
     }
 
-    public void setParentCategory(Category parentCategory) {
-        this.parentCategory = parentCategory;
-    }
-
-    public Priority getPriority() {
+    public Priority getPriority()
+    {
         return priority;
     }
 
-    public void setPriority(Priority priority) {
-        this.priority = priority;
-    }
-
-    public String getLabel() {
+    public String getLabel()
+    {
         return label;
     }
 
-    public void setLabel(String label) {
-        this.label = label;
+    @Override
+    public String toString()
+    {
+        return label;
     }
 }

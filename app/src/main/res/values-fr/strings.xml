@@ -58,7 +58,7 @@
     <string name="ticketCommentCreate_title">Créer un commentaire</string>
     <string name="ticketCreate_building">Bâtiment</string>
     <string name="ticketCreate_category">Catégorie</string>
-    <string name="ticketCreate_description">Description\\n(200 mots max.)</string>
+    <string name="ticketCreate_description">Description</string>
     <string name="ticketCreate_descriptionGreyText">Description de l\'incident</string>
     <string name="ticketCreate_floor">Étage</string>
     <string name="ticketCreate_office">Bureau</string>
@@ -80,4 +80,18 @@
     <string name="createBuilding_buildingName">Nom du bâtiment</string>
     <string name="createBuilding_sendButtonCaption">Créer le bâtiment</string>
     <string name="createBuilding_vicinity">Commune</string>
+    <string name="ticketCreate_confirmationPage">Confirmation</string>
+    <string name="ticketCreateBuilding_nextStepButton">Étape suivante</string>
+    <string name="ticketCreateBuilding_office">Bureau</string>
+    <string name="ticketCreate_cancelled">Création du ticket annulée</string>
+    <string name="ticketCreate_image">Photo du ticket</string>
+    <string name="buildingCreationFailure">Création du bâtiment échouée, veuillez réessayer</string>
+    <string name="buildingCreationSuccess">Création du bâtiment réussie</string>
+    <string name="createBuildingWrongCountryInput">Vous avez entré un nom de pays erroné</string>
+    <string name="createTicketBuilding_building">Bâtiment</string>
+    <string name="createTicket_floor">Étage</string>
+    <string name="createTicket_nextStepButton">Étape suivante</string>
+    <string name="createTicket_subcategory">Sous-catégorie</string>
+    <string name="emptyCategoryName">Aucun(e)</string>
+    <string name="pleaseSelectACategory">Veuillez sélectionner une catégorie</string>
 </resources>

@@ -1,19 +1,19 @@
 package org.ec.androidticket.backend.Async.apis;
 
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 
 import org.ec.androidticket.backend.Async.events.buildingEvents.BuildingCreationResponseEvent;
+import org.ec.androidticket.backend.Async.events.ticketEvents.ticket.create.RequestCategoriesResponseEvent;
+import org.ec.androidticket.backend.Async.events.ticketEvents.ticket.create.RequestUserBuildingsResponseEvent;
+import org.ec.androidticket.backend.Async.events.ticketEvents.ticket.create.TicketCreationResponseEvent;
 import org.ec.androidticket.backend.Async.responses.PostResponseEvent;
-import org.ec.androidticket.backend.models.ticketing.Building;
-import org.ec.androidticket.backend.models.ticketing.Category;
-import org.ec.androidticket.backend.models.ticketing.Channel;
 import org.ec.androidticket.backend.models.ticketing.Comment;
 import org.ec.androidticket.backend.models.ticketing.variants.CommentDiet;
 import org.ec.androidticket.backend.models.ticketing.variants.FullTicket;
 import org.ec.androidticket.backend.models.ticketing.variants.HistoryDiet;
 import org.ec.androidticket.backend.models.ticketing.Tickets;
 import org.ec.androidticket.backend.models.ticketing.variants.NewBuilding;
+import org.ec.androidticket.backend.models.ticketing.variants.TicketCreation;
 
 import java.util.List;
 
@@ -105,14 +105,18 @@ public interface RestTicketAPI
              * On utilise l'annotation Body pour envoyer des objets Java au web service.
              * Grâce à cette annotation, le client REST traduira l'object Java en JSON.
              */
-            // Champs non nullables
-            @NonNull @Body Category category,
-            // Champs nullables
-            @Nullable @Body Category subcategory,
-            @Nullable @Body Building building,
-            @Nullable @Body Channel channel,
-            @Nullable @Field("floor") String floor,
-            @Nullable @Field("office") String office,
-            @Nullable @Field("description") String description
+            @NonNull @Body TicketCreation newTicket,
+            Callback<TicketCreationResponseEvent> callback
+    );
+
+    @GET("/rest/tickets/getallcategories")
+    void requestAllCategories(
+            Callback<RequestCategoriesResponseEvent> callback
+    );
+
+    @GET("/rest/tickets/getallbuildingsforuser")
+    void requestUserBuildings(
+            @NonNull @Header("Authorization") String authtoken,
+            Callback<RequestUserBuildingsResponseEvent> callback
     );
 }
