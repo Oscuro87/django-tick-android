@@ -70,7 +70,7 @@ public class TicketHomeActivity extends MyActionBarActivity implements SearchVie
     protected void onResume()
     {
         super.onResume();
-        refreshTickets(false);
+        refreshTickets(true);
     }
 
     // TODO: Ajouter un bouton qui force à rafraichir la liste des tickets de l'utilisateur

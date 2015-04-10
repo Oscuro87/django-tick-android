@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TableRow;
 import android.widget.Toast;
@@ -17,6 +18,8 @@ import com.squareup.otto.Subscribe;
 
 import org.ec.androidticket.R;
 import org.ec.androidticket.activities.MyFragment;
+import org.ec.androidticket.activities.createTicket.CreateTicketActivity;
+import org.ec.androidticket.activities.createTicket.adapters.TicketCreationInformationHolder;
 import org.ec.androidticket.backend.Async.events.ticketEvents.ticket.create.RequestUserBuildingsEvent;
 import org.ec.androidticket.backend.Async.events.ticketEvents.ticket.create.RequestUserBuildingsResponseEvent;
 import org.ec.androidticket.backend.models.internal.UserDataCache;
@@ -30,9 +33,11 @@ public class CreateTicketBuildingFragment extends MyFragment
     private Spinner buildingSpinner;
     private Button nextStepButton;
     private TableRow floorRow, officeRow;
+    private EditText floorEdit, officeEdit;
     private CreateTicketFragmentInterface activityInterface;
     private ArrayAdapter<Building> userBuildingsAdapter;
     private List<Building> userBuildings;
+    private boolean isViewCreated = false;
 
     public static CreateTicketBuildingFragment newInstance(String param1, String param2)
     {
@@ -69,12 +74,16 @@ public class CreateTicketBuildingFragment extends MyFragment
         buildingSpinner = (Spinner) view.findViewById(R.id.createTicket_buildingSpinner);
         floorRow = (TableRow) view.findViewById(R.id.ticketCreateBuilding_floorRow);
         officeRow = (TableRow) view.findViewById(R.id.ticketCreateBuilding_officeRow);
+        floorEdit = (EditText) view.findViewById(R.id.ticketCreate_floor);
+        officeEdit = (EditText) view.findViewById(R.id.ticketCreate_office);
 
         userBuildings = new ArrayList<>();
         userBuildingsAdapter = new ArrayAdapter<Building>(view.getContext(), R.layout.create_ticket_category_subcategory_row, userBuildings);
         buildingSpinner.setAdapter(userBuildingsAdapter);
 
         setupListeners();
+
+        isViewCreated = true;
 
         return view;
     }
@@ -122,9 +131,12 @@ public class CreateTicketBuildingFragment extends MyFragment
             @Override
             public void onClick(View v)
             {
+                saveFragmentIntoCache();
                 activityInterface.onNextStepCalled();
             }
         });
+
+
 
         buildingSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
         {
@@ -152,5 +164,38 @@ public class CreateTicketBuildingFragment extends MyFragment
                 floorRow.setVisibility(View.GONE);
             }
         });
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser)
+    {
+        super.setUserVisibleHint(isVisibleToUser);
+        if(!isVisibleToUser && isViewCreated)
+            saveFragmentIntoCache();
+    }
+
+    private void saveFragmentIntoCache()
+    {
+        TicketCreationInformationHolder tcih = CreateTicketActivity.creationInformation;
+        if(buildingSpinner.getSelectedItemPosition() > 0)
+        {
+            tcih.building = (Building)buildingSpinner.getSelectedItem();
+
+            if( ! floorEdit.getText().toString().equals(getString(R.string.ticketCreateConfirmation_undefined)))
+                tcih.floor = floorEdit.getText().toString();
+            else
+                tcih.floor = "";
+
+            if( ! officeEdit.getText().toString().equals(getString(R.string.ticketCreateConfirmation_undefined)))
+                tcih.office = officeEdit.getText().toString();
+            else
+                tcih.office = "";
+        }
+        else
+        {
+            tcih.building = null;
+            tcih.floor = "";
+            tcih.office = "";
+        }
     }
 }

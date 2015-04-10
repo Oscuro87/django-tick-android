@@ -4,17 +4,24 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
+
+import com.squareup.otto.Subscribe;
 
 import org.ec.androidticket.R;
 import org.ec.androidticket.activities.MyActionBarActivity;
 import org.ec.androidticket.activities.createTicket.adapters.TicketCreationInformationHolder;
 import org.ec.androidticket.activities.createTicket.adapters.TicketCreationPagerAdapter;
 import org.ec.androidticket.activities.createTicket.fragments.CreateTicketFragmentInterface;
+import org.ec.androidticket.backend.Async.events.ticketEvents.ticket.create.TicketCreationEvent;
+import org.ec.androidticket.backend.Async.events.ticketEvents.ticket.create.TicketCreationResponseEvent;
+import org.ec.androidticket.backend.models.internal.UserDataCache;
 import org.ec.androidticket.backend.models.ticketing.Building;
 import org.ec.androidticket.backend.models.ticketing.Category;
+import org.ec.androidticket.backend.models.ticketing.variants.TicketCreation;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -86,6 +93,8 @@ public class CreateTicketActivity extends MyActionBarActivity implements ActionB
         viewPager.setOffscreenPageLimit(pagerAdapter.getCount());
 
         actionBar.setHomeButtonEnabled(false);
+        actionBar.setDisplayHomeAsUpEnabled(false);
+        actionBar.setDisplayShowTitleEnabled(false);
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
         for(String name : pageNames)
@@ -102,6 +111,7 @@ public class CreateTicketActivity extends MyActionBarActivity implements ActionB
             @Override
             public void onPageSelected(int position)
             {
+                if(creationInformation.category == null) return;
                 actionBar.setSelectedNavigationItem(position);
             }
 
@@ -139,6 +149,7 @@ public class CreateTicketActivity extends MyActionBarActivity implements ActionB
     @Override
     public void onTabSelected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction)
     {
+        if(creationInformation.category == null) return;
         viewPager.setCurrentItem(tab.getPosition());
     }
 
@@ -157,9 +168,29 @@ public class CreateTicketActivity extends MyActionBarActivity implements ActionB
     @Override
     public void onNextStepCalled()
     {
+        if(creationInformation.category == null) return;
         int nextPage = viewPager.getCurrentItem() + 1;
         int maxPages = pagerAdapter.getCount();
         if(nextPage <= maxPages)
             viewPager.setCurrentItem(nextPage, true);
+    }
+
+    @Override
+    public void onTicketCreationFinished()
+    {
+//        Log.i("CustomLog", "Sending new ticket informations to webservice!"); // OK
+        bus.post(new TicketCreationEvent(UserDataCache.get().getAuthtoken(), creationInformation.buildNewTicket()));
+    }
+
+    @Subscribe
+    public void onTicketCreationResponseReceived(TicketCreationResponseEvent event)
+    {
+        if(!event.isSuccess())
+            Toast.makeText(getApplicationContext(), event.getReason(), Toast.LENGTH_SHORT).show();
+        else
+        {
+            Toast.makeText(getApplicationContext(), getString(R.string.ticketCreateResponse_success), Toast.LENGTH_SHORT).show();
+            finish();
+        }
     }
 }

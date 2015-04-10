@@ -94,17 +94,18 @@ public interface RestTicketAPI
             Callback<BuildingCreationResponseEvent> callback
     );
 
+
+    /*
+     * On utilise l'annotation Body pour envoyer des objets Java au web service.
+     * Grâce à cette annotation, le client REST traduira l'object Java en JSON.
+     */
+
     /**
      * Requête envoyée au web service pour créer un ticket dans la DB.
      */
-    @FormUrlEncoded
-    @POST("/rest/tickets/create")
+    @POST("/rest/tickets/createticket")
     void createTicket(
             @NonNull @Header("Authorization") String authtoken,
-            /*
-             * On utilise l'annotation Body pour envoyer des objets Java au web service.
-             * Grâce à cette annotation, le client REST traduira l'object Java en JSON.
-             */
             @NonNull @Body TicketCreation newTicket,
             Callback<TicketCreationResponseEvent> callback
     );

@@ -113,4 +113,6 @@
     <string name="ticketCreateConfirmation_office">Office</string>
     <string name="ticketCreateConfirmation_description">Description</string>
     <string name="ticketCreateConfirmation_buttonLabel">Confirm ticket creation</string>
+    <string name="ticketCreateConfirmation_notice">You can still modify your ticket\'s informations!</string>
+    <string name="ticketCreateResponse_success">The ticket has been created, thanks for your report.</string>
 </resources>

@@ -28,23 +28,26 @@ otto (Librairie event bus)
 APP ANDROID (demo sur genymotion)
 ***********
 
-- Vue "home"
+- Vue ticket
+    V Vue ticket détaillée
+    V Possibilité de laisser un commentaire
+    - Possibilité pour le manager du ticket de gérer le ticket affiché (boutons dans le menu contextuel?)
+- Mise en lien utilisateur et entreprise via email & téléphone
+- Ajout feature photo (android uniquement)
+    - Stockage de la photo sur le serveur
+    - Url de la photo liée au ticket
+    - Affichage de la photo sur la vue ticket (web & android)
+
+
+V Vue "home"
     * Les tickets seront des icônes. Lorsque l'utilisateur clique sur une icône, la vue ticket complète apparaît
         * Pour l'instant les tickets sont dans une liste
     A Layout représentant un ticket
     * Menu options (via bouton menu)
         V Logout
-        - Créer ticket
-        - Créer bâtiment pour soi
-- Vue ticket
-    - Vue ticket détaillée
-    - Possibilité de laisser un commentaire
-    - Possibilité pour le manager du ticket de gérer le ticket affiché (boutons dans le menu contextuel?)
-- Vue création ticket + ajout feature photo (android uniquement)
-    - Stockage de la photo sur le serveur
-    - Url de la photo liée au ticket
-    - Affichage de la photo sur la vue ticket (web & android)
-
+        V Créer ticket
+        V Créer bâtiment pour soi
+V Vue création ticket
 V Créer projet avec Android Studio (+ push sur github)
 V Vue "login" fonctionnelle
 

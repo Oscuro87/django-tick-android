@@ -17,6 +17,8 @@ import com.squareup.otto.Subscribe;
 
 import org.ec.androidticket.R;
 import org.ec.androidticket.activities.MyFragment;
+import org.ec.androidticket.activities.createTicket.CreateTicketActivity;
+import org.ec.androidticket.activities.createTicket.adapters.TicketCreationInformationHolder;
 import org.ec.androidticket.backend.Async.events.ticketEvents.ticket.create.RequestCategoriesEvent;
 import org.ec.androidticket.backend.Async.events.ticketEvents.ticket.create.RequestCategoriesResponseEvent;
 import org.ec.androidticket.backend.models.internal.UserDataCache;
@@ -32,6 +34,7 @@ public class CreateTicketCategoryFragment extends MyFragment
     private TextView subcategoryLabel;
     private List<Category> subcategoryFullList = new ArrayList<>();
     private ArrayAdapter<Category> categoriesAdapter, subcategoriesAdapter;
+    private boolean isViewCreated = false;
 
     private CreateTicketFragmentInterface activityInterface;
 
@@ -79,6 +82,8 @@ public class CreateTicketCategoryFragment extends MyFragment
         subcategorySpinner.setAdapter(subcategoriesAdapter);
 
         setupListeners();
+
+        isViewCreated = true;
 
         return view;
     }
@@ -143,7 +148,10 @@ public class CreateTicketCategoryFragment extends MyFragment
                 if(((Category)categorySpinner.getSelectedItem()).getPrimaryKey() == -1)
                     Toast.makeText(v.getContext(), getString(R.string.ticketCreate_pleaseSelectCategory), Toast.LENGTH_SHORT).show();
                 else
+                {
+                    saveFragmentIntoCache();
                     activityInterface.onNextStepCalled();
+                }
             }
         });
 
@@ -179,5 +187,27 @@ public class CreateTicketCategoryFragment extends MyFragment
             }
         }
         );
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser)
+    {
+        super.setUserVisibleHint(isVisibleToUser);
+
+        if(!isVisibleToUser && isViewCreated)
+            saveFragmentIntoCache();
+    }
+
+    private void saveFragmentIntoCache()
+    {
+        TicketCreationInformationHolder tcih = CreateTicketActivity.creationInformation;
+
+        try
+        {
+            tcih.category = (Category)categorySpinner.getSelectedItem();
+
+            if(((Category)subcategorySpinner.getSelectedItem()).getPrimaryKey() != -1)
+                tcih.category = (Category)subcategorySpinner.getSelectedItem();
+        } catch (NullPointerException ignored){} // TODO
     }
 }

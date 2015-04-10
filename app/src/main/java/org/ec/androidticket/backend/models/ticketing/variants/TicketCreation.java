@@ -18,25 +18,10 @@ public class TicketCreation
     @Nullable
     public Building building;
 
-    @SerializedName("channel")
-    @Expose
-    @Nullable
-    public Channel channel;
-
     @SerializedName("category")
     @Expose
     @NonNull
-    public Category parentCategory;
-
-    @SerializedName("subcategory")
-    @Expose
-    @Nullable
-    public Category subcategory;
-
-    @SerializedName("reporter")
-    @Expose
-    @NonNull
-    public User reporter;
+    public Category category;
 
     @SerializedName("floor")
     @Expose

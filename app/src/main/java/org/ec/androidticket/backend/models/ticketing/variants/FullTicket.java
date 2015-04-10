@@ -11,8 +11,6 @@ import org.ec.androidticket.backend.models.ticketing.Priority;
 import org.ec.androidticket.backend.models.ticketing.TicketStatus;
 import org.ec.androidticket.backend.models.ticketing.User;
 
-import java.util.Date;
-
 public class FullTicket
 {
     @SerializedName("fk_building")
@@ -23,7 +21,7 @@ public class FullTicket
     private Channel channel;
     @SerializedName("fk_category")
     @Expose
-    private Category parentCategory;
+    private Category category;
     @SerializedName("fk_reporter")
     @Expose
     private User reporter;
@@ -72,14 +70,21 @@ public class FullTicket
         this.channel = channel;
     }
 
+    public Category getCategory()
+    {
+        return category;
+    }
+
     public Category getSubcategory()
     {
-        return parentCategory;
+        if (category.getParentCategory() != null)
+            return category;
+        return null;
     }
 
     public void setSubcategory(Category subcategory)
     {
-        this.parentCategory = subcategory;
+        this.category = subcategory;
     }
 
     public User getReporter()

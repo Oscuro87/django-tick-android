@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import org.ec.androidticket.R;
 import org.ec.androidticket.backend.models.internal.FullTicketCache;
+import org.ec.androidticket.backend.models.ticketing.Category;
 import org.ec.androidticket.backend.models.ticketing.variants.FullTicket;
 
 public class TicketDetailFragment extends Fragment implements TicketFragmentInterface
@@ -109,15 +110,23 @@ public class TicketDetailFragment extends Fragment implements TicketFragmentInte
 
         codeTV.setText(ticket.getTicketCode());
         statusTV.setText(ticket.getStatus().getLabel());
-        categoryTV.setText(ticket.getSubcategory().getParentCategory().getLabel());
+
         if(ticket.getSubcategory() != null)
+        {
             subcategoryTV.setText(ticket.getSubcategory().getLabel());
+            categoryTV.setText(ticket.getSubcategory().getParentCategory().getLabel());
+        }
         else
+        {
             subcategoryTV.setText("");
+            categoryTV.setText(ticket.getCategory().getLabel());
+        }
+
         if(ticket.getBuilding() != null)
             buildingTV.setText(ticket.getBuilding().getBuildingName());
         else
             buildingTV.setText(getString(R.string.ticketDetail_noBuildingFlavour));
+
         floorTV.setText(ticket.getFloor());
         officeTV.setText(ticket.getOffice());
         reporterTV.setText(ticket.getReporter().getFullName());
