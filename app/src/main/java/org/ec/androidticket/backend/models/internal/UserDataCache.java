@@ -1,6 +1,7 @@
 package org.ec.androidticket.backend.models.internal;
 
 import org.ec.androidticket.backend.Async.events.loginEvents.LoginSuccessEvent;
+import org.ec.androidticket.backend.models.ticketing.User;
 
 public class UserDataCache
 {
@@ -132,5 +133,17 @@ public class UserDataCache
     public void setUserID(int userID)
     {
         this.userID = userID;
+    }
+
+    public User buildUserFromCache()
+    {
+        User user = new User();
+        user.setEmail(email);
+        user.setFirstName(firstName);
+        user.setLastName(lastName);
+        user.setIsActive(isActive);
+        user.setIsStaff(isStaff());
+        user.setPk(userID);
+        return user;
     }
 }

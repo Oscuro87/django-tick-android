@@ -28,6 +28,8 @@ import org.ec.androidticket.backend.Async.events.ticketEvents.ticket.create.Requ
 import org.ec.androidticket.backend.Async.events.ticketEvents.ticket.create.TicketCreationEvent;
 import org.ec.androidticket.backend.Async.events.ticketEvents.ticket.create.TicketCreationResponseEvent;
 import org.ec.androidticket.backend.Async.events.ticketEvents.ticket.create.RequestCategoriesEvent;
+import org.ec.androidticket.backend.Async.events.ticketEvents.ticket.update.UpdateTicketDetailEvent;
+import org.ec.androidticket.backend.Async.events.ticketEvents.ticket.update.UpdateTicketDetailResponseEvent;
 import org.ec.androidticket.backend.Async.responses.PostResponseEvent;
 import org.ec.androidticket.backend.models.ticketing.Building;
 import org.ec.androidticket.backend.models.ticketing.Category;
@@ -271,6 +273,29 @@ public class TicketService
                     {
                         Log.e("CustomLog", error.getMessage());
                         bus.post(new RequestUserBuildingsResponseEvent(error));
+                    }
+                }
+        );
+    }
+
+    @Subscribe
+    public void onTicketDetailUpdate(UpdateTicketDetailEvent event)
+    {
+        RESTClient.getTicketAPI().updateTicketDetail(
+                event.getAuthtoken(),
+                event.getFullTicket(),
+                new Callback<UpdateTicketDetailResponseEvent>()
+                {
+                    @Override
+                    public void success(UpdateTicketDetailResponseEvent responseEvent, Response response)
+                    {
+                        bus.post(responseEvent);
+                    }
+
+                    @Override
+                    public void failure(RetrofitError error)
+                    {
+                        bus.post(new UpdateTicketDetailResponseEvent(error));
                     }
                 }
         );

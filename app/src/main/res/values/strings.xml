@@ -119,4 +119,8 @@
     <string name="action_show_own_tickets">Show your own tickets</string>
     <string name="action_show_managed_tickets">Show tickets managed by you</string>
     <string name="action_show_unmanaged_tickets">Show unmanaged tickets</string>
+    <string name="ticketDetail_takeManagement">Take management of this ticket</string>
+    <string name="ticketDetail_releaseManagement">Release management of this ticket</string>
+    <string name="ticketDetail_assignCompany">Assign company to this ticket</string>
+    <string name="ticketDetail_changePhase">Change the ticket\'s phase</string>
 </resources>

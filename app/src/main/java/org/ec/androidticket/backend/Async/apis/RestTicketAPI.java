@@ -7,6 +7,7 @@ import org.ec.androidticket.backend.Async.events.ticketEvents.ticket.SimpleTicke
 import org.ec.androidticket.backend.Async.events.ticketEvents.ticket.create.RequestCategoriesResponseEvent;
 import org.ec.androidticket.backend.Async.events.ticketEvents.ticket.create.RequestUserBuildingsResponseEvent;
 import org.ec.androidticket.backend.Async.events.ticketEvents.ticket.create.TicketCreationResponseEvent;
+import org.ec.androidticket.backend.Async.events.ticketEvents.ticket.update.UpdateTicketDetailResponseEvent;
 import org.ec.androidticket.backend.Async.responses.PostResponseEvent;
 import org.ec.androidticket.backend.models.ticketing.Comment;
 import org.ec.androidticket.backend.models.ticketing.variants.CommentDiet;
@@ -124,5 +125,12 @@ public interface RestTicketAPI
     void requestUserBuildings(
             @NonNull @Header("Authorization") String authtoken,
             Callback<RequestUserBuildingsResponseEvent> callback
+    );
+
+    @POST("/rest/tickets/updatedetails")
+    void updateTicketDetail(
+            @NonNull @Header("Authorization") String authtoken,
+            @NonNull @Body FullTicket ticketInfos,
+            Callback<UpdateTicketDetailResponseEvent> callback
     );
 }

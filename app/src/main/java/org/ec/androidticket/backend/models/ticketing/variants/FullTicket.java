@@ -37,9 +37,9 @@ public class FullTicket
     @SerializedName("fk_company")
     @Expose
     private Company company;
-    @SerializedName("pk")
+    @SerializedName("id")
     @Expose
-    private Integer pk;
+    private Integer id;
     @SerializedName("ticket_code")
     @Expose
     private String ticketCode;
@@ -179,6 +179,6 @@ public class FullTicket
 
     public int getTicketID()
     {
-        return pk;
+        return id;
     }
 }
