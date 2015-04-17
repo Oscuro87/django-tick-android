@@ -28,10 +28,12 @@ import org.ec.androidticket.backend.Async.events.ticketEvents.ticket.create.Requ
 import org.ec.androidticket.backend.Async.events.ticketEvents.ticket.create.TicketCreationEvent;
 import org.ec.androidticket.backend.Async.events.ticketEvents.ticket.create.TicketCreationResponseEvent;
 import org.ec.androidticket.backend.Async.events.ticketEvents.ticket.create.RequestCategoriesEvent;
+import org.ec.androidticket.backend.Async.events.ticketEvents.ticket.get.RequestTicketCompaniesListEvent;
 import org.ec.androidticket.backend.Async.events.ticketEvents.ticket.update.UpdateTicketDetailEvent;
 import org.ec.androidticket.backend.Async.events.ticketEvents.ticket.update.UpdateTicketDetailResponseEvent;
 import org.ec.androidticket.backend.Async.events.ticketEvents.ticket.update.UpdateTicketProgressionEvent;
 import org.ec.androidticket.backend.Async.responses.PostResponseEvent;
+import org.ec.androidticket.backend.Async.responses.RequestTicketCompaniesListResponseEvent;
 import org.ec.androidticket.backend.Async.responses.UpdateTicketProgressionResponseEvent;
 import org.ec.androidticket.backend.models.ticketing.Building;
 import org.ec.androidticket.backend.models.ticketing.Category;
@@ -321,6 +323,29 @@ public class TicketService
                     public void failure(RetrofitError error)
                     {
                         bus.post(new UpdateTicketProgressionResponseEvent(false, error.getMessage()));
+                    }
+                }
+        );
+    }
+
+    @Subscribe
+    public void onTicketCompaniesListRequest(RequestTicketCompaniesListEvent event)
+    {
+        RESTClient.getTicketAPI().getListOfCompaniesForTicket(
+                event.getAuthtoken(),
+                event.getTicketCode(),
+                new Callback<RequestTicketCompaniesListResponseEvent>()
+                {
+                    @Override
+                    public void success(RequestTicketCompaniesListResponseEvent responseEvent, Response response)
+                    {
+                        bus.post(responseEvent);
+                    }
+
+                    @Override
+                    public void failure(RetrofitError error)
+                    {
+                        bus.post(new RequestTicketCompaniesListResponseEvent(error.getMessage(), false));
                     }
                 }
         );

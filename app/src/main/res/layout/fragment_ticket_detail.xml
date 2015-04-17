@@ -1,7 +1,8 @@
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
+    android:layout_height="fill_parent"
+    android:fillViewport="true">
 
     <TableLayout
         android:id="@+id/ticketDetail_FragmentGridLayout"
@@ -117,7 +118,8 @@
                 android:gravity="start"
                 android:paddingEnd="20dp"
                 android:text="@string/ticketDetail_ticketSubcategoryLabel"
-                android:textColor="#FF909090"/>
+                android:textColor="#FF909090"
+                android:layout_weight=".25"/>
 
             <TextView
                 android:id="@+id/ticketDetail_ticketSubcategory"
@@ -236,6 +238,7 @@
         </TableRow>
 
         <!-- Ticket manager -->
+
         <TableRow>
 
             <TextView
@@ -288,7 +291,7 @@
         </TableRow>
 
         <!-- Description -->
-        <TableRow>
+        <TableRow android:id="@+id/below_here">
 
             <TextView
                 android:id="@+id/ticketDescriptionLabel"
@@ -311,6 +314,18 @@
                 android:gravity="start"
                 android:textColor="#FF000000"
                 android:lines="5"/>
+        </TableRow>
+
+        <TableRow
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+
+            <Spinner
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/companyChooserSpinner"
+                android:spinnerMode="dialog"
+                android:visibility="gone"/>
         </TableRow>
 
         <TableRow

@@ -9,6 +9,7 @@ import org.ec.androidticket.backend.Async.events.ticketEvents.ticket.create.Requ
 import org.ec.androidticket.backend.Async.events.ticketEvents.ticket.create.TicketCreationResponseEvent;
 import org.ec.androidticket.backend.Async.events.ticketEvents.ticket.update.UpdateTicketDetailResponseEvent;
 import org.ec.androidticket.backend.Async.responses.PostResponseEvent;
+import org.ec.androidticket.backend.Async.responses.RequestTicketCompaniesListResponseEvent;
 import org.ec.androidticket.backend.Async.responses.UpdateTicketProgressionResponseEvent;
 import org.ec.androidticket.backend.models.ticketing.Comment;
 import org.ec.androidticket.backend.models.ticketing.variants.CommentDiet;
@@ -141,5 +142,13 @@ public interface RestTicketAPI
             @NonNull @Header("Authorization") String authtoken,
             @NonNull @Field("ticketCode") String ticketCode,
             Callback<UpdateTicketProgressionResponseEvent> callback
+    );
+
+    @FormUrlEncoded
+    @POST("/rest/tickets/updatedetails/getlistofcompanies")
+    void getListOfCompaniesForTicket(
+            @NonNull @Header("Authorization") String authtoken,
+            @NonNull @Field("ticketCode") String ticketCode,
+            Callback<RequestTicketCompaniesListResponseEvent> callback
     );
 }

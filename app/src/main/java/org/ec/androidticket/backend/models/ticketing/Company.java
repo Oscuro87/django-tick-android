@@ -7,27 +7,38 @@ import java.util.List;
 
 public class Company
 {
+    @SerializedName("pk")
+    @Expose
+    private Integer pk;
+
     @SerializedName("fk_suitableEventCategories")
     @Expose
     private List<Category> suitableEventCategories;
+
     @SerializedName("country")
     @Expose
     private String country;
+
     @SerializedName("address")
     @Expose
     private String address;
+
     @SerializedName("vicinity")
     @Expose
     private String vicinity;
+
     @SerializedName("postcode")
     @Expose
     private String postcode;
+
     @SerializedName("phone_number")
     @Expose
     private String phone;
+
     @SerializedName("name")
     @Expose
     private String name;
+
     @SerializedName("vat_number")
     @Expose
     private String VAT;
@@ -114,6 +125,11 @@ public class Company
     public void setVAT(String VAT)
     {
         this.VAT = VAT;
+    }
+
+    public Integer getPk()
+    {
+        return pk;
     }
 
     @Override

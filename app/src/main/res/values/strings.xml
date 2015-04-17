@@ -127,4 +127,5 @@
     <string name="ticketUpdateDetail_fail">Failed to update ticket details, please try again</string>
     <string name="ticketUpdateProgressionDetail_success">Ticket status successfully updated.</string>
     <string name="ticketUpdateProgressionDetail_fail">Ticket status update failed, please try again</string>
+    <string name="ticketDetail_cancelUpdateCompany">Cancelled company assignment</string>
 </resources>
