@@ -1,6 +1,5 @@
 package org.ec.androidticket.activities.createBuilding;
 
-import org.ec.androidticket.backend.models.ticketing.Building;
 import org.ec.androidticket.backend.models.ticketing.variants.NewBuilding;
 
 public class BuildingHolder

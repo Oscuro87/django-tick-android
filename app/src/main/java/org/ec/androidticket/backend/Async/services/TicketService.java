@@ -30,7 +30,9 @@ import org.ec.androidticket.backend.Async.events.ticketEvents.ticket.create.Tick
 import org.ec.androidticket.backend.Async.events.ticketEvents.ticket.create.RequestCategoriesEvent;
 import org.ec.androidticket.backend.Async.events.ticketEvents.ticket.update.UpdateTicketDetailEvent;
 import org.ec.androidticket.backend.Async.events.ticketEvents.ticket.update.UpdateTicketDetailResponseEvent;
+import org.ec.androidticket.backend.Async.events.ticketEvents.ticket.update.UpdateTicketProgressionEvent;
 import org.ec.androidticket.backend.Async.responses.PostResponseEvent;
+import org.ec.androidticket.backend.Async.responses.UpdateTicketProgressionResponseEvent;
 import org.ec.androidticket.backend.models.ticketing.Building;
 import org.ec.androidticket.backend.models.ticketing.Category;
 import org.ec.androidticket.backend.models.ticketing.variants.CommentDiet;
@@ -296,6 +298,29 @@ public class TicketService
                     public void failure(RetrofitError error)
                     {
                         bus.post(new UpdateTicketDetailResponseEvent(error));
+                    }
+                }
+        );
+    }
+
+    @Subscribe
+    public void onTicketUpdateProgression(UpdateTicketProgressionEvent event)
+    {
+        RESTClient.getTicketAPI().updateTicketProgression(
+                event.getAuthtoken(),
+                event.getTicketCode(),
+                new Callback<UpdateTicketProgressionResponseEvent>()
+                {
+                    @Override
+                    public void success(UpdateTicketProgressionResponseEvent responseEvent, Response response)
+                    {
+                        bus.post(responseEvent);
+                    }
+
+                    @Override
+                    public void failure(RetrofitError error)
+                    {
+                        bus.post(new UpdateTicketProgressionResponseEvent(false, error.getMessage()));
                     }
                 }
         );

@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.squareup.okhttp.OkHttpClient;
 
+import org.ec.androidticket.backend.Async.apis.AuthRequestInterceptor;
 import org.ec.androidticket.backend.Async.apis.RestLoginAPI;
 import org.ec.androidticket.backend.Async.apis.RestTicketAPI;
 import org.ec.androidticket.backend.GlobalSettings;
@@ -43,6 +44,7 @@ public class RESTClient
         RestAdapter.Builder builder = new RestAdapter.Builder();
         builder.setEndpoint(ROOT);
         builder.setConverter(new GsonConverter(gson));
+//        builder.setRequestInterceptor(new AuthRequestInterceptor());
         builder.setClient(new OkClient(new OkHttpClient()));
         builder.setLogLevel(RestAdapter.LogLevel.FULL);
 

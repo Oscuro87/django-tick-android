@@ -20,12 +20,12 @@ import org.ec.androidticket.backend.Async.events.ticketEvents.comment.CommentCre
 import org.ec.androidticket.backend.Async.events.ticketEvents.comment.CommentRequestEvent;
 import org.ec.androidticket.backend.Async.events.ticketEvents.comment.CommentRequestFailureEvent;
 import org.ec.androidticket.backend.Async.events.ticketEvents.comment.CommentRequestSuccessEvent;
-import org.ec.androidticket.backend.Async.events.ticketEvents.ticket.FullTicketRequestEvent;
-import org.ec.androidticket.backend.Async.events.ticketEvents.ticket.FullTicketRequestFailureEvent;
-import org.ec.androidticket.backend.Async.events.ticketEvents.ticket.FullTicketRequestSuccessEvent;
 import org.ec.androidticket.backend.Async.events.ticketEvents.history.HistoryRequestEvent;
 import org.ec.androidticket.backend.Async.events.ticketEvents.history.HistoryRequestFailureEvent;
 import org.ec.androidticket.backend.Async.events.ticketEvents.history.HistoryRequestSuccessEvent;
+import org.ec.androidticket.backend.Async.events.ticketEvents.ticket.FullTicketRequestEvent;
+import org.ec.androidticket.backend.Async.events.ticketEvents.ticket.FullTicketRequestFailureEvent;
+import org.ec.androidticket.backend.Async.events.ticketEvents.ticket.FullTicketRequestSuccessEvent;
 import org.ec.androidticket.backend.models.internal.FullTicketCache;
 import org.ec.androidticket.backend.models.internal.UserDataCache;
 

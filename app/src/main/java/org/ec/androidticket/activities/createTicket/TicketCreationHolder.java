@@ -2,7 +2,6 @@ package org.ec.androidticket.activities.createTicket;
 
 import org.ec.androidticket.backend.models.ticketing.Building;
 import org.ec.androidticket.backend.models.ticketing.Category;
-import org.ec.androidticket.backend.models.ticketing.Channel;
 import org.ec.androidticket.backend.models.ticketing.variants.TicketCreation;
 
 /**

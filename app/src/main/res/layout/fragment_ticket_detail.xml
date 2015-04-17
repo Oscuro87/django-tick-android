@@ -363,7 +363,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/ticketDetail_changePhase"
-                android:id="@+id/ticketDetail_changePhase"
+                android:id="@+id/ticketDetail_nextStatus"
                 android:visibility="gone"/>
         </TableRow>
     </TableLayout>

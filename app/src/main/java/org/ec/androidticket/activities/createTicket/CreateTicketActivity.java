@@ -1,10 +1,9 @@
 package org.ec.androidticket.activities.createTicket;
 
+import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
-import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -19,9 +18,6 @@ import org.ec.androidticket.activities.createTicket.fragments.CreateTicketFragme
 import org.ec.androidticket.backend.Async.events.ticketEvents.ticket.create.TicketCreationEvent;
 import org.ec.androidticket.backend.Async.events.ticketEvents.ticket.create.TicketCreationResponseEvent;
 import org.ec.androidticket.backend.models.internal.UserDataCache;
-import org.ec.androidticket.backend.models.ticketing.Building;
-import org.ec.androidticket.backend.models.ticketing.Category;
-import org.ec.androidticket.backend.models.ticketing.variants.TicketCreation;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -6,10 +6,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.squareup.otto.Subscribe;
 
 import org.ec.androidticket.R;
 import org.ec.androidticket.activities.MyFragment;
 import org.ec.androidticket.backend.Async.events.ticketEvents.ticket.update.UpdateTicketDetailEvent;
+import org.ec.androidticket.backend.Async.events.ticketEvents.ticket.update.UpdateTicketDetailResponseEvent;
+import org.ec.androidticket.backend.Async.events.ticketEvents.ticket.update.UpdateTicketProgressionEvent;
+import org.ec.androidticket.backend.Async.responses.UpdateTicketProgressionResponseEvent;
 import org.ec.androidticket.backend.models.internal.FullTicketCache;
 import org.ec.androidticket.backend.models.internal.UserDataCache;
 import org.ec.androidticket.backend.models.ticketing.variants.FullTicket;
@@ -29,9 +35,10 @@ public class TicketDetailFragment extends MyFragment implements TicketFragmentIn
     private TextView descriptionTV;
     private FullTicket ticket;
 
-    private Button takeManagement, releaseManagement, assignCompany, changePhase;
+    private Button takeManagement, releaseManagement, assignCompany, nextstatusButton;
 
     private View inflated;
+    private View view;
 
     public TicketDetailFragment()
     {
@@ -70,6 +77,8 @@ public class TicketDetailFragment extends MyFragment implements TicketFragmentIn
     {
         super.onViewCreated(view, savedInstanceState);
 
+        this.view = view;
+
         codeTV = (TextView) inflated.findViewById(R.id.ticketDetail_ticketCode);
         statusTV = (TextView) inflated.findViewById(R.id.ticketDetail_ticketStatus);
         categoryTV = (TextView) inflated.findViewById(R.id.ticketDetail_ticketCategory);
@@ -85,7 +94,7 @@ public class TicketDetailFragment extends MyFragment implements TicketFragmentIn
         takeManagement = (Button) inflated.findViewById(R.id.ticketDetail_takeManagement);
         releaseManagement = (Button) inflated.findViewById(R.id.ticketDetail_releaseManagement);
         assignCompany = (Button) inflated.findViewById(R.id.ticketDetail_assignCompany);
-        changePhase = (Button) inflated.findViewById(R.id.ticketDetail_changePhase);
+        nextstatusButton = (Button) inflated.findViewById(R.id.ticketDetail_nextStatus);
 
         setupListeners();
     }
@@ -110,9 +119,8 @@ public class TicketDetailFragment extends MyFragment implements TicketFragmentIn
             @Override
             public void onClick(View v)
             {
-                if(ticket == null)
-                    ticket = FullTicketCache.get().getTicketCache();
-                ticket.setManager(UserDataCache.get().buildUserFromCache());
+                FullTicketCache.get().getTicketCache().setManager(UserDataCache.get().buildUserFromCache());
+                bus.post(new UpdateTicketDetailEvent(UserDataCache.get().getAuthtoken(), FullTicketCache.get().getTicketCache()));
                 refreshMe();
             }
         });
@@ -122,10 +130,19 @@ public class TicketDetailFragment extends MyFragment implements TicketFragmentIn
             @Override
             public void onClick(View v)
             {
-                if(ticket == null)
-                    ticket = FullTicketCache.get().getTicketCache();
-                ticket.setManager(null);
+                FullTicketCache.get().getTicketCache().setManager(null);
+                bus.post(new UpdateTicketDetailEvent(UserDataCache.get().getAuthtoken(), FullTicketCache.get().getTicketCache()));
                 refreshMe();
+            }
+        });
+
+        nextstatusButton.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                String ticketCode = FullTicketCache.get().getTicketCache().getTicketCode();
+                bus.post(new UpdateTicketProgressionEvent(UserDataCache.get().getAuthtoken(), ticketCode));
             }
         });
     }
@@ -136,12 +153,33 @@ public class TicketDetailFragment extends MyFragment implements TicketFragmentIn
         refreshMe();
     }
 
-    @Override
-    public void onDestroyView()
+    @Subscribe
+    public void onTicketDetailsUpdateResponseEvent(UpdateTicketDetailResponseEvent event)
     {
-        bus.post(new UpdateTicketDetailEvent(UserDataCache.get().getAuthtoken(), FullTicketCache.get().getTicketCache()));
-        // ...
-        super.onDestroyView();
+        if(event.isSuccess())
+        {
+            Toast.makeText(view.getContext(), getString(R.string.ticketUpdateDetail_success), Toast.LENGTH_SHORT).show();
+        }
+        else
+        {
+            Toast.makeText(view.getContext(), getString(R.string.ticketUpdateDetail_fail), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Subscribe
+    public void onUpdateTicketProgressionResponseEvent(UpdateTicketProgressionResponseEvent event)
+    {
+        if(event.isSuccess())
+        {
+            String newProgressionLabel = event.getNewTicketStatus().getLabel();
+            statusTV.setText(newProgressionLabel);
+            refreshMe();
+            Toast.makeText(view.getContext(), getString(R.string.ticketUpdateProgressionDetail_success), Toast.LENGTH_SHORT).show();
+        }
+        else
+        {
+            Toast.makeText(view.getContext(), getString(R.string.ticketUpdateProgressionDetail_fail), Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void refreshAdministrationButtons()
@@ -152,14 +190,14 @@ public class TicketDetailFragment extends MyFragment implements TicketFragmentIn
         takeManagement.setVisibility(View.GONE);
         releaseManagement.setVisibility(View.GONE);
         assignCompany.setVisibility(View.GONE);
-        changePhase.setVisibility(View.GONE);
+        nextstatusButton.setVisibility(View.GONE);
 
         // Si l'utilisateur est le manager de ce ticket
         if (ticket.getManager() != null && ticket.getManager().getEmail().equals(UserDataCache.get().getEmail()))
         {
             releaseManagement.setVisibility(View.VISIBLE);
             assignCompany.setVisibility(View.VISIBLE);
-            changePhase.setVisibility(View.VISIBLE);
+            nextstatusButton.setVisibility(View.VISIBLE);
         }
 
         // Si l'utilisateur est manager et que ce ticket est non géré

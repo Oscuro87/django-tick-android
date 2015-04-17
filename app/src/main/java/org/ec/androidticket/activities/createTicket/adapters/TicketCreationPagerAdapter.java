@@ -6,8 +6,8 @@ import android.app.FragmentManager;
 import org.ec.androidticket.activities.SmartFragmentStatePagerAdapter;
 import org.ec.androidticket.activities.createTicket.fragments.CreateTicketBuildingFragment;
 import org.ec.androidticket.activities.createTicket.fragments.CreateTicketCategoryFragment;
-import org.ec.androidticket.activities.createTicket.fragments.CreateTicketDescriptionFragment;
 import org.ec.androidticket.activities.createTicket.fragments.CreateTicketConfirmationFragment;
+import org.ec.androidticket.activities.createTicket.fragments.CreateTicketDescriptionFragment;
 
 import java.util.ArrayList;
 import java.util.List;

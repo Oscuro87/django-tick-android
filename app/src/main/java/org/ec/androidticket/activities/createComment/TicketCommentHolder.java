@@ -1,7 +1,5 @@
 package org.ec.androidticket.activities.createComment;
 
-import android.text.format.DateUtils;
-
 import org.ec.androidticket.backend.models.internal.UserDataCache;
 import org.ec.androidticket.backend.models.ticketing.Comment;
 

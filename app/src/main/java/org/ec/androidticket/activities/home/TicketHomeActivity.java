@@ -26,8 +26,9 @@ import org.ec.androidticket.backend.Async.events.loginEvents.LoggedOutEvent;
 import org.ec.androidticket.backend.Async.events.loginEvents.LogoutEvent;
 import org.ec.androidticket.backend.Async.events.ticketEvents.ticket.SimpleTicketRequestEvent;
 import org.ec.androidticket.backend.Async.events.ticketEvents.ticket.SimpleTicketResponseEvent;
-import org.ec.androidticket.backend.models.internal.UserDataCache;
+import org.ec.androidticket.backend.Async.events.ticketEvents.ticket.update.UpdateTicketDetailResponseEvent;
 import org.ec.androidticket.backend.models.internal.SimpleTicketCache;
+import org.ec.androidticket.backend.models.internal.UserDataCache;
 import org.ec.androidticket.backend.models.ticketing.Ticket;
 
 import java.util.List;
@@ -196,6 +197,12 @@ public class TicketHomeActivity extends MyActionBarActivity implements SearchVie
             Toast.makeText(getApplicationContext(), getString(R.string.simpleTicket_failedTicketsLoad), Toast.LENGTH_SHORT).show();
             finish();
         }
+    }
+
+    @Subscribe
+    public void onTicketUpdateRequestResponse(UpdateTicketDetailResponseEvent event)
+    {
+        refreshTickets(true);
     }
 
     private void goToTicketDetailView(String ticketCode)

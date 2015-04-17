@@ -123,4 +123,8 @@
     <string name="ticketDetail_releaseManagement">Release management of this ticket</string>
     <string name="ticketDetail_assignCompany">Assign company to this ticket</string>
     <string name="ticketDetail_changePhase">Change the ticket\'s phase</string>
+    <string name="ticketUpdateDetail_success">Ticket details update successful</string>
+    <string name="ticketUpdateDetail_fail">Failed to update ticket details, please try again</string>
+    <string name="ticketUpdateProgressionDetail_success">Ticket status successfully updated.</string>
+    <string name="ticketUpdateProgressionDetail_fail">Ticket status update failed, please try again</string>
 </resources>

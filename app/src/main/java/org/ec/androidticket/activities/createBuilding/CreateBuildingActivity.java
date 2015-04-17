@@ -2,7 +2,6 @@ package org.ec.androidticket.activities.createBuilding;
 
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.telephony.TelephonyManager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,8 +16,6 @@ import org.ec.androidticket.backend.Async.BusDepot;
 import org.ec.androidticket.backend.Async.events.buildingEvents.BuildingCreationEvent;
 import org.ec.androidticket.backend.Async.events.buildingEvents.BuildingCreationResponseEvent;
 import org.ec.androidticket.backend.models.internal.UserDataCache;
-
-import java.util.Locale;
 
 public class CreateBuildingActivity extends ActionBarActivity
 {

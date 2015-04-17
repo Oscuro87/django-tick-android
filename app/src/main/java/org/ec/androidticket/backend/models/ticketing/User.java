@@ -8,17 +8,24 @@ public class User
     @SerializedName("pk")
     @Expose
     private Integer userID;
+    @SerializedName("fk_company")
+    @Expose
+    private Company linkedCompany;
     @SerializedName("first_name")
     @Expose
     private String firstName;
     @SerializedName("last_name")
     @Expose
     private String lastName;
+    @SerializedName("email")
     @Expose
     private String email;
     @SerializedName("is_active")
     @Expose
     private Boolean isActive;
+    @SerializedName("phone_number")
+    @Expose
+    private String phoneNumber;
     @SerializedName("is_staff")
     @Expose
     private Boolean isStaff;
@@ -74,5 +81,30 @@ public class User
     public String getFullName()
     {
         return firstName + " " + lastName;
+    }
+
+    public String getPhoneNumber()
+    {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber)
+    {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public Company getLinkedCompany()
+    {
+        return linkedCompany;
+    }
+
+    public void setLinkedCompany(Company linkedCompany)
+    {
+        this.linkedCompany = linkedCompany;
+    }
+
+    public boolean isUserCompany()
+    {
+        return this.linkedCompany != null;
     }
 }
