@@ -18,6 +18,7 @@ public class TicketCommentFragment extends Fragment implements TicketFragmentInt
 {
     private ListView commentsListView;
     private Button postCommentButton;
+    private CommentListViewAdapter adapter;
 
     public TicketCommentFragment()
     {
@@ -90,12 +91,10 @@ public class TicketCommentFragment extends Fragment implements TicketFragmentInt
     public void onRefreshRequested()
     {
         if (FullTicketCache.get().getCommentCache() == null) return;
-        CommentListViewAdapter adapter = (CommentListViewAdapter) commentsListView.getAdapter();
+         adapter = (CommentListViewAdapter) commentsListView.getAdapter();
 
-        //TODO: refresh du fragment commentaires
         adapter.updateCommentsList(FullTicketCache.get().getCommentCache());
         adapter.notifyDataSetChanged();
         adapter.notifyDataSetInvalidated();
-        getView().invalidate();
     }
 }

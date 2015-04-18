@@ -17,13 +17,16 @@ import com.squareup.otto.Subscribe;
 import org.ec.androidticket.R;
 import org.ec.androidticket.activities.MyFragment;
 import org.ec.androidticket.backend.Async.events.ticketEvents.ticket.get.RequestTicketCompaniesListEvent;
+import org.ec.androidticket.backend.Async.events.ticketEvents.ticket.update.UpdateTicketCompanyEvent;
+import org.ec.androidticket.backend.Async.events.ticketEvents.ticket.update.UpdateTicketCompanyResponseEvent;
 import org.ec.androidticket.backend.Async.events.ticketEvents.ticket.update.UpdateTicketDetailEvent;
 import org.ec.androidticket.backend.Async.events.ticketEvents.ticket.update.UpdateTicketDetailResponseEvent;
 import org.ec.androidticket.backend.Async.events.ticketEvents.ticket.update.UpdateTicketProgressionEvent;
-import org.ec.androidticket.backend.Async.responses.RequestTicketCompaniesListResponseEvent;
-import org.ec.androidticket.backend.Async.responses.UpdateTicketProgressionResponseEvent;
+import org.ec.androidticket.backend.Async.events.ticketEvents.ticket.get.RequestTicketCompaniesListResponseEvent;
+import org.ec.androidticket.backend.Async.events.ticketEvents.ticket.update.UpdateTicketProgressionResponseEvent;
 import org.ec.androidticket.backend.models.internal.FullTicketCache;
 import org.ec.androidticket.backend.models.internal.UserDataCache;
+import org.ec.androidticket.backend.models.ticketing.Company;
 import org.ec.androidticket.backend.models.ticketing.variants.FullTicket;
 import org.ec.androidticket.backend.models.ticketing.variants.SuitableCompany;
 
@@ -174,9 +177,21 @@ public class TicketDetailFragment extends MyFragment implements TicketFragmentIn
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
             {
-                Log.i("customlog", "TODO: send event for company-ticket association.");
                 companyChooserSpinner.setVisibility(View.GONE);
-
+                SuitableCompany selected = (SuitableCompany)parent.getSelectedItem();
+                if (selected != null)
+                {
+                    UpdateTicketCompanyEvent event = new UpdateTicketCompanyEvent(
+                            UserDataCache.get().getAuthtoken(),
+                            ticket.getTicketCode(),
+                            selected.getPk()
+                    );
+                    bus.post(event);
+                }
+                else
+                {
+                    throw new RuntimeException("Selected suitable company was null! Aborting!");
+                }
             }
 
             @Override
@@ -224,12 +239,31 @@ public class TicketDetailFragment extends MyFragment implements TicketFragmentIn
     }
 
     @Subscribe
-    public void onRequestCompaniesListForTicketResponseEvent(RequestTicketCompaniesListResponseEvent event)
+    public void onRequestCompaniesListForTicketResponseReceived(RequestTicketCompaniesListResponseEvent event)
     {
         companiesAdapter.clear();
         companiesAdapter.addAll(event.getCompanies());
         companiesAdapter.notifyDataSetChanged();
         companyChooserSpinner.setVisibility(View.VISIBLE);
+    }
+
+    @Subscribe
+    public void onUpdateTicketCompanyResponseReceived(UpdateTicketCompanyResponseEvent event)
+    {
+        if(event.isSuccess())
+        {
+            Company assignedCompany = event.getCompanyInstance();
+            ticket.setCompany(assignedCompany);
+            if(assignedCompany != null)
+                companyTV.setText(assignedCompany.getName());
+            else
+                companyTV.setText("");
+            Toast.makeText(view.getContext(), getString(R.string.ticketDetail_updateTicketCompanySuccess), Toast.LENGTH_LONG).show();
+        }
+        else
+        {
+            Toast.makeText(view.getContext(), getString(R.string.ticketDetail_updateTicketCompanyFailure) + ": " + event.getReason(), Toast.LENGTH_LONG).show();
+        }
     }
 
     private void refreshAdministrationButtons()

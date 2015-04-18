@@ -9,32 +9,34 @@ import org.ec.androidticket.backend.Async.BusDepot;
 import org.ec.androidticket.backend.Async.RESTClient;
 import org.ec.androidticket.backend.Async.events.buildingEvents.BuildingCreationEvent;
 import org.ec.androidticket.backend.Async.events.buildingEvents.BuildingCreationResponseEvent;
+import org.ec.androidticket.backend.Async.events.ticketEvents.comment.CommentCreationEvent;
 import org.ec.androidticket.backend.Async.events.ticketEvents.comment.CommentCreationResponseEvent;
 import org.ec.androidticket.backend.Async.events.ticketEvents.comment.CommentRequestEvent;
 import org.ec.androidticket.backend.Async.events.ticketEvents.comment.CommentRequestFailureEvent;
 import org.ec.androidticket.backend.Async.events.ticketEvents.comment.CommentRequestSuccessEvent;
-import org.ec.androidticket.backend.Async.events.ticketEvents.comment.CommentCreationEvent;
-import org.ec.androidticket.backend.Async.events.ticketEvents.ticket.FullTicketRequestFailureEvent;
-import org.ec.androidticket.backend.Async.events.ticketEvents.ticket.FullTicketRequestEvent;
-import org.ec.androidticket.backend.Async.events.ticketEvents.ticket.FullTicketRequestSuccessEvent;
 import org.ec.androidticket.backend.Async.events.ticketEvents.history.HistoryRequestEvent;
 import org.ec.androidticket.backend.Async.events.ticketEvents.history.HistoryRequestFailureEvent;
 import org.ec.androidticket.backend.Async.events.ticketEvents.history.HistoryRequestSuccessEvent;
+import org.ec.androidticket.backend.Async.events.ticketEvents.ticket.FullTicketRequestEvent;
+import org.ec.androidticket.backend.Async.events.ticketEvents.ticket.FullTicketRequestFailureEvent;
+import org.ec.androidticket.backend.Async.events.ticketEvents.ticket.FullTicketRequestSuccessEvent;
 import org.ec.androidticket.backend.Async.events.ticketEvents.ticket.SimpleTicketRequestEvent;
 import org.ec.androidticket.backend.Async.events.ticketEvents.ticket.SimpleTicketResponseEvent;
+import org.ec.androidticket.backend.Async.events.ticketEvents.ticket.create.RequestCategoriesEvent;
 import org.ec.androidticket.backend.Async.events.ticketEvents.ticket.create.RequestCategoriesResponseEvent;
 import org.ec.androidticket.backend.Async.events.ticketEvents.ticket.create.RequestUserBuildingsEvent;
 import org.ec.androidticket.backend.Async.events.ticketEvents.ticket.create.RequestUserBuildingsResponseEvent;
 import org.ec.androidticket.backend.Async.events.ticketEvents.ticket.create.TicketCreationEvent;
 import org.ec.androidticket.backend.Async.events.ticketEvents.ticket.create.TicketCreationResponseEvent;
-import org.ec.androidticket.backend.Async.events.ticketEvents.ticket.create.RequestCategoriesEvent;
 import org.ec.androidticket.backend.Async.events.ticketEvents.ticket.get.RequestTicketCompaniesListEvent;
+import org.ec.androidticket.backend.Async.events.ticketEvents.ticket.get.RequestTicketCompaniesListResponseEvent;
+import org.ec.androidticket.backend.Async.events.ticketEvents.ticket.update.UpdateTicketCompanyEvent;
+import org.ec.androidticket.backend.Async.events.ticketEvents.ticket.update.UpdateTicketCompanyResponseEvent;
 import org.ec.androidticket.backend.Async.events.ticketEvents.ticket.update.UpdateTicketDetailEvent;
 import org.ec.androidticket.backend.Async.events.ticketEvents.ticket.update.UpdateTicketDetailResponseEvent;
 import org.ec.androidticket.backend.Async.events.ticketEvents.ticket.update.UpdateTicketProgressionEvent;
+import org.ec.androidticket.backend.Async.events.ticketEvents.ticket.update.UpdateTicketProgressionResponseEvent;
 import org.ec.androidticket.backend.Async.responses.PostResponseEvent;
-import org.ec.androidticket.backend.Async.responses.RequestTicketCompaniesListResponseEvent;
-import org.ec.androidticket.backend.Async.responses.UpdateTicketProgressionResponseEvent;
 import org.ec.androidticket.backend.models.ticketing.Building;
 import org.ec.androidticket.backend.models.ticketing.Category;
 import org.ec.androidticket.backend.models.ticketing.variants.CommentDiet;
@@ -346,6 +348,31 @@ public class TicketService
                     public void failure(RetrofitError error)
                     {
                         bus.post(new RequestTicketCompaniesListResponseEvent(error.getMessage(), false));
+                    }
+                }
+        );
+    }
+
+    @Subscribe
+    public void onUpdateTicketCompany(UpdateTicketCompanyEvent event)
+    {
+        RESTClient.getTicketAPI().updateTicketCompany(
+                event.getAuthtoken(),
+                event.getTicketCode(),
+                event.getCompanyPK(),
+                new Callback<UpdateTicketCompanyResponseEvent>()
+                {
+                    @Override
+                    public void success(UpdateTicketCompanyResponseEvent responseEvent, Response response)
+                    {
+                        bus.post(responseEvent);
+                    }
+
+                    @Override
+                    public void failure(RetrofitError error)
+                    {
+                        UpdateTicketCompanyResponseEvent responseEvent = new UpdateTicketCompanyResponseEvent(false, error.getMessage());
+                        bus.post(responseEvent);
                     }
                 }
         );

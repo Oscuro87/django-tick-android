@@ -1,385 +1,366 @@
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
+<LinearLayout
     android:layout_height="fill_parent"
-    android:fillViewport="true">
+    android:layout_width="fill_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical">
 
-    <TableLayout
-        android:id="@+id/ticketDetail_FragmentGridLayout"
+    <ScrollView
         xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:shrinkColumns="1">
+        android:fillViewport="true">
 
-        <TableRow>
-            <!-- Title -->
-            <TextView
-                android:id="@+id/title"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_column="0"
-                android:layout_gravity="top|start"
-                android:gravity="center"
-                android:text="@string/ticketDetail_title"
-                android:textAlignment="center"
-                android:textColor="#FF000000"
-                android:textSize="20sp"/>
-        </TableRow>
+        <TableLayout
+            android:id="@+id/ticketDetail_FragmentGridLayout"
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:shrinkColumns="1">
 
-        <TableRow>
-            <!-- Ticket code -->
-            <TextView
-                android:id="@+id/ticketCodeLabel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_column="0"
-                android:layout_gravity="top|left"
-                android:gravity="start"
-                android:paddingEnd="20dp"
-                android:text="@string/ticketDetail_ticketCodeLabel"
-                android:textColor="#FF909090"/>
+            <TableRow>
+                <!-- Title -->
+                <TextView
+                    android:id="@+id/title"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_column="0"
+                    android:layout_gravity="top|start"
+                    android:gravity="center"
+                    android:text="@string/ticketDetail_title"
+                    android:textAlignment="center"
+                    android:textColor="#FF000000"
+                    android:textSize="20sp"/>
+            </TableRow>
 
-            <TextView
-                android:id="@+id/ticketDetail_ticketCode"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_column="1"
-                android:layout_gravity="top|left"
-                android:layout_row="2"
-                android:gravity="end"
-                android:textColor="#FF000000"/>
-        </TableRow>
+            <TableRow>
+                <!-- Ticket code -->
+                <TextView
+                    android:id="@+id/ticketCodeLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_column="0"
+                    android:layout_gravity="top|left"
+                    android:gravity="start"
+                    android:paddingEnd="20dp"
+                    android:text="@string/ticketDetail_ticketCodeLabel"
+                    android:textColor="#FF909090"/>
 
-        <!-- Ticket status -->
+                <TextView
+                    android:id="@+id/ticketDetail_ticketCode"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_column="1"
+                    android:layout_gravity="top|left"
+                    android:layout_row="2"
+                    android:textColor="#FF000000"
+                    android:gravity="start"/>
+            </TableRow>
 
-        <TableRow>
+            <!-- Ticket status -->
 
-            <TextView
-                android:id="@+id/ticketStatusLabel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_column="0"
-                android:layout_gravity="top|left"
-                android:layout_row="3"
-                android:gravity="start"
-                android:paddingEnd="20dp"
-                android:text="@string/ticketDetail_ticketStatusLabel"
-                android:textColor="#FF909090"/>
+            <TableRow>
 
-            <TextView
-                android:id="@+id/ticketDetail_ticketStatus"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_column="1"
-                android:layout_gravity="top|left"
-                android:layout_row="3"
-                android:gravity="end"
-                android:textColor="#FF000000"/>
-        </TableRow>
+                <TextView
+                    android:id="@+id/ticketStatusLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_column="0"
+                    android:layout_gravity="top|left"
+                    android:layout_row="3"
+                    android:gravity="start"
+                    android:paddingEnd="20dp"
+                    android:text="@string/ticketDetail_ticketStatusLabel"
+                    android:textColor="#FF909090"/>
 
-        <!-- Ticket category -->
+                <TextView
+                    android:id="@+id/ticketDetail_ticketStatus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_column="1"
+                    android:layout_gravity="top|left"
+                    android:layout_row="3"
+                    android:gravity="start"
+                    android:textColor="#FF000000"/>
+            </TableRow>
 
-        <TableRow>
+            <!-- Ticket category -->
 
-            <TextView
-                android:id="@+id/ticketCategoryLabel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_column="0"
-                android:layout_gravity="top|left"
-                android:layout_row="4"
-                android:gravity="start"
-                android:paddingEnd="20dp"
-                android:text="@string/ticketDetail_ticketCategoryLabel"
-                android:textColor="#FF909090"/>
+            <TableRow>
 
-            <TextView
-                android:id="@+id/ticketDetail_ticketCategory"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_column="1"
-                android:layout_gravity="top|left"
-                android:layout_row="4"
-                android:gravity="end"
-                android:textColor="#FF000000"/>
-        </TableRow>
+                <TextView
+                    android:id="@+id/ticketCategoryLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_column="0"
+                    android:layout_gravity="top|left"
+                    android:layout_row="4"
+                    android:gravity="start"
+                    android:paddingEnd="20dp"
+                    android:text="@string/ticketDetail_ticketCategoryLabel"
+                    android:textColor="#FF909090"/>
 
-        <!-- Ticket subcategory -->
+                <TextView
+                    android:id="@+id/ticketDetail_ticketCategory"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_column="1"
+                    android:layout_gravity="top|left"
+                    android:layout_row="4"
+                    android:gravity="start"
+                    android:textColor="#FF000000"/>
+            </TableRow>
 
-        <TableRow>
+            <!-- Ticket subcategory -->
 
-            <TextView
-                android:id="@+id/ticketSubcategoryLabel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_column="0"
-                android:layout_gravity="top|left"
-                android:layout_row="5"
-                android:gravity="start"
-                android:paddingEnd="20dp"
-                android:text="@string/ticketDetail_ticketSubcategoryLabel"
-                android:textColor="#FF909090"
-                android:layout_weight=".25"/>
+            <TableRow>
 
-            <TextView
-                android:id="@+id/ticketDetail_ticketSubcategory"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_column="1"
-                android:layout_gravity="top|left"
-                android:layout_row="5"
-                android:gravity="end"
-                android:textColor="#FF000000"/>
-        </TableRow>
+                <TextView
+                    android:id="@+id/ticketSubcategoryLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_column="0"
+                    android:layout_gravity="top|left"
+                    android:layout_row="5"
+                    android:gravity="start"
+                    android:paddingEnd="20dp"
+                    android:text="@string/ticketDetail_ticketSubcategoryLabel"
+                    android:textColor="#FF909090"
+                    android:layout_weight=".25"/>
 
-        <!-- Ticket building -->
+                <TextView
+                    android:id="@+id/ticketDetail_ticketSubcategory"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_column="1"
+                    android:layout_gravity="top|left"
+                    android:layout_row="5"
+                    android:gravity="start"
+                    android:textColor="#FF000000"/>
+            </TableRow>
 
-        <TableRow>
+            <!-- Ticket building -->
 
-            <TextView
-                android:id="@+id/ticketBuildingLabel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_column="0"
-                android:layout_gravity="top|left"
-                android:layout_row="6"
-                android:gravity="start"
-                android:paddingEnd="20dp"
-                android:text="@string/ticketDetail_ticketBuildingLabel"
-                android:textColor="#FF909090"/>
+            <TableRow>
 
-            <TextView
-                android:id="@+id/ticketDetail_ticketBuilding"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_column="1"
-                android:layout_gravity="top|left"
-                android:layout_row="6"
-                android:gravity="end"
-                android:textColor="#FF000000"/>
-        </TableRow>
+                <TextView
+                    android:id="@+id/ticketBuildingLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_column="0"
+                    android:layout_gravity="top|left"
+                    android:layout_row="6"
+                    android:gravity="start"
+                    android:paddingEnd="20dp"
+                    android:text="@string/ticketDetail_ticketBuildingLabel"
+                    android:textColor="#FF909090"/>
 
-        <!-- Floor -->
-        <TableRow>
+                <TextView
+                    android:id="@+id/ticketDetail_ticketBuilding"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_column="1"
+                    android:layout_gravity="top|left"
+                    android:layout_row="6"
+                    android:gravity="start"
+                    android:textColor="#FF000000"/>
+            </TableRow>
 
-            <TextView
-                android:id="@+id/ticketFloorLabel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_column="0"
-                android:layout_gravity="top|left"
-                android:layout_row="7"
-                android:gravity="start"
-                android:paddingEnd="20dp"
-                android:text="@string/ticketDetail_ticketFloorLabel"
-                android:textColor="#FF909090"/>
+            <!-- Floor -->
+            <TableRow>
 
-            <TextView
-                android:id="@+id/ticketDetail_ticketFloor"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_column="1"
-                android:layout_gravity="top|left"
-                android:layout_row="7"
-                android:gravity="end"
-                android:textColor="#FF000000"/>
-        </TableRow>
+                <TextView
+                    android:id="@+id/ticketFloorLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_column="0"
+                    android:layout_gravity="top|left"
+                    android:layout_row="7"
+                    android:gravity="start"
+                    android:paddingEnd="20dp"
+                    android:text="@string/ticketDetail_ticketFloorLabel"
+                    android:textColor="#FF909090"/>
 
-        <!-- Office -->
-        <TableRow>
+                <TextView
+                    android:id="@+id/ticketDetail_ticketFloor"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_column="1"
+                    android:layout_gravity="top|left"
+                    android:layout_row="7"
+                    android:gravity="start"
+                    android:textColor="#FF000000"/>
+            </TableRow>
 
-            <TextView
-                android:id="@+id/ticketOfficeLabel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_column="0"
-                android:layout_gravity="top|left"
-                android:layout_row="8"
-                android:gravity="start"
-                android:paddingEnd="20dp"
-                android:text="@string/ticketDetail_ticketOfficeLabel"
-                android:textColor="#FF909090"/>
+            <!-- Office -->
+            <TableRow>
 
-            <TextView
-                android:id="@+id/ticketDetail_ticketOffice"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_column="1"
-                android:layout_gravity="top|left"
-                android:layout_row="8"
-                android:gravity="end"
-                android:textColor="#FF000000"/>
-        </TableRow>
+                <TextView
+                    android:id="@+id/ticketOfficeLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_column="0"
+                    android:layout_gravity="top|left"
+                    android:layout_row="8"
+                    android:gravity="start"
+                    android:paddingEnd="20dp"
+                    android:text="@string/ticketDetail_ticketOfficeLabel"
+                    android:textColor="#FF909090"/>
 
-        <!-- Ticket reporter -->
-        <TableRow>
+                <TextView
+                    android:id="@+id/ticketDetail_ticketOffice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_column="1"
+                    android:layout_gravity="top|left"
+                    android:layout_row="8"
+                    android:gravity="start"
+                    android:textColor="#FF000000"/>
+            </TableRow>
 
-            <TextView
-                android:id="@+id/ticketDetail_reporterLabel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_column="0"
-                android:layout_gravity="top|left"
-                android:layout_row="9"
-                android:gravity="start"
-                android:paddingEnd="20dp"
-                android:text="@string/ticketDetail_ticketReporterLabel"
-                android:textColor="#FF909090"/>
+            <!-- Ticket reporter -->
+            <TableRow>
 
-            <TextView
-                android:id="@+id/ticketDetail_ticketReporter"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_column="1"
-                android:layout_gravity="top|left"
-                android:layout_row="9"
-                android:gravity="end"
-                android:textColor="#FF000000"/>
-        </TableRow>
+                <TextView
+                    android:id="@+id/ticketDetail_reporterLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_column="0"
+                    android:layout_gravity="top|left"
+                    android:layout_row="9"
+                    android:gravity="start"
+                    android:paddingEnd="20dp"
+                    android:text="@string/ticketDetail_ticketReporterLabel"
+                    android:textColor="#FF909090"/>
 
-        <!-- Ticket manager -->
+                <TextView
+                    android:id="@+id/ticketDetail_ticketReporter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_column="1"
+                    android:layout_gravity="top|left"
+                    android:layout_row="9"
+                    android:gravity="start"
+                    android:textColor="#FF000000"/>
+            </TableRow>
 
-        <TableRow>
+            <!-- Ticket manager -->
 
-            <TextView
-                android:id="@+id/ticketManagerLabel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_column="0"
-                android:layout_gravity="top|left"
-                android:layout_row="10"
-                android:gravity="start"
-                android:paddingEnd="20dp"
-                android:text="@string/ticketDetail_ticketManagerLabel"
-                android:textColor="#FF909090"/>
+            <TableRow>
 
-            <TextView
-                android:id="@+id/ticketDetail_ticketManager"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_column="1"
-                android:layout_gravity="top|left"
-                android:layout_row="10"
-                android:gravity="end"
-                android:textColor="#FF000000"/>
-        </TableRow>
+                <TextView
+                    android:id="@+id/ticketManagerLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_column="0"
+                    android:layout_gravity="top|start"
+                    android:layout_row="10"
+                    android:gravity="start"
+                    android:paddingEnd="20dp"
+                    android:text="@string/ticketDetail_ticketManagerLabel"
+                    android:textColor="#FF909090"/>
 
-        <!-- Company -->
-        <TableRow>
+                <TextView
+                    android:id="@+id/ticketDetail_ticketManager"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_column="1"
+                    android:layout_gravity="top|left"
+                    android:layout_row="10"
+                    android:gravity="start"
+                    android:textColor="#FF000000"/>
+            </TableRow>
 
-            <TextView
-                android:id="@+id/ticketCompanyLabel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_column="0"
-                android:layout_gravity="top|left"
-                android:layout_row="11"
-                android:gravity="start"
-                android:paddingEnd="20dp"
-                android:text="@string/ticketDetail_ticketCompanyLabel"
-                android:textColor="#FF909090"/>
+            <!-- Company -->
+            <TableRow>
 
-            <TextView
-                android:id="@+id/ticketDetail_ticketCompany"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_column="1"
-                android:layout_gravity="top|left"
-                android:layout_row="11"
-                android:gravity="end"
-                android:textColor="#FF000000"/>
-        </TableRow>
+                <TextView
+                    android:id="@+id/ticketCompanyLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_column="0"
+                    android:layout_gravity="top|left"
+                    android:layout_row="11"
+                    android:gravity="start"
+                    android:paddingEnd="20dp"
+                    android:text="@string/ticketDetail_ticketCompanyLabel"
+                    android:textColor="#FF909090"/>
 
-        <!-- Description -->
-        <TableRow android:id="@+id/below_here">
+                <TextView
+                    android:id="@+id/ticketDetail_ticketCompany"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_column="1"
+                    android:layout_gravity="top|left"
+                    android:layout_row="11"
+                    android:gravity="start"
+                    android:textColor="#FF000000"/>
+            </TableRow>
 
-            <TextView
-                android:id="@+id/ticketDescriptionLabel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_column="0"
-                android:layout_gravity="top|start"
-                android:gravity="start"
-                android:paddingEnd="20dp"
-                android:text="@string/ticketDetail_ticketDescriptionLabel"
-                android:textColor="#FF909090"/>
+            <!-- Description -->
+            <TableRow android:id="@+id/below_here">
 
-            <TextView
-                android:id="@+id/ticketDetail_ticketDescription"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_column="1"
-                android:layout_gravity="top|start"
-                android:clickable="true"
-                android:gravity="start"
-                android:textColor="#FF000000"
-                android:lines="5"/>
-        </TableRow>
+                <TextView
+                    android:id="@+id/ticketDescriptionLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_column="0"
+                    android:layout_gravity="top|start"
+                    android:gravity="start"
+                    android:paddingEnd="20dp"
+                    android:text="@string/ticketDetail_ticketDescriptionLabel"
+                    android:textColor="#FF909090"/>
 
-        <TableRow
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent">
+                <TextView
+                    android:id="@+id/ticketDetail_ticketDescription"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_column="1"
+                    android:layout_gravity="top|start"
+                    android:clickable="true"
+                    android:gravity="start"
+                    android:textColor="#FF000000"
+                    android:lines="5"/>
+            </TableRow>
+        </TableLayout>
+    </ScrollView>
 
-            <Spinner
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/companyChooserSpinner"
-                android:spinnerMode="dialog"
-                android:visibility="gone"/>
-        </TableRow>
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/companyChooserSpinner"
+        android:spinnerMode="dialog"
+        android:visibility="gone"/>
 
-        <TableRow
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent">
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/ticketDetail_takeManagement"
+        android:id="@+id/ticketDetail_takeManagement"
+        android:layout_span="1"
+        android:visibility="gone"/>
 
-            <Button
-                style="?android:attr/buttonStyleSmall"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/ticketDetail_takeManagement"
-                android:id="@+id/ticketDetail_takeManagement"
-                android:layout_span="1"
-                android:visibility="gone"/>
-        </TableRow>
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/ticketDetail_releaseManagement"
+        android:id="@+id/ticketDetail_releaseManagement"
+        android:visibility="gone"/>
 
-        <TableRow
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent">
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/ticketDetail_assignCompany"
+        android:id="@+id/ticketDetail_assignCompany"
+        android:visibility="gone"/>
 
-            <Button
-                style="?android:attr/buttonStyleSmall"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/ticketDetail_releaseManagement"
-                android:id="@+id/ticketDetail_releaseManagement"
-                android:visibility="gone"/>
-
-        </TableRow>
-
-        <TableRow
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent">
-
-            <Button
-                style="?android:attr/buttonStyleSmall"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/ticketDetail_assignCompany"
-                android:id="@+id/ticketDetail_assignCompany"
-                android:visibility="gone"/>
-        </TableRow>
-
-        <TableRow
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent">
-
-            <Button
-                style="?android:attr/buttonStyleSmall"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/ticketDetail_changePhase"
-                android:id="@+id/ticketDetail_nextStatus"
-                android:visibility="gone"/>
-        </TableRow>
-    </TableLayout>
-</ScrollView>
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/ticketDetail_changePhase"
+        android:id="@+id/ticketDetail_nextStatus"
+        android:visibility="gone"/>
+</LinearLayout>

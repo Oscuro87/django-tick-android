@@ -115,17 +115,20 @@
     <string name="ticketCreateConfirmation_buttonLabel">Confirm ticket creation</string>
     <string name="ticketCreateConfirmation_notice">You can still modify your ticket\'s informations!</string>
     <string name="ticketCreateResponse_success">The ticket has been created, thanks for your report.</string>
-    <string name="simpleTicket_failedTicketsLoad">Could not load tickets list.</string>
+    <string name="simpleTicket_failedTicketsLoad">Could not load tickets list, please try again</string>
     <string name="action_show_own_tickets">Show your own tickets</string>
     <string name="action_show_managed_tickets">Show tickets managed by you</string>
     <string name="action_show_unmanaged_tickets">Show unmanaged tickets</string>
     <string name="ticketDetail_takeManagement">Take management of this ticket</string>
     <string name="ticketDetail_releaseManagement">Release management of this ticket</string>
     <string name="ticketDetail_assignCompany">Assign company to this ticket</string>
-    <string name="ticketDetail_changePhase">Change the ticket\'s phase</string>
+    <string name="ticketDetail_changePhase">Change ticket\'s status to the next phase</string>
     <string name="ticketUpdateDetail_success">Ticket details update successful</string>
     <string name="ticketUpdateDetail_fail">Failed to update ticket details, please try again</string>
     <string name="ticketUpdateProgressionDetail_success">Ticket status successfully updated.</string>
     <string name="ticketUpdateProgressionDetail_fail">Ticket status update failed, please try again</string>
     <string name="ticketDetail_cancelUpdateCompany">Cancelled company assignment</string>
+    <string name="ticketCreate_lieu">Location</string>
+    <string name="ticketDetail_updateTicketCompanySuccess">New company assigned succesfully</string>
+    <string name="ticketDetail_updateTicketCompanyFailure">There was a problem while assigning a company to the ticket</string>
 </resources>

@@ -72,7 +72,7 @@ public class CreateTicketActivity extends MyActionBarActivity implements ActionB
         if(pageNames == null)
             pageNames = new ArrayList<>();
         pageNames.add(getString(R.string.ticketCreate_category));
-        pageNames.add(getString(R.string.ticketCreate_building));
+        pageNames.add(getString(R.string.ticketCreate_lieu));
         pageNames.add(getString(R.string.ticketCreate_description));
 //        pageNames.add(getString(R.string.ticketCreate_image));
         pageNames.add(getString(R.string.ticketCreate_confirmationPage));

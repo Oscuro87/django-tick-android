@@ -1,4 +1,4 @@
-package org.ec.androidticket.backend.Async.responses;
+package org.ec.androidticket.backend.Async.events.ticketEvents.ticket.get;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

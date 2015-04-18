@@ -7,10 +7,11 @@ import org.ec.androidticket.backend.Async.events.ticketEvents.ticket.SimpleTicke
 import org.ec.androidticket.backend.Async.events.ticketEvents.ticket.create.RequestCategoriesResponseEvent;
 import org.ec.androidticket.backend.Async.events.ticketEvents.ticket.create.RequestUserBuildingsResponseEvent;
 import org.ec.androidticket.backend.Async.events.ticketEvents.ticket.create.TicketCreationResponseEvent;
+import org.ec.androidticket.backend.Async.events.ticketEvents.ticket.update.UpdateTicketCompanyResponseEvent;
 import org.ec.androidticket.backend.Async.events.ticketEvents.ticket.update.UpdateTicketDetailResponseEvent;
 import org.ec.androidticket.backend.Async.responses.PostResponseEvent;
-import org.ec.androidticket.backend.Async.responses.RequestTicketCompaniesListResponseEvent;
-import org.ec.androidticket.backend.Async.responses.UpdateTicketProgressionResponseEvent;
+import org.ec.androidticket.backend.Async.events.ticketEvents.ticket.get.RequestTicketCompaniesListResponseEvent;
+import org.ec.androidticket.backend.Async.events.ticketEvents.ticket.update.UpdateTicketProgressionResponseEvent;
 import org.ec.androidticket.backend.models.ticketing.Comment;
 import org.ec.androidticket.backend.models.ticketing.variants.CommentDiet;
 import org.ec.androidticket.backend.models.ticketing.variants.FullTicket;
@@ -150,5 +151,14 @@ public interface RestTicketAPI
             @NonNull @Header("Authorization") String authtoken,
             @NonNull @Field("ticketCode") String ticketCode,
             Callback<RequestTicketCompaniesListResponseEvent> callback
+    );
+
+    @FormUrlEncoded
+    @POST("/rest/tickets/updatedetails/updateticketcompany")
+    void updateTicketCompany(
+            @NonNull @Header("Authorization") String authtoken,
+            @NonNull @Field("ticketCode") String ticketCode,
+            @Field("companyPK") int companyPK,
+            Callback<UpdateTicketCompanyResponseEvent> callback
     );
 }
