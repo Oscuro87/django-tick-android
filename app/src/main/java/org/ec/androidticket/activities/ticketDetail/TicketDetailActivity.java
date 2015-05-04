@@ -74,7 +74,7 @@ public class TicketDetailActivity extends MyActionBarActivity implements android
         if (params != null)
         {
             this.ticketCode = params.getString("ticketCode");
-            requestTicketInfo(ticketCode);
+            requestTicketInfo(ticketCode, false);
             return true;
         } else
         {
@@ -83,12 +83,17 @@ public class TicketDetailActivity extends MyActionBarActivity implements android
         }
     }
 
-    private void requestTicketInfo(String ticketCode)
+    private void requestTicketInfo(String ticketCode, boolean forceUpdate)
     {
         FullTicketCache cache = FullTicketCache.get();
-        bus.post(new FullTicketRequestEvent("Token " + UserDataCache.get().getAuthtoken(), ticketCode));
-        bus.post(new CommentRequestEvent("Token " + UserDataCache.get().getAuthtoken(), ticketCode));
-        bus.post(new HistoryRequestEvent("Token " + UserDataCache.get().getAuthtoken(), ticketCode));
+
+        //  Check si le ticket n'est pas déjà en cache
+        if(!cache.getTicketCache().getTicketCode().equals(ticketCode) || forceUpdate)
+        {
+            bus.post(new FullTicketRequestEvent("Token " + UserDataCache.get().getAuthtoken(), ticketCode));
+            bus.post(new CommentRequestEvent("Token " + UserDataCache.get().getAuthtoken(), ticketCode));
+            bus.post(new HistoryRequestEvent("Token " + UserDataCache.get().getAuthtoken(), ticketCode));
+        }
     }
 
     private void setupFragments()
